@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="FeedMonkey">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
@@ -7,123 +7,27 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <title>FeedMonkey</title>
   
-  <link rel="stylesheet" href="css/screen.css" />
+  <!--<link rel="stylesheet" href="css/screen.css" />-->
 
-  <script src="js/App.js"></script>
+  <script src="lib/angularjs/1.2.26/angular.min.js"></script>
+  <script src="lib/angularjs/1.2.26/angular-route.min.js"></script>
+  <script src="sections/login/Login.js"></script>
+  <script src="sections/categories/Categories.js"></script>
+  <script src="sections/list/List.js"></script>
+  <script src="sections/articles/Articles.js"></script>
+  <script src="Index.js"></script>
+  <!-- <script src="js/App.js"></script>
   <script src="js/TinyTinyRSS.js"></script>
   <script src="js/OwnCloud.js"></script>
   <script src="js/Pond.js"></script>
   <script src="js/md5.js"></script>
   <script src="js/Login.js"></script> 
-  <script src="js/hammer.js"></script>
+  <script src="js/hammer.js"></script> -->
 </head>
 <body>
 
-<section id="list">
-  <header class="bar">
-    <a class="button icon settings" href="#settings">&#9881;</a>
-    <a class="button icon back" href="#categories">&#171;</a>
-    <a class="button icon reload" href="#reload">&#128260;</a>
-    <a class="button icon all-read inactive" href="#all-read" id="all-read">✓</a>
-    <canvas width="40" height="40"></canvas>
-  </header>
-  <article>
-    <ul></ul>
-  </article>
-</section>
-
-<section id="categories" class="active">
-  <header class="bar">
-    <a class="button icon settings" href="#settings">&#9881;</a>
-    <a class="button icon back" href="#categories-back">&#171;</a>
-    <a class="button icon reload" href="#reload">&#128260;</a>
-    <a class="button icon all-read inactive" href="#all-read" id="all-read">✓</a>
-    <canvas width="40" height="40"></canvas>
-  </header>
-  <article>
-    <ul></ul>
-  </article>
-</section>
-
-<section id="settings">
-  <header class="bar">
-    <a class="button icon" href="#categories">&#57349;</a>
-  </header>
-  <article>
-    <ul>
-      <li class="font-size">
-        <span><span class="icon">&#128269;</span> <small>A</small><big>A</big>:</span>
-        <a class="button small" href="#font-smaller"><span class="icon">&#11015;</span></a>
-        <a class="button small" href="#font-bigger"><span class="icon">&#11014;</span></a>
-      </li>
-      <li><a href="#color-white" class="color-white button"><span class="icon">&#59290;</span> White</a></li>
-      <li><a href="#color-blue" class="color-blue button"><span class="icon">&#59290;</span> Blue</a></li>
-      <li><a href="#color-yellow" class="color-yellow button"><span class="icon">&#59290;</span> Yellow</a></li>
-      <li><a href="#color-red" class="color-red button"><span class="icon">&#59290;</span> Red (default)</a></li>
-      <li class="reset-info"><a href="#reset-info" class="button"><span class="icon">&#59160;</span> View those info bubbles again</a></li>
-      <li><a href="#logout" class="button"><span class="icon">&#59201;</span> Log out</a></li>
-      <li class="version"><span class="icon">&#59141;</span> You're running version <em id="version"></em></li>
-      <li class="madeby"><span class="icon">&#59141;</span> Made by <a href="http://jabs.nu/" target="_blank">Jabs Nu</a></li>
-      <li class="icons"><span class="icon">&#128325;</span> Icons by <a href="http://www.entypo.com/" target="_blank">Entypo</a></li>
-    </ul>
-  </article>
-</section>
-
-<section id="login">
-  <header class="bar">
-    <h1>Please log in</h1>
-  </header>
-  <article>
-    <form>
-      <p class="smallogo">
-        <img src="img/icon-128.png" alt="Logo, an ape head">
-      </p>
-      <p class="backends">
-        <label class="button"><input type="radio" name="backend" value="TinyTinyRSS" checked="checked" /> Tiny Tiny RSS</label>
-        <label class="button"><input type="radio" name="backend" value="OwnCloud" /> ownCloud News</label>
-        <label class="button"><input type="radio" name="backend" value="Pond" /> Pond</label>
-      </p>
-      <p>
-        <label for="url">URL:</label>
-        <input class="button" type="text" name="url" id="url" value="" placeholder="http://example.com/tt-rss/" x-inputmode="verbatim" autocorrect="off" />
-        <label for="un">Username:</label>
-        <input class="button" type="text" name="user" id="un" value="" placeholder="username" x-inputmode="verbatim" autocorrect="off" />          
-        <label for="pw">Password:</label>
-        <input class="button" type="password" name="pass" id="pw" value="" placeholder="password" x-inputmode="verbatim" autocorrect="off" />      
-      </p>
-      <p>
-        <button class="button" type="submit">Sign in</button>
-      </p>
-    </form>
-  </article>
-</section>
-
-<section id="full">
-  <header class="bar">
-    <a class="button icon list" href="#list">&#57349;</a>
-    <a id="setpublished" class="button icon inactive invisible" href="#published">&#59194;</a>
-    <a id="setstarred" class="button icon inactive" href="#starred">&#9733;</a>
-    <a id="setunread" class="button icon inactive" href="#unread">✓</a>
-    <canvas width="40" height="40"></canvas>
-  </header>
-  <article>
-	  <header>
-      <p><span class="feed_title"></span> <span class="author"></span></p>
-			<h1><a class="title" href="" target="_blank"></a></h1>
-			<p><timedate class="date"></timedate></p>
-		</header>
-		<div class="article"></div>
-    <div class="info swipe">
-      <p>Swipe with your finger right and left to navigate to next and previous article.</p>
-    </div>
-  </article>
-  <footer class="bar">
-    <a class="button previous icon" href="#previous">&larr;</a>
-    <a class="button next icon" href="#next">&rarr;</a>
-  </footer>
-</section>
-
-<script src="js/application.js"></script>
+<div ng-view/>
+<!-- <script src="js/application.js"></script> -->
 
 </body>
 </html>
