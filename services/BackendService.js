@@ -32,7 +32,7 @@ angular.module('FeedMonkey').factory("backendService", function($q, http, authen
 		
 		var deferred = $q.defer();
 		var token = authenticationService.getToken();
-    var options = {
+    	var options = {
 			"sid": token,
 			"op": "getFeeds",
 			"unread_only": true,
@@ -52,9 +52,35 @@ angular.module('FeedMonkey').factory("backendService", function($q, http, authen
 
 		return deferred.promise;
 	}
+
+	function downloadArticles(categoryId) {
+
+		var deferred = $q.defer();
+		var token = authenticationService.getToken();
+    	var options = {
+			"sid": token,
+			"op": "getHeadlines",
+			"unread_only": true,
+			"feed_id":categoryId
+		};
+		http.post(serverUrl, options,
+			function(xhr) {
+				if(JSON.parse(xhr.responseText).content) {
+				  deferred.resolve(JSON.parse(xhr.responseText).content);
+				} else {
+          			deferred.reject();
+				}
+			}, function(xhr) {
+				deferred.reject(xhr.statusText);
+			}
+		);
+
+		return deferred.promise;
+	}
   
   return {
     downloadCategories: downloadCategories,
-		downloadFeeds: downloadFeeds
+	downloadFeeds: downloadFeeds,
+	downloadArticles: downloadArticles
   }
 });

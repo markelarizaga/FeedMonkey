@@ -28,12 +28,13 @@ angular.module('FeedMonkey').factory("feedsCache", function(){
     var i = 0;
     
     if(categories) {
-      if (elementId !== null && elementId !== undefined) {
+      if (elementId === null && elementId === undefined) {
         elementsToReturn = categories
-      }
-      for(i; i < categories.length; i++) {
-        if(categories[i].id === elementId) {
-         elementsToReturn = categories[i].children;
+      } else {
+        for(i; i < categories.length; i++) {
+          if(categories[i].id === elementId) {
+           elementsToReturn = categories[i].children;
+          }
         }
       }
     }
