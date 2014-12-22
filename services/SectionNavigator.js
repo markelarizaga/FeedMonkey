@@ -7,13 +7,15 @@ angular.module('FeedMonkey').factory("sectionNavigator", function($location){
 
 	var sectionHistory = null;
 	
-	function navigateTo (section, parameter) {
+	function navigateTo (section, parameter, ignoreHistory) {
 		if (section) {
 			if(parameter) {
 				section += "/" + parameter;
 			}
 			$location.path(section);
-			pushSectionToHistory(section);
+			if(!ignoreHistory){
+				pushSectionToHistory(section);
+			}
 		}
 	}
 
@@ -30,7 +32,7 @@ angular.module('FeedMonkey').factory("sectionNavigator", function($location){
 		if(sectionHistory) {
 			sectionHistory.pop();
 			destinationSection = sectionHistory[sectionHistory.length-1];
-			navigateTo(destinationSection);
+			navigateTo(destinationSection, null, true);
 			if(sectionHistory.length === 0) {
 				sectionHistory = null;
 			}
