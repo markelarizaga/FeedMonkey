@@ -1,13 +1,13 @@
 function List($scope, feedsCache, backendService, $routeParams) {
 
-	var articles = feedsCache.getElements($routeParams.feedId);
-	if(articles) {
-		$scope.articles = articles;
+	var headlines = feedsCache.getElements($routeParams.feedId);
+	if(headlines) {
+		$scope.headlines = headlines;
 	} else {
-		var articlesRetrieved = backendService.downloadArticles($routeParams.feedId);
-		articlesRetrieved.then(function(articles){
-			$scope.articles = articles;
-			feedsCache.addToCache(articles, $routeParams.feedId);
+		var headlinesRetrieved = backendService.downloadHeadlines($routeParams.feedId);
+		headlinesRetrieved.then(function(headlines){
+			$scope.headlines = headlines;
+			feedsCache.addToCache(headlines, $routeParams.feedId);
 		});
 	}
 }

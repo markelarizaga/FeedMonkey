@@ -15,6 +15,7 @@
   <script src="sections/categories/Categories.js"></script>
   <script src="sections/list/List.js"></script>
   <script src="sections/articles/Articles.js"></script>
+  <script src="sections/header/Header.js"></script>
   <script src="index.js"></script>
   <script src="services/http.js"></script>
   <script src="services/BackendService.js"></script>
@@ -31,6 +32,7 @@
 </head>
 <body>
 
+<div ng-include src="'sections/header/header.html'"></div>
 <div ng-view/>
 <!-- <script src="js/application.js"></script> -->
 

@@ -53,7 +53,7 @@ angular.module('FeedMonkey').factory("backendService", function($q, http, authen
 		return deferred.promise;
 	}
 
-	function downloadArticles(categoryId) {
+	function downloadHeadlines(categoryId) {
 
 		var deferred = $q.defer();
 		var token = authenticationService.getToken();
@@ -81,6 +81,6 @@ angular.module('FeedMonkey').factory("backendService", function($q, http, authen
   return {
     downloadCategories: downloadCategories,
 	downloadFeeds: downloadFeeds,
-	downloadArticles: downloadArticles
+	downloadHeadlines: downloadHeadlines
   }
 });
