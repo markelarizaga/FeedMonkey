@@ -1,4 +1,4 @@
-angular.module('FeedMonkey', ['ngRoute']).config(function($routeProvider) {
+angular.module('FeedMonkey', ['ngRoute', 'LocalStorageModule']).config(function($routeProvider) {
 	
 	var path = 'sections/';
 	$routeProvider.

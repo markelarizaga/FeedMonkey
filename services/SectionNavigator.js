@@ -33,7 +33,7 @@ angular.module('FeedMonkey').factory("sectionNavigator", function($location){
 
 	function back() {
 		var destinationSection = null;
-		if(sectionHistory) {
+		if(sectionHistory && sectionHistory.length > 1) {
 			sectionHistory.pop();
 			destinationSection = sectionHistory[sectionHistory.length-1];
 			navigateTo(destinationSection, null, true);

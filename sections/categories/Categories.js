@@ -3,7 +3,7 @@ function Categories($scope, backendService, feedsCache, sectionNavigator, $route
 	var categories = null;
 	var categoryId = $routeParams.categoryId;
 	if(!categoryId) {
-		categories = feedsCache.getElements()
+		categories = feedsCache.getElements();
 		if(categories) {
 			$scope.categories = categories;
 		} else {
@@ -15,16 +15,16 @@ function Categories($scope, backendService, feedsCache, sectionNavigator, $route
 		}
 	} else {
 		var children = feedsCache.getElements(categoryId);
-			if(children) {
-				$scope.categories = children;
-			} else {
-				// Retrieve child elements from server
-				var feedsRetrieved = backendService.downloadFeeds(categoryId);
-				feedsRetrieved.then(function(feeds){
-					feedsCache.addToCache(feeds, categoryId);
-					$scope.categories = feeds;
-				});
-			}
+		if(children) {
+			$scope.categories = children;
+		} else {
+			// Retrieve child elements from server
+			var feedsRetrieved = backendService.downloadFeeds(categoryId);
+			feedsRetrieved.then(function(feeds){
+				feedsCache.addToCache(feeds, categoryId);
+				$scope.categories = feeds;
+			});
+		}
 	}
 		
 	

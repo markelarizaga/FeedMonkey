@@ -1,6 +1,14 @@
-angular.module('FeedMonkey').factory("feedsCache", function(){
+angular.module('FeedMonkey').factory("feedsCache", function(localStorageService){
   
   var categories = null;
+  
+  function makePersistent(obj) {
+    localStorageService.set('feeds',JSON.stringify(obj));
+  }
+  
+  function getPersistent() {
+    return localStorageService.get('feeds');
+  }
   
   function cacheSubcategory(parentItemId, elementsList) {
     var i = 0;
@@ -17,6 +25,7 @@ angular.module('FeedMonkey').factory("feedsCache", function(){
     } else {
       cacheSubcategory(parentItemId, elementsList);
     }
+    makePersistent(categories);
   }
   
   function clear() {
@@ -26,9 +35,10 @@ angular.module('FeedMonkey').factory("feedsCache", function(){
   function getElements(elementId) {
     var elementsToReturn = null;
     var i = 0;
+    categories = categories || getPersistent();
     
     if(categories) {
-      if (elementId === null && elementId === undefined) {
+      if (elementId === null || elementId === undefined) {
         elementsToReturn = categories
       } else {
         for(i; i < categories.length; i++) {
