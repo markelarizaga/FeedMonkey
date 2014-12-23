@@ -3,8 +3,11 @@ angular.module('FeedMonkey').factory("sectionNavigator", function($location){
 		LOGIN: "/login",
 		CATEGORIES: "/categories",
 		LIST: "/list"
+	};
+	var events = {
+		SECTION_CHANGED: "onSectionChanged"
 	}
-
+	var onSectionChangedListeners = null;
 	var sectionHistory = null;
 	
 	function navigateTo (section, parameter, ignoreHistory) {
@@ -13,6 +16,7 @@ angular.module('FeedMonkey').factory("sectionNavigator", function($location){
 				section += "/" + parameter;
 			}
 			$location.path(section);
+			emit(events.SECTION_CHANGED, section);
 			if(!ignoreHistory){
 				pushSectionToHistory(section);
 			}
@@ -45,12 +49,46 @@ angular.module('FeedMonkey').factory("sectionNavigator", function($location){
 		}
 		sectionHistory.push(section);
 	}
+	
+	function addEventListener(event, listener){
+		switch(event) {
+			case events.SECTION_CHANGED:
+				if(!onSectionChangedListeners) {
+					onSectionChangedListeners = [];
+				}
+				onSectionChangedListeners.push(listener);
+				break;
+		}
+	}
+	
+	function removeEventListener(event, listener){
+		switch(event) {
+			case events.SECTION_CHANGED:
+				onSectionChangedListeners.splice(onSectionChangedListeners.indexOf(listener), 1);
+		}
+	}
+	
+	function callListeners (listeners, params) {
+		var i = 0;
+		for (i; i < listeners.length; i++) {
+			listeners[i](params);
+		}
+	}
+	
+	function emit(event, params) {
+		switch(event) {
+			case events.SECTION_CHANGED:
+				callListeners(onSectionChangedListeners, params);
+				break;
+		}
+	}
 
 	return {
 		navigateTo: navigateTo,
 		isInRoot: isInRoot,
 		back: back,
 		pushSectionToHistory: pushSectionToHistory,
+		addEventListener: addEventListener,
 		section: section
 	};
 });

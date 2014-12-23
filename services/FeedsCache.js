@@ -41,9 +41,23 @@ angular.module('FeedMonkey').factory("feedsCache", function(){
     return elementsToReturn;
   }
   
+  function getElementTitle(elementId) {
+    var returnTitle = "";
+    var i = 0;
+    if(categories && elementId !== null && elementId !== undefined) {
+      for(i; i < categories.length; i++) {
+        if(categories[i].id === elementId) {
+          returnTitle = categories[i].title;
+        }
+      }
+    }
+    return returnTitle;
+  }
+  
   return {
     addToCache: addToCache,
     clear: clear,
-    getElements: getElements
+    getElements: getElements,
+    getElementTitle: getElementTitle
   };
 });
