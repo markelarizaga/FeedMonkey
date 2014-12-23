@@ -1,24 +1,6 @@
 <section id="full">
-  <header class="bar">
-    <a class="button icon list" href="#list">&#57349;</a>
-    <a id="setpublished" class="button icon inactive invisible" href="#published">&#59194;</a>
-    <a id="setstarred" class="button icon inactive" href="#starred">&#9733;</a>
-    <a id="setunread" class="button icon inactive" href="#unread">✓</a>
-    <canvas width="40" height="40"></canvas>
-  </header>
   <article>
-    <header>
-      <p><span class="feed_title"></span> <span class="author"></span></p>
-      <h1><a class="title" href="" target="_blank"></a></h1>
-      <p><timedate class="date"></timedate></p>
-    </header>
-    <div class="article"></div>
-    <div class="info swipe">
-      <p>Swipe with your finger right and left to navigate to next and previous article.</p>
-    </div>
+    <h1>{{article.title}}</h1>
+    <div ng-bind-html="article.content"></div>
   </article>
-  <footer class="bar">
-    <a class="button previous icon" href="#previous">&larr;</a>
-    <a class="button next icon" href="#next">&rarr;</a>
-  </footer>
 </section>

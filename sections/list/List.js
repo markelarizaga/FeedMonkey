@@ -1,4 +1,4 @@
-function List($scope, feedsCache, backendService, $routeParams) {
+function List($scope, feedsCache, backendService, $routeParams, sectionNavigator) {
 
 	var headlines = feedsCache.getElements($routeParams.feedId);
 	if(headlines) {
@@ -10,4 +10,8 @@ function List($scope, feedsCache, backendService, $routeParams) {
 			feedsCache.addToCache(headlines, $routeParams.feedId);
 		});
 	}
+
+	$scope.openElement = function(element) {
+		sectionNavigator.navigateTo(sectionNavigator.section.ARTICLES, element.id);
+	};
 }

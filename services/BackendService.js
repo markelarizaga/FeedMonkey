@@ -77,10 +77,34 @@ angular.module('FeedMonkey').factory("backendService", function($q, http, authen
 
 		return deferred.promise;
 	}
+
+	function downloadArticle(articleId) {
+		var deferred = $q.defer();
+		var token = authenticationService.getToken();
+    	var options = {
+			"sid": token,
+			"op": "getArticle",
+			"article_id": articleId,
+		};
+		http.post(serverUrl, options,
+			function(xhr) {
+				if(JSON.parse(xhr.responseText).content) {
+				  deferred.resolve(JSON.parse(xhr.responseText).content);
+				} else {
+          			deferred.reject();
+				}
+			}, function(xhr) {
+				deferred.reject(xhr.statusText);
+			}
+		);
+
+		return deferred.promise;
+	}
   
-  return {
-    downloadCategories: downloadCategories,
-	downloadFeeds: downloadFeeds,
-	downloadHeadlines: downloadHeadlines
+	return {
+    	downloadCategories: downloadCategories,
+		downloadFeeds: downloadFeeds,
+		downloadHeadlines: downloadHeadlines,
+		downloadArticle: downloadArticle
   }
 });

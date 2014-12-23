@@ -2,7 +2,8 @@ angular.module('FeedMonkey').factory("sectionNavigator", function($location){
 	var section = {
 		LOGIN: "/login",
 		CATEGORIES: "/categories",
-		LIST: "/list"
+		LIST: "/list",
+		ARTICLES: "/articles"
 	};
 	var events = {
 		SECTION_CHANGED: "onSectionChanged"
