@@ -6,6 +6,7 @@ function Articles($scope, $routeParams, backendService) {
 		articleRetrieved.then(function(articles){
 			if(articles && articles.length > 0) {
 				$scope.article = articles[0];
+				backendService.markArticlesAsRead([$scope.article.id]);
 			}
 		});
 	}

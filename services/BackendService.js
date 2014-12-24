@@ -100,11 +100,37 @@ angular.module('FeedMonkey').factory("backendService", function($q, http, authen
 
 		return deferred.promise;
 	}
+
+	function markArticlesAsRead(articles){
+		var deferred = $q.defer();
+		var token = authenticationService.getToken();
+    	var options = {
+			"sid": token,
+			"op": "updateArticle",
+			"article_ids": articles.toString(),
+			"mode": 0,
+			"field": 2
+		};
+		http.post(serverUrl, options,
+			function(xhr) {
+				if(JSON.parse(xhr.responseText).content) {
+				  deferred.resolve(JSON.parse(xhr.responseText).content);
+				} else {
+          			deferred.reject();
+				}
+			}, function(xhr) {
+				deferred.reject(xhr.statusText);
+			}
+		);
+
+		return deferred.promise;
+	}
   
 	return {
     	downloadCategories: downloadCategories,
 		downloadFeeds: downloadFeeds,
 		downloadHeadlines: downloadHeadlines,
-		downloadArticle: downloadArticle
+		downloadArticle: downloadArticle,
+		markArticlesAsRead: markArticlesAsRead
   }
 });
