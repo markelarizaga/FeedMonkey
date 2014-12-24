@@ -10,26 +10,52 @@ angular.module('FeedMonkey').factory("feedsCache", function(localStorageService)
     return localStorageService.get('feeds');
   }
   
-  function cacheSubcategory(parentItemId, elementsList) {
+  function cacheSubcategory(cachedTree, parentItemId, elementsList) {
     var i = 0;
-    for(i; i < categories.length; i++) {
-      if(categories[i].id === parentItemId) {
-        categories[i].children = elementsList;
+    var subcategoryFound = false;
+    
+    for(i; i < cachedTree.length; i++) {
+      // There are only two equals because the ids can be both numbers or strings
+      if(cachedTree[i].id == parentItemId) {
+        cachedTree[i].children = elementsList;
+        return true;
+        
+      } else if(cachedTree[i].children) {
+        subcategoryFound = cacheSubcategory(cachedTree[i].children, parentItemId, elementsList);
       }
     }
+    return subcategoryFound;
   }
   
   function addToCache(elementsList, parentItemId) {
     if(parentItemId === null || parentItemId === undefined) {
       categories = elementsList;
     } else {
-      cacheSubcategory(parentItemId, elementsList);
+      cacheSubcategory(categories, parentItemId, elementsList);
     }
     makePersistent(categories);
   }
   
   function clear() {
     categories = null;
+  }
+  
+  function inspectCachedTree (cachedTree, elementId) {
+    var i = 0;
+    var foundElement = null;
+    for(i; i < cachedTree.length; i++) {
+      // There are only two equals because the ids can be both numbers or strings
+      if(cachedTree[i].id == elementId) {
+        return cachedTree[i].children;
+        
+      } else if(cachedTree[i].children) {
+        foundElement = inspectCachedTree(cachedTree[i].children, elementId);
+        if(foundElement) {
+          return foundElement;
+        }
+      }
+    }
+    return null;
   }
   
   function getElements(elementId) {
@@ -41,11 +67,7 @@ angular.module('FeedMonkey').factory("feedsCache", function(localStorageService)
       if (elementId === null || elementId === undefined) {
         elementsToReturn = categories
       } else {
-        for(i; i < categories.length; i++) {
-          if(categories[i].id === elementId) {
-           elementsToReturn = categories[i].children;
-          }
-        }
+        elementsToReturn = inspectCachedTree(categories, elementId);
       }
     }
     return elementsToReturn;
