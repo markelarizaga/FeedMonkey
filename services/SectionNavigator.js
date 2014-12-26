@@ -1,9 +1,9 @@
 angular.module('FeedMonkey').factory("sectionNavigator", function($location){
 	var section = {
-		LOGIN: "/login",
-		CATEGORIES: "/categories",
-		LIST: "/list",
-		ARTICLES: "/articles"
+		LOGIN: "/login/",
+		CATEGORIES: "/categories/",
+		LIST: "/list/",
+		ARTICLES: "/articles/"
 	};
 	var events = {
 		SECTION_CHANGED: "onSectionChanged"
@@ -14,7 +14,7 @@ angular.module('FeedMonkey').factory("sectionNavigator", function($location){
 	function navigateTo (section, parameter, ignoreHistory) {
 		if (section) {
 			if(parameter) {
-				section += "/" + parameter;
+				section += parameter;
 			}
 			$location.path(section);
 			if(!ignoreHistory){
@@ -26,11 +26,9 @@ angular.module('FeedMonkey').factory("sectionNavigator", function($location){
 
 	function isInRoot (){
 		var returnValue = true;
-
 		if (sectionHistory && sectionHistory.length > 1) {
 			returnValue = false;
 		}
-
 		return returnValue;
 	}
 
