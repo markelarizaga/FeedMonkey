@@ -60,7 +60,7 @@ angular.module('FeedMonkey').factory("backendService", function($q, http, authen
     	var options = {
 			"sid": token,
 			"op": "getHeadlines",
-			"unread_only": true,
+			"view_mode": "unread",
 			"feed_id":categoryId
 		};
 		http.post(serverUrl, options,
