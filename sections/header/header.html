@@ -1,6 +1,6 @@
 <div ng-controller="Header">
-<header>
-    <button ng-click="goBack()"><span class="icon icon-back">back</span></button>
-    <h1>{{title}}</h1>
-  </header>
+	<header>
+    	<button ng-show="!isRoot" ng-click="goBack()"><span class="icon icon-back">back</span></button>
+    	<h1>{{title}}</h1>
+	</header>
 </div>

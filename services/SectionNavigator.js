@@ -17,18 +17,20 @@ angular.module('FeedMonkey').factory("sectionNavigator", function($location){
 				section += "/" + parameter;
 			}
 			$location.path(section);
-			emit(events.SECTION_CHANGED, section);
 			if(!ignoreHistory){
 				pushSectionToHistory(section);
 			}
+			emit(events.SECTION_CHANGED, section);
 		}
 	}
 
 	function isInRoot (){
-		var returnValue = false;
-		if (sectionHistory === null || sectionHistory.length === 1) {
-			returnValue = true;
+		var returnValue = true;
+
+		if (sectionHistory && sectionHistory.length > 1) {
+			returnValue = false;
 		}
+
 		return returnValue;
 	}
 
