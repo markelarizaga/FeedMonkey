@@ -1,7 +1,9 @@
 <section id="categories" class="active">
   <article>
-    <div ng-repeat="category in categories">
-      <div ng-click="openElement(category)">{{category.title}}</div>
-    </div>
+  <ul>
+    <li ng-repeat="category in categories">
+      <p ng-click="openElement(category)">{{category.title}}</p>
+    </li>
+    </ul>
   </article>
 </section>

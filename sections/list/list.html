@@ -1,7 +1,9 @@
 <section id="list">
   <article>
-    <div ng-repeat="headline in headlines">
-      <div ng-click="openElement(headline)">{{headline.title}}</div>
-    </div>
+  	<ul>
+    <li ng-repeat="headline in headlines">
+      <p ng-click="openElement(headline)">{{headline.title}}</p>
+    </li>
+  </ul>
   </article>
 </section>
