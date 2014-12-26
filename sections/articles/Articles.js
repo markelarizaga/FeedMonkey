@@ -1,9 +1,9 @@
-function Articles($scope, $routeParams, backendService, feedsCache) {
+function Articles($scope, $routeParams, backendService, feedsCache, networkStatusService) {
 
 	var articleId = $routeParams.articleId;
 	var articleList;
 	var articleCursor = 0;
-	if(articleId) {
+	if(networkStatusService.isOnline() && articleId) {
 		var articleRetrieved = backendService.downloadArticle(articleId);
 		articleRetrieved.then(showArticle);
 	}

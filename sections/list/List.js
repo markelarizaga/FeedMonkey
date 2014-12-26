@@ -1,16 +1,20 @@
-function List($scope, feedsCache, backendService, $routeParams, sectionNavigator) {
+function List($scope, feedsCache, backendService, $routeParams, sectionNavigator, networkStatusService) {
 
-	var headlines = feedsCache.getElements($routeParams.feedId);
-	if(headlines) {
-		$scope.headlines = headlines;
-		feedsCache.setHeadlinesList(headlines);
-	} else {
+	
+	if(networkStatusService.isOnline()) {
 		var headlinesRetrieved = backendService.downloadHeadlines($routeParams.feedId);
 		headlinesRetrieved.then(function(headlines){
 			$scope.headlines = headlines;
 			feedsCache.addToCache(headlines, $routeParams.feedId);
 			feedsCache.setHeadlinesList(headlines);
 		});
+
+	} else {
+		var headlines = feedsCache.getElements($routeParams.feedId);
+		if(headlines) {
+			$scope.headlines = headlines;
+			feedsCache.setHeadlinesList(headlines);
+		}	
 	}
 
 	$scope.openElement = function(element) {
