@@ -1,4 +1,5 @@
-angular.module('FeedMonkey', ['ngRoute', 'LocalStorageModule', 'ngSanitize']).config(function($routeProvider) {
+angular.module('FeedMonkey', ['ngRoute', 'LocalStorageModule', 'ngSanitize', 'hmTouchEvents']).
+config(function($routeProvider) {
 	
 	var path = 'sections/';
 	$routeProvider.

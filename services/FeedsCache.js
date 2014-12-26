@@ -1,6 +1,7 @@
 angular.module('FeedMonkey').factory("feedsCache", function(localStorageService){
   
   var categories = null;
+  var currentHeadlines = null;
   
   function makePersistent(obj) {
     localStorageService.set('feeds',JSON.stringify(obj));
@@ -85,11 +86,21 @@ angular.module('FeedMonkey').factory("feedsCache", function(localStorageService)
     }
     return returnTitle;
   }
+
+  function setHeadlinesList (headlines) {
+    currentHeadlines = headlines;
+  }
+
+  function getHeadlinesList () {
+    return currentHeadlines;
+  }
   
   return {
     addToCache: addToCache,
     clear: clear,
     getElements: getElements,
-    getElementTitle: getElementTitle
+    getElementTitle: getElementTitle,
+    setHeadlinesList: setHeadlinesList,
+    getHeadlinesList: getHeadlinesList
   };
 });
