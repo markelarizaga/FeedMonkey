@@ -6,6 +6,12 @@ html, body {
 }
 
 header {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	z-index: 10;
 	background-color: #F97C17;
 }
 
@@ -62,6 +68,12 @@ header h1 {
 	margin: 0px;
 	padding: 0px 1rem;
 	height: 100%;
+}
+
+#content {
+	position: relative;
+	height: calc(100% - 5rem);
+	top: 5rem;
 }
 
 ul {
