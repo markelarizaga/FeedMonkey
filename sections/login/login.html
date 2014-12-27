@@ -3,18 +3,12 @@
     <h1>Please log in</h1>
   </header>
   <article>
+    <img id="login-icon" src="img/logo/logo-hdpi.png" />
     <form>
-      <p>
-        <label for="url">URL:</label>
-        <input class="button" type="text" name="url" id="url" placeholder="http://example.com/tt-rss/" x-inputmode="verbatim" autocorrect="off" ng-model="server_url" />
-        <label for="un">Username:</label>
-        <input class="button" type="text" name="user" id="un" placeholder="username" x-inputmode="verbatim" autocorrect="off" ng-model="username" />          
-        <label for="pw">Password:</label>
-        <input class="button" type="password" name="pass" id="pw" placeholder="password" x-inputmode="verbatim" autocorrect="off" ng-model="password" />      
-      </p>
-      <p>
-        <button class="button" type="submit" ng-click="attemptLogin()">Sign in</button>
-      </p>
+      <input class="button" type="text" name="url" id="url" placeholder="http://example.com/tt-rss/" x-inputmode="verbatim" autocorrect="off" ng-model="server_url" />
+      <input class="button" type="text" name="user" id="un" placeholder="Username" x-inputmode="verbatim" autocorrect="off" ng-model="username" />          
+      <input class="button" type="password" name="pass" id="pw" placeholder="Password" x-inputmode="verbatim" autocorrect="off" ng-model="password" />      
+      <button class="default" type="submit" ng-click="attemptLogin()">Sign in</button>
     </form>
   </article>
 </section>

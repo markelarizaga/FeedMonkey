@@ -3,9 +3,9 @@
   "description": "A feed mobile client with which you can read your RSS feeds and mark them as read on your server. Works also offline.",
   "launch_path": "/index.html",
   "icons": {
-    "58": "/img/icon-58.png",
-    "60": "/img/icon-60.png",
-    "128": "/img/icon-128.png"
+    "72": "/img/logo/logo-hdpi.png",
+    "96": "/img/logo/logo-xhdpi.png",
+    "128": "/img/logo/logo-xxhdpi.png"
   },
   "developer": {
     "name": "Jabs Nu",
