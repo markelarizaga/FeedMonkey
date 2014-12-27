@@ -37,6 +37,7 @@ function Articles($scope, $routeParams, backendService, feedsCache, networkStatu
 	function showArticle(articles){
 		if(articles && articles.length > 0) {
 			$scope.article = articles[0];
+			window.scroll(0, 0);
 			backendService.markArticlesAsRead([$scope.article.id]);
 			if(!articleList || !articleCursor) {
 				articleList = feedsCache.getHeadlinesList();
