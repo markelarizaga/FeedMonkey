@@ -2,7 +2,7 @@
   <article>
 	  <ul>
 	    <li ng-repeat="category in categories">
-	      <p ng-click="openElement(category)">{{category.title}}</p>
+	      <p ng-click="openElement(category)">{{category.title}}<span class="unread">({{category.unread}})</span></p>
 	    </li>
 	  </ul>
   </article>
