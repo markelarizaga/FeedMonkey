@@ -5,34 +5,49 @@ function Articles($scope, $routeParams, backendService, feedsCache, networkStatu
 	var articleCursor = 0;
 	if(networkStatusService.isOnline() && articleId) {
 		var articleRetrieved = backendService.downloadArticle(articleId);
-		articleRetrieved.then(showArticle);
+		articleRetrieved.then(function(articles) {
+			showArticle(addTargetToLinks(articles));
+		});
 	}
 
 	$scope.onHammer = function onHammer (event) {
 
 		switch (event.direction) {
-			case 2: // left
+			case 2:
 				if(articleCursor !== null && articleCursor !== undefined) {
 					articleCursor += 1;
 					var nextArticle = articleList[articleCursor];
 					if(nextArticle) {
 						var articleRetrieved = backendService.downloadArticle(nextArticle.id);
-						articleRetrieved.then(showArticle);
+						articleRetrieved.then(function(articles) {
+							showArticle(addTargetToLinks(articles));
+						});
 					}
 				}
 				break;
-			case 4: // right
+			case 4:
 				if(articleCursor !== null && articleCursor !== undefined) {
 					articleCursor -= 1;
 					var previousArticle = articleList[articleCursor];
 					if(previousArticle) {
 						var articleRetrieved = backendService.downloadArticle(previousArticle.id);
-						articleRetrieved.then(showArticle);
+						articleRetrieved.then(function(articles) {
+							showArticle(addTargetToLinks(articles));
+						});
 					}
 				}
 				break;
 		}
 	};
+
+	//FIXME this is not probably the best way to add target='_blank' to all links
+	function addTargetToLinks(articles) {
+		var i = 0;
+		for(i; i < articles.length; i++) {
+			articles[i].content = articles[i].content.replace(/<a/g, '<a target="_blank"'); 
+		}
+		return articles;
+	}
 
 	function showArticle(articles){
 		if(articles && articles.length > 0) {
