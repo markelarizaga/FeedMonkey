@@ -12,7 +12,7 @@ function Articles($scope, $routeParams, backendService, feedsCache, networkStatu
 
 		switch (event.direction) {
 			case 2: // left
-				if(articleCursor) {
+				if(articleCursor !== null && articleCursor !== undefined) {
 					articleCursor += 1;
 					var nextArticle = articleList[articleCursor];
 					if(nextArticle) {
@@ -22,7 +22,7 @@ function Articles($scope, $routeParams, backendService, feedsCache, networkStatu
 				}
 				break;
 			case 4: // right
-				if(articleCursor) {
+				if(articleCursor !== null && articleCursor !== undefined) {
 					articleCursor -= 1;
 					var previousArticle = articleList[articleCursor];
 					if(previousArticle) {
