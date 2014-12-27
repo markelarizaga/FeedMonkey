@@ -12,7 +12,7 @@ header {
 	margin: 0;
 	padding: 0;
 	z-index: 10;
-	background-color: #F97C17;
+	background-color: #222B2D;
 }
 
 header a {
@@ -87,8 +87,8 @@ ul {
 }
 
 ul li {
-	width: 100%;
-	height: 6rem;
+	min-width: 100%;
+	min-height: 6rem;
 	box-sizing: border-box;
 	border-bottom: 0.1rem solid #E7E7E7;
 	color: #333;
@@ -96,15 +96,13 @@ ul li {
 	padding: 0px;
 	display: block;
 	position: relative;
-	list-style: outside none none;
+	list-style: none outside none;
 	font-size: 1.9rem;
 	font-weight: normal;
 	line-height: 2.5rem;
 }
 
 ul li p {
-	line-height: 4rem;
-	padding-left: 1.5rem;
 	font-size: 1.8rem;
 	line-height: 4rem;
 	color: #333;
@@ -114,8 +112,41 @@ ul li p {
 	text-overflow: ellipsis;
 	border: medium none;
 	display: block;
+	margin: 0px 0px 10px 0px;
+	list-style: none outside none;
+}
+
+ul li p .unread {
+	color: #A09FA7;
+	font-size: 0.8em;
+	margin-left: 0.3em;
+}
+
+.headline {
+	font-size: 0.7em;
+	white-space: normal;
+	line-height: 2rem;
+}
+
+article h1 {
+	font-size: 2.5em;
+	padding: 10px 5px 5px;
 	margin: 0px;
-	list-style: outside none none;
+	background-color: #2C393B;
+	min-height: 3em;
+	color: #F6F1F1;
+	font-family: sans-serif;
+	font-weight: 400;
+}
+
+article  div{
+	font-size: 2.3em;
+	margin: 0px 5px 20px 5px;
+}
+
+article div img {
+	max-width: 100%;
+	margin: 5px;
 }
 
 .ng-hide {
