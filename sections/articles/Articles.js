@@ -53,7 +53,10 @@ function Articles($scope, $routeParams, backendService, feedsCache, networkStatu
 		if(articles && articles.length > 0) {
 			$scope.article = articles[0];
 			window.scroll(0, 0);
-			backendService.markArticlesAsRead([$scope.article.id]);
+			if($scope.article.unread) {
+				feedsCache.markLocalArticleAsRead($scope.article.feed_id, $scope.article.id);
+				backendService.markArticlesAsRead([$scope.article.id]);
+			}
 			if(!articleList || !articleCursor) {
 				articleList = feedsCache.getHeadlinesList();
 				articleCursor = getArticleCursor(articleList);

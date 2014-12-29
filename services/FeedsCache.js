@@ -66,7 +66,7 @@ angular.module('FeedMonkey').factory("feedsCache", function(localStorageService)
     
     if(categories) {
       if (elementId === null || elementId === undefined) {
-        elementsToReturn = categories
+        elementsToReturn = categories;
       } else {
         elementsToReturn = inspectCachedTree(categories, elementId);
       }
@@ -94,6 +94,25 @@ angular.module('FeedMonkey').factory("feedsCache", function(localStorageService)
   function getHeadlinesList () {
     return currentHeadlines;
   }
+
+  function markLocalArticleAsRead(feedId, articleId) {
+    var articleList = null;
+    var i = 0;
+    categories = categories || getPersistent();
+    
+    if(categories) {
+      articleList = inspectCachedTree(categories, feedId);
+      if(articleList) {
+        for(i; i < articleList.length; i++) {
+          if(articleList[i].id == articleId) {
+            articleList[i].unread = false;
+            return;
+          }
+        }
+      }
+    }
+    
+  }
   
   return {
     addToCache: addToCache,
@@ -101,6 +120,7 @@ angular.module('FeedMonkey').factory("feedsCache", function(localStorageService)
     getElements: getElements,
     getElementTitle: getElementTitle,
     setHeadlinesList: setHeadlinesList,
-    getHeadlinesList: getHeadlinesList
+    getHeadlinesList: getHeadlinesList,
+    markLocalArticleAsRead: markLocalArticleAsRead
   };
 });

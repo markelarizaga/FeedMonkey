@@ -17,7 +17,6 @@ function List($scope, feedsCache, backendService, $routeParams, sectionNavigator
 	}
 
 	$scope.openElement = function(element) {
-		element.unread = false;
 		sectionNavigator.navigateTo(sectionNavigator.section.ARTICLES, element.id);
 	};
 }
