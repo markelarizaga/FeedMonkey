@@ -202,12 +202,26 @@ article a.title-link {
 	text-decoration: none;
 }
 
-article  div{
-	font-size: 2.3em;
-	margin: 0px 5px 20px 5px;
+article .article-date {
+	font-size: 2em;
+	color: #A09FA7;
+	float: right;
+	margin: 0;
 }
 
-article div img {
+article .article-author {
+	font-size: 2em;
+	color: #A09FA7;
+	float: left;
+	margin: 0;
+}
+
+article  div.article-content{
+	font-size: 2.3em;
+	margin: 20px 5px 20px 5px;
+}
+
+article div.article-content img {
 	max-width: 100%;
 	margin: 5px;
 }

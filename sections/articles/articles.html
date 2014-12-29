@@ -1,6 +1,10 @@
 <section id="full">
   <article hm-swipeleft="onHammer" hm-swiperight="onHammer" data-hm-recognizer-options='[{"type":"swipe","directions":"DIRECTION_HORIZONTAL"}]'>
     <a href="{{article.link}}" target="_blank" class="title-link"><h1>{{article.title}}</h1></a>
-    <div ng-bind-html="article.content"></div>
+    <div>
+    	<p class="article-author">{{article.author}}</p>
+    	<p class="article-date">{{article.updated * 1000 | date:medium}}</p>
+    </div>
+    <div class="article-content" ng-bind-html="article.content"></div>
   </article>
 </section>
