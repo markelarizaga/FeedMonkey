@@ -1,6 +1,6 @@
 {
-  "name": "FeedMonkey",
-  "description": "A feed mobile client with which you can read your RSS feeds and mark them as read on your server. Works also offline.",
+  "name": "Tiny Tiny RSS",
+  "description": "A Tiny Tiny RSS feed reader client for Firefox OS.",
   "launch_path": "/index.html",
   "icons": {
     "72": "/img/logo/logo-hdpi.png",
@@ -8,8 +8,8 @@
     "128": "/img/logo/logo-xxhdpi.png"
   },
   "developer": {
-    "name": "Jabs Nu",
-    "url": "http://jabs.nu"
+    "name": "Markel Arizaga",
+    "url": "http://www.markelarizaga.com"
   },
   "default_locale": "en",
   "type": "privileged",
@@ -19,5 +19,5 @@
     }
   },
   "installs_allowed_from": ["*"],
-  "version": "0.4.2"
+  "version": "0.1.0"
 }
