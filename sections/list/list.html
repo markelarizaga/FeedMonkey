@@ -2,7 +2,7 @@
   <article>
   	<ul>
     <li ng-repeat="headline in headlines">
-      <p class="headline" ng-click="openElement(headline)">{{headline.title}}</p>
+      <p ng-class="{headline: true, unread:headline.unread}" ng-click="openElement(headline)">{{headline.title}}</p>
     </li>
   </ul>
   </article>

@@ -4,7 +4,7 @@ function Categories($scope, backendService, feedsCache, sectionNavigator, $route
 	var categoryId = $routeParams.categoryId;
 
 	if(!categoryId) {
-		if(networkStatusService.isOnline()) {
+		if(networkStatusService.isOnline() && !sectionNavigator.isComingBack()) {
 			var categoriesRetrieved = backendService.downloadCategories();
 			categoriesRetrieved.then(function(categories){
 				$scope.categories = categories;
@@ -19,7 +19,7 @@ function Categories($scope, backendService, feedsCache, sectionNavigator, $route
 		}
 
 	} else {
-		if(networkStatusService.isOnline()) {
+		if(networkStatusService.isOnline() && !sectionNavigator.isComingBack()) {
 			// Retrieve child elements from server
 			var feedsRetrieved = backendService.downloadFeeds(categoryId);
 			feedsRetrieved.then(function(feeds){

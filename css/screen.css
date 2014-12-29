@@ -175,10 +175,14 @@ ul li p {
 	list-style: none outside none;
 }
 
-ul li p .unread {
+ul li p .unread-amount {
 	color: #A09FA7;
 	font-size: 0.8em;
 	margin-left: 0.3em;
+}
+
+ul li p.unread {
+	font-weight: 600;
 }
 
 .headline {

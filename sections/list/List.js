@@ -1,7 +1,6 @@
 function List($scope, feedsCache, backendService, $routeParams, sectionNavigator, networkStatusService) {
 
-	
-	if(networkStatusService.isOnline()) {
+	if(networkStatusService.isOnline() && !sectionNavigator.isComingBack()) {
 		var headlinesRetrieved = backendService.downloadHeadlines($routeParams.feedId);
 		headlinesRetrieved.then(function(headlines){
 			$scope.headlines = headlines;
@@ -18,6 +17,7 @@ function List($scope, feedsCache, backendService, $routeParams, sectionNavigator
 	}
 
 	$scope.openElement = function(element) {
+		element.unread = false;
 		sectionNavigator.navigateTo(sectionNavigator.section.ARTICLES, element.id);
 	};
 }

@@ -10,8 +10,9 @@ angular.module('FeedMonkey').factory("sectionNavigator", function($location){
 	}
 	var onSectionChangedListeners = null;
 	var sectionHistory = null;
+	var comingBack = false;
 	
-	function navigateTo (section, parameter, ignoreHistory) {
+	function navigateTo (section, parameter, ignoreHistory, isComingBack) {
 		if (section) {
 			if(parameter) {
 				section += parameter;
@@ -19,6 +20,9 @@ angular.module('FeedMonkey').factory("sectionNavigator", function($location){
 			$location.path(section);
 			if(!ignoreHistory){
 				pushSectionToHistory(section);
+			}
+			if(!isComingBack) {
+				comingBack = false;
 			}
 			emit(events.SECTION_CHANGED, section);
 		}
@@ -37,7 +41,8 @@ angular.module('FeedMonkey').factory("sectionNavigator", function($location){
 		if(sectionHistory && sectionHistory.length > 1) {
 			sectionHistory.pop();
 			destinationSection = sectionHistory[sectionHistory.length-1];
-			navigateTo(destinationSection, null, true);
+			comingBack = true;
+			navigateTo(destinationSection, null, true, comingBack);
 			if(sectionHistory.length === 0) {
 				sectionHistory = null;
 			}
@@ -84,12 +89,17 @@ angular.module('FeedMonkey').factory("sectionNavigator", function($location){
 		}
 	}
 
+	function isComingBack() {
+		return comingBack;
+	}
+
 	return {
 		navigateTo: navigateTo,
 		isInRoot: isInRoot,
 		back: back,
 		pushSectionToHistory: pushSectionToHistory,
 		addEventListener: addEventListener,
+		isComingBack: isComingBack,
 		section: section
 	};
 });
