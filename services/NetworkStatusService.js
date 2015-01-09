@@ -1,11 +1,23 @@
 angular.module('TinyFeed')
 .factory("networkStatusService", function(){
 
+	var offlineMode = false;
+
 	function isOnline() {
-		return navigator.onLine;
+		return (!offlineMode && navigator.onLine);
+	}
+
+	function setOfflineMode(offline) {
+		offlineMode = offline;
+	}
+
+	function isOfflineMode() {
+		return offlineMode;
 	}
 
 	return{
-		isOnline: isOnline
+		isOnline: isOnline,
+		setOfflineMode: setOfflineMode,
+		isOfflineMode: isOfflineMode
 	}
 })

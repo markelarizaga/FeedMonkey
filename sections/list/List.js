@@ -13,7 +13,7 @@ function List($scope, feedsCache, backendService, $routeParams, sectionNavigator
 		if(headlines) {
 			$scope.headlines = headlines;
 			feedsCache.setHeadlinesList(headlines);
-		}	
+		}
 	}
 
 	$scope.openElement = function(element) {

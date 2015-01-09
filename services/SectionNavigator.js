@@ -3,7 +3,8 @@ angular.module('TinyFeed').factory("sectionNavigator", function($location){
 		LOGIN: "/login/",
 		CATEGORIES: "/categories/",
 		LIST: "/list/",
-		ARTICLES: "/articles/"
+		ARTICLES: "/articles/",
+		ROOT_SECTION: "root"
 	};
 	var events = {
 		SECTION_CHANGED: "onSectionChanged"
@@ -11,20 +12,28 @@ angular.module('TinyFeed').factory("sectionNavigator", function($location){
 	var onSectionChangedListeners = null;
 	var sectionHistory = null;
 	var comingBack = false;
-	
-	function navigateTo (section, parameter, ignoreHistory, isComingBack) {
-		if (section) {
+
+	function navigateTo (destinationSection, parameter, ignoreHistory, isComingBack) {
+		if (destinationSection) {
 			if(parameter) {
-				section += parameter;
+				destinationSection += parameter;
 			}
-			$location.path(section);
+			if(destinationSection === section.ROOT_SECTION) {
+				destinationSection = section.CATEGORIES;
+				sectionHistory = null;
+			}
+			if($location.path() === destinationSection) {
+				$route.reload();
+			} else {
+				$location.path(destinationSection);
+			}
 			if(!ignoreHistory){
-				pushSectionToHistory(section);
+				pushSectionToHistory(destinationSection);
 			}
 			if(!isComingBack) {
 				comingBack = false;
 			}
-			emit(events.SECTION_CHANGED, section);
+			emit(events.SECTION_CHANGED, destinationSection);
 		}
 	}
 

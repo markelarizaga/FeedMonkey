@@ -1,6 +1,5 @@
-function Header($scope, sectionNavigator, feedsCache) {
+function Header($scope, sectionNavigator, feedsCache, backendService, networkStatusService) {
 	$scope.isRoot = true;
-	
 	sectionNavigator.addEventListener("onSectionChanged", function(newSection){
 		var id = newSection.split("/");
 		id = id[id.length-1];
@@ -12,4 +11,19 @@ function Header($scope, sectionNavigator, feedsCache) {
 	$scope.goBack = function() {
 		sectionNavigator.back();
 	};
+
+	$scope.toggleOffline = function() {
+		if(!networkStatusService.isOfflineMode()) {
+			backendService.goOffline(function (feeds) {
+				alert("Offline mode is ready");
+				feedsCache.setOfflineFeeds(feeds);
+				networkStatusService.setOfflineMode(true);
+				sectionNavigator.navigateTo(sectionNavigator.section.ROOT_SECTION);
+			});
+		} else {
+			networkStatusService.setOfflineMode(false);
+			feedsCache.clear();
+			sectionNavigator.navigateTo(sectionNavigator.section.ROOT_SECTION);
+		}
+	}
 }

@@ -1,8 +1,7 @@
 function Categories($scope, backendService, feedsCache, sectionNavigator, $routeParams, networkStatusService) {
-	
+
 	var categories = null;
 	var categoryId = $routeParams.categoryId;
-
 	if(!categoryId) {
 		if(networkStatusService.isOnline() && !sectionNavigator.isComingBack()) {
 			var categoriesRetrieved = backendService.downloadCategories();

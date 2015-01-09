@@ -38,7 +38,7 @@ angular.module('TinyFeed').factory("feedsCache", function(localStorageService){
   }
   
   function clear() {
-    categories = null;
+    categories = [];
   }
   
   function inspectCachedTree (cachedTree, elementId) {
@@ -47,7 +47,7 @@ angular.module('TinyFeed').factory("feedsCache", function(localStorageService){
     for(i; i < cachedTree.length; i++) {
       // There are only two equals because the ids can be both numbers or strings
       if(cachedTree[i].id == elementId) {
-        return cachedTree[i].children;
+        return cachedTree[i].children || cachedTree[i];
         
       } else if(cachedTree[i].children) {
         foundElement = inspectCachedTree(cachedTree[i].children, elementId);
@@ -111,7 +111,10 @@ angular.module('TinyFeed').factory("feedsCache", function(localStorageService){
         }
       }
     }
-    
+  }
+
+  function setOfflineFeeds(feeds) {
+    categories = feeds;
   }
   
   return {
@@ -121,6 +124,7 @@ angular.module('TinyFeed').factory("feedsCache", function(localStorageService){
     getElementTitle: getElementTitle,
     setHeadlinesList: setHeadlinesList,
     getHeadlinesList: getHeadlinesList,
-    markLocalArticleAsRead: markLocalArticleAsRead
+    markLocalArticleAsRead: markLocalArticleAsRead,
+    setOfflineFeeds: setOfflineFeeds
   };
 });

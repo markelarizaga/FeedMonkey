@@ -3,11 +3,18 @@ function Articles($scope, $routeParams, backendService, feedsCache, networkStatu
 	var articleId = $routeParams.articleId;
 	var articleList;
 	var articleCursor = 0;
-	if(networkStatusService.isOnline() && articleId) {
+	var article = null;
+	if(networkStatusService.isOnline()) {
 		var articleRetrieved = backendService.downloadArticle(articleId);
 		articleRetrieved.then(function(articles) {
 			showArticle(addTargetToLinks(articles));
 		});
+	} else {
+		article = feedsCache.getElements(articleId);
+		console.log(article);
+		if(article) {
+			showArticle(addTargetToLinks([article]));
+		}
 	}
 
 	$scope.onHammer = function onHammer (event) {
