@@ -85,8 +85,10 @@ angular.module('TinyFeed').factory("sectionNavigator", function($location){
 	
 	function callListeners (listeners, params) {
 		var i = 0;
-		for (i; i < listeners.length; i++) {
-			listeners[i](params);
+		if(listeners) {
+			for (i; i < listeners.length; i++) {
+				listeners[i](params);
+			}
 		}
 	}
 	

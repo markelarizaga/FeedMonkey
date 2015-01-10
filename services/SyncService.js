@@ -1,4 +1,4 @@
-angular.module('FeedMonkey').factory("syncService", function(){
+angular.module('FeedMonkey').factory("syncService", function(backendService){
   
   var articlesToSync = null;
   
@@ -12,10 +12,14 @@ angular.module('FeedMonkey').factory("syncService", function(){
   }
   
   function syncArticlesInServer() {
-    
+    if(articlesToSync) {
+      backendService.markArticlesAsRead(articlesToSync);
+      articlesToSync = null;
+    }
   }
   
   return {
-    addToSyncPending: addToSyncPending
+    addToSyncPending: addToSyncPending,
+    syncArticlesInServer: syncArticlesInServer
   };
-}
+});

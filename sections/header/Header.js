@@ -1,4 +1,4 @@
-function Header($scope, sectionNavigator, feedsCache, backendService, networkStatusService) {
+function Header($scope, sectionNavigator, feedsCache, backendService, networkStatusService, syncService) {
 	$scope.isRoot = true;
 	sectionNavigator.addEventListener("onSectionChanged", function(newSection){
 		var id = newSection.split("/");
@@ -23,6 +23,7 @@ function Header($scope, sectionNavigator, feedsCache, backendService, networkSta
 		} else {
 			networkStatusService.setOfflineMode(false);
 			feedsCache.clear();
+			syncService.syncArticlesInServer();
 			sectionNavigator.navigateTo(sectionNavigator.section.ROOT_SECTION);
 		}
 	}
