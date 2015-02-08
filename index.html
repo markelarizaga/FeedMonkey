@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html ng-app="FeedMonkey">
+<html ng-app="TinyFeed">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  <title>FeedMonkey</title>
+  <title>TinyFeed</title>
   
   <link rel="stylesheet" href="css/screen.css" />
 
@@ -27,19 +27,11 @@
   <script src="services/AuthenticationService.js"></script>
   <script src="services/FeedsCache.js"></script>
   <script src="services/NetworkStatusService.js"></script>
-  <!-- <script src="js/App.js"></script>
-  <script src="js/TinyTinyRSS.js"></script>
-  <script src="js/OwnCloud.js"></script>
-  <script src="js/Pond.js"></script>
-  <script src="js/md5.js"></script>
-  <script src="js/Login.js"></script> 
-  <script src="js/hammer.js"></script> -->
 </head>
 <body>
 
 <div ng-include src="'sections/header/header.html'"></div>
 <div ng-view id="content"/>
-<!-- <script src="js/application.js"></script> -->
 
 </body>
 </html>

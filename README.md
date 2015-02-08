@@ -1,4 +1,4 @@
-FeedMonkey
+TinyFeed
 ==========
 
 RSS client for Firefox OS

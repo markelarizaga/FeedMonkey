@@ -1,4 +1,4 @@
-angular.module('FeedMonkey').factory("feedsCache", function(localStorageService){
+angular.module('TinyFeed').factory("feedsCache", function(localStorageService){
   
   var categories = null;
   var currentHeadlines = null;

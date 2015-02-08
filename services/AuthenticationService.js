@@ -1,4 +1,4 @@
-angular.module('FeedMonkey')
+angular.module('TinyFeed')
 .factory("authenticationService", function($q, http){
 	
   var token = null;

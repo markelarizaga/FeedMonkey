@@ -1,4 +1,4 @@
-angular.module('FeedMonkey').factory("backendService", function($q, http, authenticationService){
+angular.module('TinyFeed').factory("backendService", function($q, http, authenticationService){
   
   //FIXME Don't hardcode the url
   var serverUrl = "http://lecturas.markelarizaga.com/api/";

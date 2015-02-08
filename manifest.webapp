@@ -1,5 +1,5 @@
 {
-  "name": "Tiny Tiny RSS",
+  "name": "TinyFeed",
   "description": "A Tiny Tiny RSS feed reader client for Firefox OS.",
   "launch_path": "/index.html",
   "icons": {
@@ -9,7 +9,7 @@
   },
   "developer": {
     "name": "Markel Arizaga",
-    "url": "http://www.markelarizaga.com"
+    "url": "https://github.com/markelarizaga/FeedMonkey"
   },
   "default_locale": "en",
   "type": "privileged",

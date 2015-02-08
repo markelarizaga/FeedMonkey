@@ -1,4 +1,4 @@
-angular.module('FeedMonkey')
+angular.module('TinyFeed')
 .factory("networkStatusService", function(){
 
 	function isOnline() {
