@@ -1,5 +1,5 @@
 {
-  "name": "TinyFeed",
+  "name": "Tiny RSS",
   "description": "A Tiny Tiny RSS feed reader client for Firefox OS.",
   "launch_path": "/index.html",
   "icons": {

@@ -4,7 +4,7 @@ function Header($scope, sectionNavigator, feedsCache) {
 	sectionNavigator.addEventListener("onSectionChanged", function(newSection){
 		var id = newSection.split("/");
 		id = id[id.length-1];
-		$scope.title = feedsCache.getElementTitle(id) || "TT-RSS";
+		$scope.title = feedsCache.getElementTitle(id) || "Tiny RSS";
 
 		$scope.isRoot = sectionNavigator.isInRoot();
 	});
