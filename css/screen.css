@@ -58,8 +58,12 @@ header a .icon-back {
 	background-image: url("../img/icons/back.png");
 }
 
-header a .icon-more {
-	background-image: url("../img/icons/back.png");
+header a .icon-offline {
+	background-image: url("../img/icons/offline.png");
+}
+
+header a .icon-online {
+	background-image: url("../img/icons/online.png");
 }
 
 header h1 {
