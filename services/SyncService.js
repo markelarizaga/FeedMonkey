@@ -1,4 +1,4 @@
-angular.module('FeedMonkey').factory("syncService", function(backendService){
+angular.module('TinyFeed').factory("syncService", function(backendService){
   
   var articlesToSync = null;
   

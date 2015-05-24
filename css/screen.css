@@ -59,11 +59,11 @@ header a .icon-back {
 }
 
 header a .icon-offline {
-	background-image: url("../img/icons/offline.png");
+	background-image: url("../img/icons/offline.svg");
 }
 
 header a .icon-online {
-	background-image: url("../img/icons/online.png");
+	background-image: url("../img/icons/online.svg");
 }
 
 header h1 {
