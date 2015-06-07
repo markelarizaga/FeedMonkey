@@ -1,4 +1,5 @@
-angular.module('TinyFeed').factory("backendService", function($q, http, authenticationService){
+angular.module('TinyFeed').
+factory("backendService", ['$q', 'http', 'authenticationService', function($q, http, authenticationService){
   
   //FIXME Don't hardcode the url
   var serverUrl = "http://lecturas.markelarizaga.com/api/";
@@ -261,4 +262,4 @@ angular.module('TinyFeed').factory("backendService", function($q, http, authenti
 		markArticlesAsRead: markArticlesAsRead,
 		goOffline: goOffline,
 	}
-});
+}]);

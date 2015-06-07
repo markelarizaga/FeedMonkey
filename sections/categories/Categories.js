@@ -1,4 +1,6 @@
-function Categories($scope, backendService, feedsCache, sectionNavigator, $routeParams, networkStatusService) {
+angular.module('TinyFeed').
+controller('Categories', ['$scope', 'backendService', 'feedsCache', 'sectionNavigator', '$routeParams', 'networkStatusService',
+function($scope, backendService, feedsCache, sectionNavigator, $routeParams, networkStatusService) {
 
 	var categories = null;
 	var categoryId = $routeParams.categoryId;
@@ -41,4 +43,4 @@ function Categories($scope, backendService, feedsCache, sectionNavigator, $route
 			sectionNavigator.navigateTo(sectionNavigator.section.CATEGORIES, element.id);
 		}
 	};
-}
+}]);

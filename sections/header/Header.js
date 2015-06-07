@@ -1,4 +1,6 @@
-function Header($scope, sectionNavigator, feedsCache, backendService, networkStatusService, syncService) {
+angular.module('TinyFeed').
+controller('Header', ['$scope', 'sectionNavigator', 'feedsCache', 'backendService', 'networkStatusService', 'syncService',
+function($scope, sectionNavigator, feedsCache, backendService, networkStatusService, syncService) {
 	
 	$scope.isRoot = true;
 	$scope.offline = false;
@@ -32,4 +34,4 @@ function Header($scope, sectionNavigator, feedsCache, backendService, networkSta
 			sectionNavigator.navigateTo(sectionNavigator.section.ROOT_SECTION);
 		}
 	}
-}
+}]);

@@ -1,4 +1,5 @@
-angular.module('TinyFeed').factory("sectionNavigator", function($location){
+angular.module('TinyFeed').
+factory("sectionNavigator", ['$location', '$route', function($location, $route){
 	var section = {
 		LOGIN: "/login/",
 		CATEGORIES: "/categories/",
@@ -113,4 +114,4 @@ angular.module('TinyFeed').factory("sectionNavigator", function($location){
 		isComingBack: isComingBack,
 		section: section
 	};
-});
+}]);

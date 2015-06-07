@@ -1,9 +1,7 @@
-function Login($scope, sectionNavigator, authenticationService) {
-
-	$scope.server_url = 'http://lecturas.markelarizaga.com';
-	$scope.username = 'markel';
-	$scope.password = 'markel123';
-
+angular.module('TinyFeed').
+controller('Login', ['$scope', 'sectionNavigator', 'authenticationService',
+function ($scope, sectionNavigator, authenticationService) {
+	
 	$scope.attemptLogin = function() {
 		var login = null;
 		if ($scope.username && $scope.password && $scope.server_url) {
@@ -22,4 +20,4 @@ function Login($scope, sectionNavigator, authenticationService) {
 			sectionNavigator.navigateTo(sectionNavigator.section.CATEGORIES);
 		});
 	}
-}
+}]);

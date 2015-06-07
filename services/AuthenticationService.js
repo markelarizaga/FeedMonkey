@@ -1,5 +1,5 @@
 angular.module('TinyFeed')
-.factory("authenticationService", function($q, http){
+.factory("authenticationService", ['$q', 'http', function($q, http){
 	
   var token = null;
 	var serverUrl = null;
@@ -111,4 +111,4 @@ angular.module('TinyFeed')
     logout: logout,
 		getToken: getToken
 	};
-})
+}])

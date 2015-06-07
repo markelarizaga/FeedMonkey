@@ -1,4 +1,5 @@
-angular.module('TinyFeed').factory("syncService", function(backendService){
+angular.module('TinyFeed').
+factory("syncService", ['backendService', function(backendService){
   
   var articlesToSync = null;
   
@@ -22,4 +23,4 @@ angular.module('TinyFeed').factory("syncService", function(backendService){
     addToSyncPending: addToSyncPending,
     syncArticlesInServer: syncArticlesInServer
   };
-});
+}]);

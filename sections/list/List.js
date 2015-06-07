@@ -1,4 +1,6 @@
-function List($scope, feedsCache, backendService, $routeParams, sectionNavigator, networkStatusService) {
+angular.module('TinyFeed').
+controller('List', ['$scope', 'feedsCache', 'backendService', '$routeParams', 'sectionNavigator', 'networkStatusService',
+function($scope, feedsCache, backendService, $routeParams, sectionNavigator, networkStatusService) {
 
 	if(networkStatusService.isOnline() && !sectionNavigator.isComingBack()) {
 		var headlinesRetrieved = backendService.downloadHeadlines($routeParams.feedId);
@@ -19,4 +21,4 @@ function List($scope, feedsCache, backendService, $routeParams, sectionNavigator
 	$scope.openElement = function(element) {
 		sectionNavigator.navigateTo(sectionNavigator.section.ARTICLES, element.id);
 	};
-}
+}]);

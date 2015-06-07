@@ -1,4 +1,5 @@
-angular.module('TinyFeed').factory("feedsCache", function(localStorageService){
+angular.module('TinyFeed').
+factory("feedsCache", ['localStorageService', function(localStorageService){
   
   var categories = null;
   var currentHeadlines = null;
@@ -127,4 +128,4 @@ angular.module('TinyFeed').factory("feedsCache", function(localStorageService){
     markLocalArticleAsRead: markLocalArticleAsRead,
     setOfflineFeeds: setOfflineFeeds
   };
-});
+}]);

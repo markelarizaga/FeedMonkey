@@ -1,4 +1,6 @@
-function Articles($scope, $routeParams, backendService, feedsCache, networkStatusService) {
+angular.module('TinyFeed').
+controller('Articles', ['$scope', '$routeParams', 'backendService', 'feedsCache', 'networkStatusService',
+function($scope, $routeParams, backendService, feedsCache, networkStatusService) {
 
 	var articleId = $routeParams.articleId;
 	var articleList;
@@ -80,4 +82,4 @@ function Articles($scope, $routeParams, backendService, feedsCache, networkStatu
 		}
 		return null;
 	}
-}
+}]);
