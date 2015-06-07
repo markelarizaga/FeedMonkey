@@ -1,4 +1,4 @@
-TinyFeed
+TinyRSS
 ==========
 
 RSS client for Firefox OS

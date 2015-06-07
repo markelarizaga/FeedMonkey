@@ -1,4 +1,4 @@
-angular.module('TinyFeed').
+angular.module('TinyRSS').
 factory("sectionNavigator", ['$location', '$route', function($location, $route){
 	var section = {
 		LOGIN: "/login/",

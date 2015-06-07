@@ -1,4 +1,4 @@
-angular.module('TinyFeed').
+angular.module('TinyRSS').
 controller('Login', ['$scope', 'sectionNavigator', 'authenticationService',
 function ($scope, sectionNavigator, authenticationService) {
 	

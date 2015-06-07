@@ -1,4 +1,4 @@
-angular.module('TinyFeed').
+angular.module('TinyRSS').
 controller('Articles', ['$scope', '$routeParams', 'backendService', 'feedsCache', 'networkStatusService',
 function($scope, $routeParams, backendService, feedsCache, networkStatusService) {
 

@@ -1,7 +1,7 @@
 /**
  * Temporary service until Angular's default $http service can be used in FirefoxOS
  **/
-angular.module('TinyFeed')
+angular.module('TinyRSS')
 .factory("http", function(){
 
   return {

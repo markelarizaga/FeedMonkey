@@ -1,4 +1,4 @@
-angular.module('TinyFeed')
+angular.module('TinyRSS')
 .factory("networkStatusService", function(){
 
 	var offlineMode = false;

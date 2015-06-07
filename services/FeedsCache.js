@@ -1,4 +1,4 @@
-angular.module('TinyFeed').
+angular.module('TinyRSS').
 factory("feedsCache", ['localStorageService', function(localStorageService){
   
   var categories = null;

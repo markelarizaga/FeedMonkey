@@ -1,4 +1,4 @@
-angular.module('TinyFeed', ['ngRoute', 'LocalStorageModule', 'ngSanitize', 'hmTouchEvents'])
+angular.module('TinyRSS', ['ngRoute', 'LocalStorageModule', 'ngSanitize', 'hmTouchEvents'])
 .config(["$compileProvider", function($compileProvider) {
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(file|https?|ftp|mailto|app):/);
 }])

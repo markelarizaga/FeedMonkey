@@ -1,4 +1,4 @@
-angular.module('TinyFeed')
+angular.module('TinyRSS')
 .factory("authenticationService", ['$q', 'http', function($q, http){
 	
   var token = null;

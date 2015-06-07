@@ -1,4 +1,4 @@
-angular.module('TinyFeed').
+angular.module('TinyRSS').
 factory("backendService", ['$q', 'http', 'authenticationService', function($q, http, authenticationService){
   
   //FIXME Don't hardcode the url

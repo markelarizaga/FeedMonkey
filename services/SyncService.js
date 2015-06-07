@@ -1,4 +1,4 @@
-angular.module('TinyFeed').
+angular.module('TinyRSS').
 factory("syncService", ['backendService', function(backendService){
   
   var articlesToSync = null;
