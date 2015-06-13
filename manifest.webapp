@@ -1,6 +1,6 @@
 {
   "name": "Tiny RSS",
-  "description": "A Tiny Tiny RSS feed reader client for Firefox OS.",
+  "description": "A Tiny Tiny RSS feed reader client for Firefox OS which supports offline mode",
   "launch_path": "/index.html",
   "icons": {
     "72": "/img/logo/logo-hdpi.png",
