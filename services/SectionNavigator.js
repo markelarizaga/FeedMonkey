@@ -5,7 +5,8 @@ factory("sectionNavigator", ['$location', '$route', function($location, $route){
 		CATEGORIES: "/categories/",
 		LIST: "/list/",
 		ARTICLES: "/articles/",
-		ROOT_SECTION: "root"
+		ROOT_SECTION: "root",
+		SETTINGS: "/settings/"
 	};
 	var events = {
 		SECTION_CHANGED: "onSectionChanged"
@@ -105,6 +106,12 @@ factory("sectionNavigator", ['$location', '$route', function($location, $route){
 		return comingBack;
 	}
 
+	function clearHistory() {
+		if(sectionHistory && sectionHistory.length > 0) {
+			sectionHistory = null;
+		}
+	}
+
 	return {
 		navigateTo: navigateTo,
 		isInRoot: isInRoot,
@@ -112,6 +119,7 @@ factory("sectionNavigator", ['$location', '$route', function($location, $route){
 		pushSectionToHistory: pushSectionToHistory,
 		addEventListener: addEventListener,
 		isComingBack: isComingBack,
-		section: section
+		section: section,
+		clearHistory: clearHistory
 	};
 }]);

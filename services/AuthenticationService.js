@@ -106,9 +106,9 @@ angular.module('TinyRSS')
 
 
 	return{
-    isLoggedIn: isLoggedIn,
-    login: login,
-    logout: logout,
+		isLoggedIn: isLoggedIn,
+		login: login,
+		logout: logout,
 		getToken: getToken
 	};
 }])

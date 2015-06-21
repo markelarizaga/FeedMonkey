@@ -9,5 +9,6 @@ angular.module('TinyRSS', ['ngRoute', 'LocalStorageModule', 'ngSanitize', 'hmTou
 		when('/categories/:categoryId?', {controller: 'Categories', templateUrl: 'sections/categories/categories.html'}).
 		when('/list/:feedId', {controller: 'List', templateUrl: 'sections/list/list.html'}).
 		when('/articles/:articleId', {controller: 'Articles', templateUrl: 'sections/articles/articles.html'}).
+		when('/settings', {controller: 'Settings', templateUrl: 'sections/settings/settings.html'}).
 		otherwise({redirectTo: '/login'});
 }]);
