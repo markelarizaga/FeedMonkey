@@ -38,7 +38,7 @@ header a {
 	font-style: italic;
 }
 
-header a#btn-buttons-more {
+header a.btn-buttons {
 	float: right;
 }
 
@@ -55,7 +55,7 @@ header .icon {
 }
 
 header a .icon-back {
-	background-image: url("../img/icons/back.png");
+	background-image: url("../img/icons/back.svg");
 }
 
 header a .icon-offline {
@@ -64,6 +64,10 @@ header a .icon-offline {
 
 header a .icon-online {
 	background-image: url("../img/icons/online.svg");
+}
+
+header a .icon-settings {
+	background-image: url("../img/icons/settings.svg");
 }
 
 header h1 {

@@ -33,5 +33,9 @@ function($scope, sectionNavigator, feedsCache, backendService, networkStatusServ
 			syncService.syncArticlesInServer();
 			sectionNavigator.navigateTo(sectionNavigator.section.ROOT_SECTION);
 		}
-	}
+	};
+
+	$scope.openSettings = function() {
+		sectionNavigator.navigateTo(sectionNavigator.section.SETTINGS);
+	};
 }]);

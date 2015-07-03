@@ -2,7 +2,10 @@
 	<a ng-show="!isRoot" ng-click="goBack()" id="btn-buttons-back">
 		<span class="icon icon-back">back</span>
 	</a>
-	<a ng-show="isRoot" ng-click="toggleOffline()" id="btn-buttons-more">
+	<a ng-show="isRoot" ng-click="openSettings()" class="btn-buttons">
+		<span class="icon icon-settings">more</span>
+	</a>
+	<a ng-show="isRoot" ng-click="toggleOffline()" class="btn-buttons">
 		<span class="icon" ng-class="{'icon-offline': !offline, 'icon-online': offline}">more</span>
 	</a>
 	<h1>{{title}}</h1>
