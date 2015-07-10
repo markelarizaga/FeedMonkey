@@ -1,4 +1,4 @@
-angular.module('TinyRSS', ['ngRoute', 'LocalStorageModule', 'ngSanitize', 'hmTouchEvents'])
+angular.module('TinyRSS', ['ngRoute', 'LocalStorageModule', 'ngSanitize', 'hmTouchEvents', 'pascalprecht.translate'])
 .config(["$compileProvider", function($compileProvider) {
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(file|https?|ftp|mailto|app):/);
 }])
@@ -11,4 +11,10 @@ angular.module('TinyRSS', ['ngRoute', 'LocalStorageModule', 'ngSanitize', 'hmTou
 		when('/articles/:articleId', {controller: 'Articles', templateUrl: 'sections/articles/articles.html'}).
 		when('/settings', {controller: 'Settings', templateUrl: 'sections/settings/settings.html'}).
 		otherwise({redirectTo: '/login'});
+}])
+.config(['$translateProvider',function($translateProvider) {
+	$translateProvider.translations('en', tinyRss.locales.en);
+	$translateProvider.translations('eu', tinyRss.locales.eu);
+
+	$translateProvider.preferredLanguage('eu');
 }]);

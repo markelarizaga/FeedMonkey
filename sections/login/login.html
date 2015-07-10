@@ -1,14 +1,14 @@
 <section id="login">
   <header class="bar">
-    <h1>Please log in</h1>
+    <h1 translate>pleaseLogIn</h1>
   </header>
   <article>
     <img id="login-icon" src="img/logo/logo-hdpi.png" />
     <form>
-      <input class="button" type="text" name="url" id="url" placeholder="http://example.com/tt-rss/" x-inputmode="verbatim" autocorrect="off" ng-model="server_url" />
-      <input class="button" type="text" name="user" id="un" placeholder="Username" x-inputmode="verbatim" autocorrect="off" ng-model="username" />          
-      <input class="button" type="password" name="pass" id="pw" placeholder="Password" x-inputmode="verbatim" autocorrect="off" ng-model="password" />      
-      <button class="default" type="submit" ng-click="attemptLogin()">Sign in</button>
+      <input class="button" type="text" name="url" id="url" placeholder="{{ 'serverPlaceholder' | translate }}" x-inputmode="verbatim" autocorrect="off" ng-model="server_url" />
+      <input class="button" type="text" name="user" id="un" placeholder="{{ 'usernamePlaceholder' | translate }}" x-inputmode="verbatim" autocorrect="off" ng-model="username" />          
+      <input class="button" type="password" name="pass" id="pw" placeholder="{{ 'passwordPlaceholder' | translate }}" x-inputmode="verbatim" autocorrect="off" ng-model="password" />      
+      <button class="default" type="submit" ng-click="attemptLogin()" translate>logIn</button>
     </form>
   </article>
 </section>
