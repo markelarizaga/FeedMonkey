@@ -16,7 +16,11 @@ tinyRss.locales.es = {
 	LOGIN_ERROR: 'Credenciales incorrectas',
 
 	/* SETTINGS */
+	language: 'Idioma',
+	eu: 'Euskara',
+	en: 'English',
+	es: 'Español',
 	logOut: 'Cerrar sesión',
-	runningVersion: 'Versión instalada:',
-	developer: 'Desarrollador:'
+	runningVersion: 'Versión instalada',
+	developer: 'Desarrollador'
 };

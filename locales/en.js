@@ -16,7 +16,11 @@ tinyRss.locales.en = {
 	LOGIN_ERROR: 'Incorrect credentials',
 
 	/* SETTINGS */
+	language: 'Language',
+	eu: 'Euskara',
+	en: 'English',
+	es: 'Español',
 	logOut: 'Log out',
-	runningVersion: 'Running version:',
-	developer: 'Developer:'
+	runningVersion: 'Running version',
+	developer: 'Developer'
 };

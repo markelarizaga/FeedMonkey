@@ -3,6 +3,7 @@ controller('Settings', ['$scope', 'sectionNavigator', 'authenticationService', '
 function($scope, sectionNavigator, authenticationService, settingsService) {
 
 	$scope.version = settingsService.getVersion();
+	$scope.currentLanguage = settingsService.getCurrentLanguage();
 
 	$scope.logout = function () {
 		var logout = authenticationService.logout();

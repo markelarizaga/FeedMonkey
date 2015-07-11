@@ -16,7 +16,11 @@ tinyRss.locales.eu = {
 	LOGIN_ERROR: 'Okerreko kredentzialak',
 
 	/* SETTINGS */
+	language: 'Hizkuntza',
+	eu: 'Euskara',
+	en: 'English',
+	es: 'Español',
 	logOut: 'Itxi saioa',
-	runningVersion: 'Instalatutako bertsioa:',
-	developer: 'Garatzailea:'
+	runningVersion: 'Instalatutako bertsioa',
+	developer: 'Garatzailea'
 };
