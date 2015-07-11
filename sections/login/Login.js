@@ -1,7 +1,7 @@
 angular.module('TinyRSS').
-controller('Login', ['$scope', 'sectionNavigator', 'authenticationService', 'settingsService',
-function ($scope, sectionNavigator, authenticationService, settingsService) {
-	
+controller('Login', ['$scope', 'sectionNavigator', 'authenticationService', 'settingsService', '$filter',
+function ($scope, sectionNavigator, authenticationService, settingsService, $filter) {
+
 	$scope.attemptLogin = function() {
 		var login = null;
 		if ($scope.username && $scope.password && $scope.server_url) {
@@ -10,7 +10,9 @@ function ($scope, sectionNavigator, authenticationService, settingsService) {
 			login.then(function(){
 				sectionNavigator.navigateTo(sectionNavigator.section.CATEGORIES);
 			}, function(error) {
-				alert("Something went wrong when authenticating: " + error);
+				var errorMessage = $filter('translate')('loginError');
+				var errorMessage = error ? errorMessage + ': ' + $filter('translate')(error) : errorMessage;
+				alert(errorMessage);
 			});
 		}
 	};

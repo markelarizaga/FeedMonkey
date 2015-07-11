@@ -15,6 +15,7 @@ angular.module('TinyRSS', ['ngRoute', 'LocalStorageModule', 'ngSanitize', 'hmTou
 .config(['$translateProvider',function($translateProvider) {
 	$translateProvider.translations('en', tinyRss.locales.en);
 	$translateProvider.translations('eu', tinyRss.locales.eu);
+	$translateProvider.translations('es', tinyRss.locales.es);
 
 	$translateProvider.preferredLanguage('eu');
 }]);

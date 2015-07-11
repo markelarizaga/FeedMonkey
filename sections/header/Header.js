@@ -1,6 +1,6 @@
 angular.module('TinyRSS').
-controller('Header', ['$scope', 'sectionNavigator', 'feedsCache', 'backendService', 'networkStatusService', 'syncService',
-function($scope, sectionNavigator, feedsCache, backendService, networkStatusService, syncService) {
+controller('Header', ['$scope', 'sectionNavigator', 'feedsCache', 'backendService', 'networkStatusService', 'syncService', '$filter',
+function($scope, sectionNavigator, feedsCache, backendService, networkStatusService, syncService, $filter) {
 	
 	$scope.isRoot = true;
 	$scope.offline = false;
@@ -20,7 +20,7 @@ function($scope, sectionNavigator, feedsCache, backendService, networkStatusServ
 	$scope.toggleOffline = function() {
 		if(!networkStatusService.isOfflineMode()) {
 			backendService.goOffline(function (feeds) {
-				alert("Offline mode is ready");
+				alert($filter('translate')('offlineModeReady'));
 				$scope.offline = true;
 				feedsCache.setOfflineFeeds(feeds);
 				networkStatusService.setOfflineMode(true);
