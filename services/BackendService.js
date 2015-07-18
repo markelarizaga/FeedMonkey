@@ -1,8 +1,6 @@
 angular.module('TinyRSS').
-factory("backendService", ['$q', 'http', 'authenticationService', function($q, http, authenticationService){
-  
-  //FIXME Don't hardcode the url
-  var serverUrl = "http://lecturas.markelarizaga.com/api/";
+factory("backendService", ['$q', 'http', 'authenticationService', 'settingsService',
+function($q, http, authenticationService, settingsService){
 
   function downloadCategories() {
     var deferred = $q.defer();
@@ -14,7 +12,7 @@ factory("backendService", ['$q', 'http', 'authenticationService', function($q, h
 			"enable_nested": false,
 			"include_empty": false
 		};
-		http.post(serverUrl, options,
+		http.post(settingsService.getCredentials().serverApiUrl, options,
 			function(xhr) {
 				if(JSON.parse(xhr.responseText).content) {
 				  deferred.resolve(JSON.parse(xhr.responseText).content);
@@ -50,7 +48,7 @@ factory("backendService", ['$q', 'http', 'authenticationService', function($q, h
 			};
 		}
     	
-		http.post(serverUrl, options,
+		http.post(settingsService.getCredentials().serverApiUrl, options,
 			function(xhr) {
 				if(JSON.parse(xhr.responseText).content) {
 					deferred.resolve(JSON.parse(xhr.responseText).content);
@@ -88,7 +86,7 @@ factory("backendService", ['$q', 'http', 'authenticationService', function($q, h
 				"feed_id": -4 // All articles
 			};
 		}
-		http.post(serverUrl, options,
+		http.post(settingsService.getCredentials().serverApiUrl, options,
 			function(xhr) {
 				if(JSON.parse(xhr.responseText).content) {
 					deferred.resolve(JSON.parse(xhr.responseText).content);
@@ -111,7 +109,7 @@ factory("backendService", ['$q', 'http', 'authenticationService', function($q, h
 			"op": "getArticle",
 			"article_id": articleId,
 		};
-		http.post(serverUrl, options,
+		http.post(settingsService.getCredentials().serverApiUrl, options,
 			function(xhr) {
 				if(JSON.parse(xhr.responseText).content) {
 				  deferred.resolve(JSON.parse(xhr.responseText).content);
@@ -136,7 +134,7 @@ factory("backendService", ['$q', 'http', 'authenticationService', function($q, h
 			"mode": 0,
 			"field": 2
 		};
-		http.post(serverUrl, options,
+		http.post(settingsService.getCredentials().serverApiUrl, options,
 			function(xhr) {
 				if(JSON.parse(xhr.responseText).content) {
 				  deferred.resolve(JSON.parse(xhr.responseText).content);
