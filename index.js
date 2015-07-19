@@ -1,9 +1,16 @@
-angular.module('TinyRSS', ['ngRoute', 'LocalStorageModule', 'ngSanitize', 'hmTouchEvents', 'pascalprecht.translate'])
+angular.module('TinyRSS',
+    ['ngRoute',
+    'LocalStorageModule',
+    'ngSanitize',
+    'hmTouchEvents',
+    'ngCookies',
+    'pascalprecht.translate'])
+
 .config(["$compileProvider", function($compileProvider) {
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(file|https?|ftp|mailto|app):/);
 }])
+
 .config(['$routeProvider',function($routeProvider) {
-	
 	$routeProvider.
 		when('/login', {controller: 'Login', templateUrl: 'sections/login/login.html'}).
 		when('/categories/:categoryId?', {controller: 'Categories', templateUrl: 'sections/categories/categories.html'}).
@@ -12,10 +19,13 @@ angular.module('TinyRSS', ['ngRoute', 'LocalStorageModule', 'ngSanitize', 'hmTou
 		when('/settings', {controller: 'Settings', templateUrl: 'sections/settings/settings.html'}).
 		otherwise({redirectTo: '/login'});
 }])
+
 .config(['$translateProvider',function($translateProvider) {
 	$translateProvider.translations('en', tinyRss.locales.en);
 	$translateProvider.translations('eu', tinyRss.locales.eu);
 	$translateProvider.translations('es', tinyRss.locales.es);
 
-	$translateProvider.preferredLanguage('eu');
+    $translateProvider.fallbackLanguage('en');
+	$translateProvider.preferredLanguage('en');
+    $translateProvider.useLocalStorage();
 }]);

@@ -5,6 +5,7 @@ tinyRss.locales.es = {
 	/* GENERAL */
 	appTitle : 'Tiny RSS',
 	offlineModeReady: 'Modo offline listo',
+	cancel: 'Cancelar',
 
 	/* LOGIN SCREEN */
 	pleaseLogIn: 'Inicia sesión por favor',

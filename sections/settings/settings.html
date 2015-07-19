@@ -1,10 +1,18 @@
 <section id="settings">
-  <article>
-    <ul>
-    	<li><p>{{'language' | translate}}: {{currentLanguage | translate}}</p></li>
-    	<li><p class="version">{{'runningVersion' | translate}}: {{version}}</p></li>
-    	<li><p class="madeby">{{'developer' | translate}}: <a href="https://github.com/markelarizaga/TinyRSS" target="_blank">Markel Arizaga</a></p></li>
-    	<li><p ng-click="logout()" class="button" translate>logOut</p></li>
-    </ul>
-  </article>
+  	<article>
+    	<ul>
+    		<li><p ng-click="revealLanguageSwitcher()">{{'language' | translate}}: {{currentLanguage | translate}}</p></li>
+    		<li><p class="version">{{'runningVersion' | translate}}: {{version}}</p></li>
+    		<li><p class="madeby">{{'developer' | translate}}: <a href="https://github.com/markelarizaga/TinyRSS" target="_blank">Markel Arizaga</a></p></li>
+    		<li><p ng-click="logout()" class="button" translate>logOut</p></li>
+    	</ul>
+  	</article>
+	<article ng-show="switchLanguage" class="modal">
+		<button class="action-button" ng-click="changeLanguage('eu')" translate>eu</button>
+		<button class="action-button" ng-click="changeLanguage('en')" translate>en</button>
+		<button class="action-button" ng-click="changeLanguage('es')" translate>es</button>
+        <div class="bottom-container">
+            <button class="default" ng-click="dismissLanguageSwitcher()" translate>cancel</button>
+	    </div>
+    </article>
 </section>

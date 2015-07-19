@@ -1,7 +1,7 @@
 angular.module('TinyRSS').
-factory("settingsService", ['$translate', function($translate) {
+factory("settingsService", ['$translate', 'localStorageService', function($translate, localStorageService) {
 
-	var version = "0.2.1";
+	var version = "0.3.0";
 	var url = null;
 	var user = null;
 	var pass = null;
@@ -29,10 +29,21 @@ factory("settingsService", ['$translate', function($translate) {
 		return $translate.use();
 	}
 
+	function setCurrentLanguage(languageCode) {
+		$translate.use(languageCode);
+		localStorageService.set('language', languageCode);
+	}
+
+	function getLanguagePreference() {
+		return localStorageService.get('language');
+	}
+
 	return {
 		getVersion: getVersion,
 		setCredentials: setCredentials,
 		getCredentials: getCredentials,
-		getCurrentLanguage: getCurrentLanguage
+		getCurrentLanguage: getCurrentLanguage,
+		setCurrentLanguage: setCurrentLanguage,
+		getLanguagePreference: getLanguagePreference
 	}
 }]);

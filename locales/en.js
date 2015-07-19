@@ -5,6 +5,7 @@ tinyRss.locales.en = {
 	/* GENERAL */
 	appTitle : 'Tiny RSS',
 	offlineModeReady: 'Offline mode ready',
+	cancel: 'Cancel',
 
 	/* LOGIN SCREEN */
 	pleaseLogIn: 'Please log in',
