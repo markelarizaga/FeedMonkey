@@ -15,11 +15,11 @@
   "locales": {
       "eu" : {
           "name": "Tiny RSS",
-          "description": "Lineaz kanpoko modua eskaintzen duen Tiny Tiny RSS jario irakurlearentzako bezero aplikazioa Firefox OS plataformarako",
+          "description": "Lineaz kanpoko modua eskaintzen duen Tiny Tiny RSS jario irakurlearentzako bezero aplikazioa Firefox OS plataformarako"
       },
       "es" : {
           "name": "Tiny RSS",
-          "description": "Aplicación para el gestor de fuentes Tiny Tiny RSS que soporta modo offline para Firefox OS",
+          "description": "Aplicación para el gestor de fuentes Tiny Tiny RSS que soporta modo offline para Firefox OS"
       }
   },
   "type": "privileged",

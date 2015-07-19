@@ -147,6 +147,10 @@ input[type=text], input[type=password] {
 	outline: medium none;
 }
 
+.default:active {
+	background-color: #B2F2FF;
+}
+
 #content {
 	position: relative;
 	height: calc(100% - 5rem);
@@ -273,6 +277,10 @@ article div.article-content img {
 	font-style: italic;
 	font-size: 1.6rem;
 	background-image: none;
+}
+
+.action-button:active {
+	background-color: #00AACC;
 }
 
 .bottom-container {
