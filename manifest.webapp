@@ -12,6 +12,16 @@
     "url": "https://github.com/markelarizaga/TinyRSS"
   },
   "default_locale": "en",
+  "locales": {
+      "eu" : {
+          "name": "Tiny RSS",
+          "description": "Lineaz kanpoko modua eskaintzen duen Tiny Tiny RSS jario irakurlearentzako bezero aplikazioa Firefox OS plataformarako",
+      },
+      "es" : {
+          "name": "Tiny RSS",
+          "description": "Aplicación para el gestor de fuentes Tiny Tiny RSS que soporta modo offline para Firefox OS",
+      }
+  },
   "type": "privileged",
   "permissions": {
     "systemXHR": {
