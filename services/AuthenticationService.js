@@ -1,11 +1,11 @@
 angular.module('TinyRSS')
 .factory("authenticationService", ['$q', 'http', function($q, http){
-	
+
   var token = null;
 	var serverUrl = null;
-	
+
 	/**
-	 * This function makes an asynchronous call to the server sending the user credentials to authenticate. The function returns a 
+	 * This function makes an asynchronous call to the server sending the user credentials to authenticate. The function returns a
 	 * promise that will call the resolve callback in case of success of the reject callback in case of failure.
 	 * @method login
 	 * @example
@@ -20,7 +20,7 @@ angular.module('TinyRSS')
 		var deferred = $q.defer();
 		var options = {op: "login", user: user, password: password};
 		serverUrl = server_url + "/api/";
-		
+
 		http.post(serverUrl, options,
 			function(xhr) {
 				if(JSON.parse(xhr.responseText).content.error) {
@@ -36,24 +36,24 @@ angular.module('TinyRSS')
 
 		return deferred.promise;
 	}
-	
+
 	/**
-	 * Asynchronously checks for authentication status. This function will check for a token and a serverUrl stored in memory and if 
+	 * Asynchronously checks for authentication status. This function will check for a token and a serverUrl stored in memory and if
 	 * both elements are present will return a promise that will call resolve callback if user is logged in and reject in other case.
 	 * If no token and server url are present, this function will return null.
 	 * @method isLoggedIn
 	 * @example
 	 * var promise = authenticationService.isLoggedIn();
 	 * if (promise) {promise.then(isLoggedCallback, failureCallback);}
-	 * @return {Object} A promise that will call resolve callback if user is logged in and reject in other case or null if no token 
+	 * @return {Object} A promise that will call resolve callback if user is logged in and reject in other case or null if no token
 	 * and server url exist in memory
 	 **/
 	function isLoggedIn() {
-		
+
 		var deferred = $q.defer();
 		var options = {op: "isLoggedIn", sid: token};
 		var returnValue = null;
-		
+
 		if(token && serverUrl) {
 			http.post(serverUrl, options,
 				function(xhr) {
@@ -72,11 +72,12 @@ angular.module('TinyRSS')
 
 		return returnValue;
 	}
-	
+
 	/**
-	 * Sends an asynchronous call to the server to logout the current user.
+	 * Sends an asynchronous call to the server to logout the current user and
+	 * removes the token from the cache to destroy the session.
 	 * @method logout
-	 * @return {Object} A promise that will call resolve callback in case the log out was done (or already not logged in) 
+	 * @return {Object} A promise that will call resolve callback in case the log out was done (or already not logged in)
 	 * and reject if the network call fails
 	 **/
 	function logout() {
@@ -84,22 +85,22 @@ angular.module('TinyRSS')
 		var deferred = $q.defer();
 		var options = {op: "logout", sid: token};
 		var returnValue = null;
-		
+
 		if(token && serverUrl) {
 			http.post(serverUrl, options,
 				function(xhr) {
-					token = null;
 					deferred.resolve();
 				}, function(xhr) {
 					deferred.reject(xhr.statusText);
 				}
 			);
 			returnValue = deferred.promise;
+			token = null;
 		}
 
 		return returnValue;
 	}
-	
+
 	function getToken() {
 			return token;
 		}

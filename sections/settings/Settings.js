@@ -9,11 +9,12 @@ function($scope, sectionNavigator, authenticationService, settingsService, $tran
 	$scope.logout = function () {
 		var logout = authenticationService.logout();
 		logout.then(function(){
-				sectionNavigator.clearHistory();
-				sectionNavigator.navigateTo(sectionNavigator.section.LOGIN, null, true, true);
+				console.log("Sucessfully logged out");
 			}, function(error) {
-				alert("Something went wrong when logging out: " + error);
+				console.log("Something went wrong when logging out: " + error);
 			});
+		sectionNavigator.clearHistory();
+		sectionNavigator.navigateTo(sectionNavigator.section.LOGIN, null, true, true);
 	};
 
 	$scope.revealLanguageSwitcher = function() {
