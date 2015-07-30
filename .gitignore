@@ -1,1 +1,5 @@
 .DS_Store
+style/style.css
+style/style.css.map
+bower_components/
+.sass-cache
