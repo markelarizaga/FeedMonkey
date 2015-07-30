@@ -1,10 +1,10 @@
 <section id="settings">
   	<article>
-    	<ul>
-    		<li><p ng-click="revealLanguageSwitcher()">{{'language' | translate}}: {{currentLanguage | translate}}</p></li>
-    		<li><p class="version">{{'runningVersion' | translate}}: {{version}}</p></li>
-    		<li><p class="madeby">{{'developer' | translate}}: <a href="https://github.com/markelarizaga/TinyRSS" target="_blank">Markel Arizaga</a></p></li>
-    		<li><p ng-click="logout()" class="button" translate>logOut</p></li>
+        <ul class="trss-list">
+            <li class="settings-item group-item"><p ng-click="revealLanguageSwitcher()">{{'language' | translate}}: {{currentLanguage | translate}}</p></li>
+            <li class="settings-item group-item"><p class="version">{{'runningVersion' | translate}}: {{version}}</p></li>
+            <li class="settings-item group-item"><p class="madeby">{{'developer' | translate}}: <a href="https://github.com/markelarizaga/TinyRSS" target="_blank">Markel Arizaga</a></p></li>
+            <li class="settings-item group-item"><p ng-click="logout()" class="button" translate>logOut</p></li>
     	</ul>
   	</article>
 	<article ng-show="switchLanguage" class="modal">

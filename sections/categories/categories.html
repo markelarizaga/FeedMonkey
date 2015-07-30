@@ -1,9 +1,11 @@
 <section id="categories" class="active">
-  <article>
-	  <ul>
-	    <li ng-repeat="category in categories">
-	      <p ng-click="openElement(category)">{{category.title}}<span class="unread-amount">({{category.unread}})</span></p>
-	    </li>
-	  </ul>
-  </article>
+    <article>
+        <ul class="trss-list">
+            <li ng-repeat="category in categories" class="category">
+                <p ng-click="openElement(category)" class="group-item">{{category.title}}
+                    <span class="unread-amount">({{category.unread}})</span>
+                </p>
+            </li>
+        </ul>
+    </article>
 </section>

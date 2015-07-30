@@ -1,9 +1,11 @@
 <section id="list">
-  <article>
-  	<ul>
-    <li ng-repeat="headline in headlines">
-      <p ng-class="{headline: true, unread:headline.unread}" ng-click="openElement(headline)">{{headline.title}}</p>
-    </li>
-  </ul>
-  </article>
+    <article>
+        <ul class="trss-list">
+            <li ng-repeat="headline in headlines" class="feed">
+                <p ng-class="{headline: true, unread:headline.unread}" ng-click="openElement(headline)">
+                    {{headline.title}}
+                </p>
+            </li>
+        </ul>
+    </article>
 </section>
