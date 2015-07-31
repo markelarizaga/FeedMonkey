@@ -47,13 +47,14 @@ function($scope, $routeParams, backendService, feedsCache, networkStatusService)
 				}
 				break;
 		}
+		document.getElementById('full').scrollTop = 0;
 	};
 
 	//FIXME this is not probably the best way to add target='_blank' to all links
 	function addTargetToLinks(articles) {
 		var i = 0;
 		for(i; i < articles.length; i++) {
-			articles[i].content = articles[i].content.replace(/<a/g, '<a target="_blank"'); 
+			articles[i].content = articles[i].content.replace(/<a/g, '<a target="_blank"');
 		}
 		return articles;
 	}
