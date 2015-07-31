@@ -3,7 +3,7 @@ controller('List', ['$scope', 'feedsCache', 'backendService', '$routeParams', 's
 function($scope, feedsCache, backendService, $routeParams, sectionNavigator, networkStatusService) {
 
 	if(networkStatusService.isOnline() && !sectionNavigator.isComingBack()) {
-		var headlinesRetrieved = backendService.downloadHeadlines($routeParams.feedId);
+		var headlinesRetrieved = backendService.downloadHeadlines($routeParams.feedId, true);
 		headlinesRetrieved.then(function(headlines){
 			$scope.headlines = headlines;
 			feedsCache.addToCache(headlines, $routeParams.feedId);

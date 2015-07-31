@@ -26,9 +26,9 @@ function($q, http, authenticationService, settingsService){
 
 		return deferred.promise;
   }
-	
+
 	function downloadFeeds(categoryId) {
-		
+
 		var deferred = $q.defer();
 		var token = authenticationService.getToken();
 		var options = null;
@@ -47,7 +47,7 @@ function($q, http, authenticationService, settingsService){
 				"include_empty": false
 			};
 		}
-    	
+
 		http.post(settingsService.getCredentials().serverApiUrl, options,
 			function(xhr) {
 				if(JSON.parse(xhr.responseText).content) {
@@ -63,7 +63,7 @@ function($q, http, authenticationService, settingsService){
 		return deferred.promise;
 	}
 
-	function downloadHeadlines(categoryId) {
+	function downloadHeadlines(categoryId, fullArticles) {
 
 		var deferred = $q.defer();
 		var token = authenticationService.getToken();
@@ -86,6 +86,9 @@ function($q, http, authenticationService, settingsService){
 				"feed_id": -4 // All articles
 			};
 		}
+        if(fullArticles) {
+            options["show_content"] = fullArticles;
+        }
 		http.post(settingsService.getCredentials().serverApiUrl, options,
 			function(xhr) {
 				if(JSON.parse(xhr.responseText).content) {
@@ -251,7 +254,7 @@ function($q, http, authenticationService, settingsService){
 			callback(feeds);
 		});
 	}
-  
+
 	return {
     	downloadCategories: downloadCategories,
 		downloadFeeds: downloadFeeds,

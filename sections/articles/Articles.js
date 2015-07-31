@@ -2,21 +2,16 @@ angular.module('TinyRSS').
 controller('Articles', ['$scope', '$routeParams', 'backendService', 'feedsCache', 'networkStatusService',
 function($scope, $routeParams, backendService, feedsCache, networkStatusService) {
 
-	var articleId = $routeParams.articleId;
-	var articleList;
 	var articleCursor = 0;
-	var article = null;
-	if(networkStatusService.isOnline()) {
-		var articleRetrieved = backendService.downloadArticle(articleId);
+	var articleList;
+	var article = article = feedsCache.getElements($routeParams.articleId);
+	if(article && article.content) {
+		showArticle(addTargetToLinks([article]));
+	} else if(networkStatusService.isOnline()) {
+		var articleRetrieved = backendService.downloadArticle(article.id);
 		articleRetrieved.then(function(articles) {
 			showArticle(addTargetToLinks(articles));
 		});
-	} else {
-		article = feedsCache.getElements(articleId);
-		console.log(article);
-		if(article) {
-			showArticle(addTargetToLinks([article]));
-		}
 	}
 
 	$scope.onHammer = function onHammer (event) {
@@ -26,7 +21,9 @@ function($scope, $routeParams, backendService, feedsCache, networkStatusService)
 				if(articleCursor !== null && articleCursor !== undefined) {
 					articleCursor += 1;
 					var nextArticle = articleList[articleCursor];
-					if(nextArticle) {
+					if(nextArticle.content) {
+						showArticle(addTargetToLinks([nextArticle]));
+					} else {
 						var articleRetrieved = backendService.downloadArticle(nextArticle.id);
 						articleRetrieved.then(function(articles) {
 							showArticle(addTargetToLinks(articles));
@@ -38,7 +35,9 @@ function($scope, $routeParams, backendService, feedsCache, networkStatusService)
 				if(articleCursor !== null && articleCursor !== undefined) {
 					articleCursor -= 1;
 					var previousArticle = articleList[articleCursor];
-					if(previousArticle) {
+					if(previousArticle.content) {
+						showArticle(addTargetToLinks([previousArticle]));
+					} else {
 						var articleRetrieved = backendService.downloadArticle(previousArticle.id);
 						articleRetrieved.then(function(articles) {
 							showArticle(addTargetToLinks(articles));
@@ -70,13 +69,16 @@ function($scope, $routeParams, backendService, feedsCache, networkStatusService)
 				articleList = feedsCache.getHeadlinesList();
 				articleCursor = getArticleCursor(articleList);
 			}
+			if(!$scope.$$phase) {
+				$scope.$apply();
+			}
 		}
 	}
 
 	function getArticleCursor(articlesList) {
 		var i = 0;
 		for (i; i < articlesList.length; i++) {
-			if (articlesList[i].id == articleId) {
+			if (articlesList[i].id == article.id) {
 				return i;
 			}
 		}
