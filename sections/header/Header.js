@@ -1,7 +1,7 @@
 angular.module('TinyRSS').
 controller('Header', ['$scope', 'sectionNavigator', 'feedsCache', 'backendService', 'networkStatusService', 'syncService', '$filter',
 function($scope, sectionNavigator, feedsCache, backendService, networkStatusService, syncService, $filter) {
-	
+
 	$scope.isRoot = true;
 	$scope.offline = false;
 
@@ -12,7 +12,7 @@ function($scope, sectionNavigator, feedsCache, backendService, networkStatusServ
 
 		$scope.isRoot = sectionNavigator.isInRoot();
 	});
-	
+
 	$scope.goBack = function() {
 		sectionNavigator.back();
 	};
@@ -38,4 +38,8 @@ function($scope, sectionNavigator, feedsCache, backendService, networkStatusServ
 	$scope.openSettings = function() {
 		sectionNavigator.navigateTo(sectionNavigator.section.SETTINGS);
 	};
+
+	$scope.reloadFeeds = function() {
+		sectionNavigator.navigateTo(sectionNavigator.section.ROOT_SECTION);
+	}
 }]);
