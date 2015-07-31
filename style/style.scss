@@ -219,43 +219,56 @@ ul li {
     }
 }
 
-article h1 {
-	font-size: 2.5em;
-	padding: 10px 5px 5px;
-	margin: 0px;
-	background-color: #2C393B;
-	min-height: 3em;
-	color: #F6F1F1;
-	font-family: sans-serif;
-	font-weight: 400;
-}
+#full {
+	position: fixed;
+	top: 5rem;
+	bottom: 0px;
+	right: 0;
+	left: 0;
+	overflow-y: scroll;
 
-article a.title-link {
-	text-decoration: none;
-}
+	article {
+		min-height: 100%;
+	}
 
-article .article-date {
-	font-size: 2em;
-	color: #A09FA7;
-	float: right;
-	margin: 0;
-}
+	article h1 {
+		font-size: 2.5em;
+		padding: 10px 5px 5px;
+		margin: 0px;
+		background-color: #2C393B;
+		min-height: 3em;
+		color: #F6F1F1;
+		font-family: sans-serif;
+		font-weight: 400;
+	}
 
-article .article-author {
-	font-size: 2em;
-	color: #A09FA7;
-	float: left;
-	margin: 0;
-}
+	article a.title-link {
+		text-decoration: none;
+	}
 
-article  div.article-content{
-	font-size: 2.3em;
-	margin: 20px 5px 20px 5px;
-}
+	article .article-date {
+		font-size: 2em;
+		color: #A09FA7;
+		float: right;
+		margin: 0;
+	}
 
-article div.article-content img {
-	max-width: 100%;
-	height: auto;
+	article .article-author {
+		font-size: 2em;
+		color: #A09FA7;
+		float: left;
+		margin: 0;
+	}
+
+	article  div.article-content{
+		font-size: 2.3em;
+		margin: 20px 5px 20px 5px;
+	}
+
+	article div.article-content img {
+		max-width: 100%;
+		height: auto;
+	}
 }
 
 .ng-hide {
