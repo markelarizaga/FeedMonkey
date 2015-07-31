@@ -47,7 +47,6 @@ function($scope, $routeParams, backendService, feedsCache, networkStatusService)
 				}
 				break;
 		}
-		document.getElementById('full').scrollTop = 0;
 	};
 
 	//FIXME this is not probably the best way to add target='_blank' to all links
@@ -62,7 +61,7 @@ function($scope, $routeParams, backendService, feedsCache, networkStatusService)
 	function showArticle(articles){
 		if(articles && articles.length > 0) {
 			$scope.article = articles[0];
-			window.scroll(0, 0);
+			document.getElementById('full').scrollTop = 0;
 			if($scope.article.unread) {
 				feedsCache.markLocalArticleAsRead($scope.article.feed_id, $scope.article.id);
 				backendService.markArticlesAsRead([$scope.article.id]);
