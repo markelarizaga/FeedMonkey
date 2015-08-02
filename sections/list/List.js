@@ -6,14 +6,17 @@ controller('List',
 	'$routeParams',
 	'sectionNavigator',
 	'networkStatusService',
-function($scope, feedsCache, backendService, $routeParams, sectionNavigator, networkStatusService) {
+	'backgroundActivityService',
+function($scope, feedsCache, backendService, $routeParams, sectionNavigator, networkStatusService, backgroundActivityService) {
 
+	backgroundActivityService.notifyBackgroundActivity();
 	if(networkStatusService.isOnline() && !sectionNavigator.isComingBack()) {
 		var headlinesRetrieved = backendService.downloadHeadlines($routeParams.feedId, true);
 		headlinesRetrieved.then(function(headlines){
 			$scope.headlines = headlines;
 			feedsCache.addToCache(headlines, $routeParams.feedId);
 			feedsCache.setHeadlinesList(headlines);
+			backgroundActivityService.notifyBackgroundActivityStopped();
 		});
 
 	} else {
@@ -21,6 +24,7 @@ function($scope, feedsCache, backendService, $routeParams, sectionNavigator, net
 		if(headlines) {
 			$scope.headlines = headlines;
 			feedsCache.setHeadlinesList(headlines);
+			backgroundActivityService.notifyBackgroundActivityStopped();
 		}
 	}
 
