@@ -1,12 +1,34 @@
 /* HEADER COLORS */
-$header-color: #222B2D;
+$header-title: #ffffff;
+$header-background: #222B2D;
 $header-icon-active: #7E9DB9;
 
 /* LIST COLORS */
-$active-item: #E6E9E9;
+$active-item-background: #E6E9E9;
+$list-item-text: #333;
+$list-item-border: #E7E7E7;
+$list-item-unread-indicator: #A09FA7;
+
+/* ARTICLE COLORS */
+$article-title-background: #2C393B;
+$article-title-text: #F6F1F1;
+$article-author-text: #A09FA7;
+$article-date-text: #A09FA7;
 
 /* BUTTON COLORS */
-$active-button: #00AACC;
+$default-button-background: #D8D8D8;
+$active-button-background: #00AACC;
+$action-button-background: #4E4E4E;
+$action-button-text: #FFFFFF;
+$default-button-text: #333;
+
+/* MODAL COLORS */
+$modal-background: #2D2D2D;
+
+/* INPUT COLORS */
+$input-background: #ffffff;
+$input-border: #C7C7C7;
+$input-text-color: #333;
 
 html, body {
 	padding: 0;
@@ -23,7 +45,7 @@ header {
 	margin: 0;
 	padding: 0;
 	z-index: 10;
-	background-color: $header-color;
+	background-color: $header-background;
 
     a {
         box-sizing: border-box;
@@ -85,7 +107,7 @@ header {
     }
 
     h1 {
-    	color: #ffffff;
+    	color: $article-title-text;
     	font-weight: 300;
     	font-style: italic;
     	text-align: center;
@@ -125,11 +147,11 @@ input[type=text], input[type=password] {
 	resize: none;
 	padding: 0px 1.5rem;
 	font-size: 1.6rem;
-	border: 0.1rem solid #C7C7C7;
+	border: 0.1rem solid $input-border;
 	border-radius: 0px;
 	box-shadow: none;
-	color: #333;
-	background: none repeat scroll 0% 0% #FFF;
+	color: $input-text-color;
+	background: none repeat scroll 0% 0% $input-background;
 	margin-bottom: 10px;
 	margin-left: auto;
 	margin-right: auto;
@@ -149,20 +171,20 @@ input[type=text], input[type=password] {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
-	background: none repeat scroll 0% 0% #D8D8D8;
+	background: none repeat scroll 0% 0% $default-button-background;
 	border: medium none;
 	border-radius: 2rem;
 	font-weight: normal;
 	font-size: 1.6rem;
 	line-height: 4rem;
-	color: #333;
+	color: $default-button-text;
 	text-align: center;
 	text-decoration: none;
 	outline: medium none;
 }
 
 .default:active {
-	background-color: $active-button;
+	background-color: $active-button-background;
 }
 
 #content {
@@ -183,11 +205,12 @@ ul.trss-list {
 
 ul li {
 
+	border-bottom: 0.1rem solid $list-item-border;
+	color: $list-item-text;
+
     &.category, &.settings-item {
         min-width: 100%;
     	box-sizing: border-box;
-    	border-bottom: 0.1rem solid #E7E7E7;
-    	color: #333;
     	margin: 0px;
     	padding: 0px;
     	display: block;
@@ -200,7 +223,6 @@ ul li {
         p.group-item {
             font-size: 1.8rem;
         	line-height: 4rem;
-        	color: #333;
         	padding: 1rem 0px 0px;
         	white-space: nowrap;
         	overflow: hidden;
@@ -211,7 +233,7 @@ ul li {
         	list-style: none outside none;
 
             .unread-amount {
-                color: #A09FA7;
+                color: $list-item-unread-indicator;
             	font-size: 0.8em;
             	margin-left: 0.3em;
             }
@@ -223,8 +245,6 @@ ul li {
         white-space: normal;
         line-height: 2rem;
         min-height: 5rem;
-        color: #333;
-        border-bottom: 0.1rem solid #E7E7E7;
 
         .unread {
             font-weight: 600;
@@ -232,7 +252,7 @@ ul li {
     }
 
 	&:active {
-		background-color: $active-item;
+		background-color: $active-item-background;
 	}
 
 	.headline {
@@ -257,9 +277,9 @@ ul li {
 		font-size: 2.5em;
 		padding: 10px 5px 5px;
 		margin: 0px;
-		background-color: #2C393B;
+		background-color: $article-title-background;
 		min-height: 3em;
-		color: #F6F1F1;
+		color: $article-title-text;
 		font-family: sans-serif;
 		font-weight: 400;
 	}
@@ -270,14 +290,14 @@ ul li {
 
 	article .article-date {
 		font-size: 2em;
-		color: #A09FA7;
+		color: $article-date-text;
 		float: right;
 		margin: 0;
 	}
 
 	article .article-author {
 		font-size: 2em;
-		color: #A09FA7;
+		color: $article-author-text;
 		float: left;
 		margin: 0;
 	}
@@ -302,7 +322,7 @@ ul li {
 	top: 0;
 	width: 100%;
 	height: 100%;
-	background-color: #2D2D2D;
+	background-color: $modal-background;
 }
 
 .action-button {
@@ -310,10 +330,10 @@ ul li {
 	width: 95%;
 	margin: 10px auto 10px auto;
 	height: 40px;
-	background-color: #4E4E4E;
+	background-color: $action-button-background;
 	border: none;
 	border-radius: 0;
-	color: #FFFFFF;
+	color: $action-button-text;
 	font-family: sans-serif;
 	font-style: italic;
 	font-size: 1.6rem;
@@ -321,7 +341,7 @@ ul li {
 }
 
 .action-button:active {
-	background-color: $active-button;
+	background-color: $active-button-background;
 }
 
 .bottom-container {
@@ -331,6 +351,6 @@ ul li {
 	min-height: 40px;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	background-color: #4E4E4E;
+	background-color: $action-button-background;
 	text-align: center;
 }
