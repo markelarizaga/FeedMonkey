@@ -1,5 +1,11 @@
 angular.module('TinyRSS').
-controller('Categories', ['$scope', 'backendService', 'feedsCache', 'sectionNavigator', '$routeParams', 'networkStatusService',
+controller('Categories',
+	['$scope',
+	'backendService',
+	'feedsCache',
+	'sectionNavigator',
+	'$routeParams',
+	'networkStatusService',
 function($scope, backendService, feedsCache, sectionNavigator, $routeParams, networkStatusService) {
 
 	var categories = null;
@@ -34,8 +40,8 @@ function($scope, backendService, feedsCache, sectionNavigator, $routeParams, net
 			}
 		}
 	}
-		
-	
+
+
 	$scope.openElement = function(element) {
 		if(element.feed_url) {
 			sectionNavigator.navigateTo(sectionNavigator.section.LIST, element.id);

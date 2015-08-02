@@ -1,5 +1,11 @@
 angular.module('TinyRSS').
-controller('List', ['$scope', 'feedsCache', 'backendService', '$routeParams', 'sectionNavigator', 'networkStatusService',
+controller('List',
+	['$scope',
+	'feedsCache',
+	'backendService',
+	'$routeParams',
+	'sectionNavigator',
+	'networkStatusService',
 function($scope, feedsCache, backendService, $routeParams, sectionNavigator, networkStatusService) {
 
 	if(networkStatusService.isOnline() && !sectionNavigator.isComingBack()) {

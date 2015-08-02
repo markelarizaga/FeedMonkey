@@ -1,55 +1,49 @@
 angular.module('TinyRSS').
-controller('Articles', ['$scope', '$routeParams', 'backendService', 'feedsCache', 'networkStatusService',
+controller('Articles',
+	['$scope', '$routeParams', 'backendService', 'feedsCache', 'networkStatusService',
 function($scope, $routeParams, backendService, feedsCache, networkStatusService) {
 
 	var articleCursor = 0;
 	var articleList;
-	var article = article = feedsCache.getElements($routeParams.articleId);
+	var article = feedsCache.getElements($routeParams.articleId);
+	var readArticles = 0;
+
 	if(article && article.content) {
+		// If retrieved article has all the information, show it
 		showArticle(addTargetToLinks([article]));
 	} else if(networkStatusService.isOnline()) {
+		// If the article has only the headline, request all the info
 		var articleRetrieved = backendService.downloadArticle(article.id);
-		articleRetrieved.then(function(articles) {
-			showArticle(addTargetToLinks(articles));
+		articleRetrieved.then(function(article) {
+			showArticle(addTargetToLinks(article));
 		});
 	}
 
-	$scope.onHammer = function onHammer (event) {
+	$scope.onHammer = function onHammer (swipe) {
 
-		switch (event.direction) {
+		switch (swipe.direction) {
 			case 2:
-				if(articleCursor !== null && articleCursor !== undefined) {
-					articleCursor += 1;
-					var nextArticle = articleList[articleCursor];
-					if(nextArticle.content) {
-						showArticle(addTargetToLinks([nextArticle]));
-					} else {
-						var articleRetrieved = backendService.downloadArticle(nextArticle.id);
-						articleRetrieved.then(function(articles) {
-							showArticle(addTargetToLinks(articles));
-						});
-					}
-				}
+				moveToArticle('next');
 				break;
 			case 4:
-				if(articleCursor !== null && articleCursor !== undefined) {
-					articleCursor -= 1;
-					var previousArticle = articleList[articleCursor];
-					if(previousArticle.content) {
-						showArticle(addTargetToLinks([previousArticle]));
-					} else {
-						var articleRetrieved = backendService.downloadArticle(previousArticle.id);
-						articleRetrieved.then(function(articles) {
-							showArticle(addTargetToLinks(articles));
-						});
-					}
-				}
+				moveToArticle('previous');
 				break;
 		}
 	};
 
-	//FIXME this is not probably the best way to add target='_blank' to all links
+	/**
+	 * This function transforms all the link elements found in the articles to
+	 * avoid the appliction to load the page without going to the system
+	 * browser. By adding the target='_blank' Firefox OS leaves the app and
+	 * opens the browser-
+	 * @method addTargetToLinks
+	 * @param {Array} articles A list of articles whose link elements need to
+	 * be extended with the target attribute
+	 * @return {Array} The list of articles received as articles arguments
+	 * having their link elements extended with the target='_blank' attribute
+	 */
 	function addTargetToLinks(articles) {
+		//FIXME this is not probably the best way to add target='_blank' to all links
 		var i = 0;
 		for(i; i < articles.length; i++) {
 			articles[i].content = articles[i].content.replace(/<a/g, '<a target="_blank"');
@@ -69,6 +63,7 @@ function($scope, $routeParams, backendService, feedsCache, networkStatusService)
 				articleList = feedsCache.getHeadlinesList();
 				articleCursor = getArticleCursor(articleList);
 			}
+			// Start a digest cycle to let Angular know the view needs an update
 			if(!$scope.$$phase) {
 				$scope.$apply();
 			}
@@ -83,5 +78,21 @@ function($scope, $routeParams, backendService, feedsCache, networkStatusService)
 			}
 		}
 		return null;
+	}
+
+	function moveToArticle(direction){
+		var newArticle = null;
+		if(articleCursor !== null && articleCursor !== undefined) {
+			articleCursor = direction === 'next' ? ++articleCursor : --articleCursor;
+			newArticle = articleList[articleCursor];
+			if(newArticle.content) {
+				showArticle(addTargetToLinks([newArticle]));
+			} else {
+				var articleRetrieved = backendService.downloadArticle(newArticle.id);
+				articleRetrieved.then(function(articles) {
+					showArticle(addTargetToLinks(articles));
+				});
+			}
+		}
 	}
 }]);
