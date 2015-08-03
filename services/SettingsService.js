@@ -1,7 +1,7 @@
 angular.module('TinyRSS').
 factory("settingsService", ['$translate', 'localStorageService', function($translate, localStorageService) {
 
-	var version = "0.3.1";
+	var version = "0.3.2";
 	var url = null;
 	var user = null;
 	var pass = null;
