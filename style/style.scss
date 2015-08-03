@@ -30,6 +30,10 @@ $input-background: #ffffff;
 $input-border: #C7C7C7;
 $input-text-color: #333;
 
+/* ACTIVITY INDICATOR COLORS */
+$activity-indicator-background: #FFA500;
+$activity-indicator-glow: #EF692B;
+
 html, body {
 	padding: 0;
 	margin: 0;
@@ -121,11 +125,6 @@ header {
     	padding: 0px 1rem;
     	height: 100%;
     }
-
-	#activity-indicator {
-		height: 0.4rem;
-		background-color: orange;
-	}
 }
 
 #login-icon {
@@ -358,4 +357,61 @@ ul li {
 	padding-bottom: 10px;
 	background-color: $action-button-background;
 	text-align: center;
+}
+
+@-webkit-keyframes glow {
+	from {
+		left: -70px;
+	}
+	to {
+		left: 100%;
+	}
+}
+
+@-moz-keyframes glow {
+	from {
+		left: -70px;
+	}
+	to {
+		left: 100%;
+	}
+}
+
+@-o-keyframes glow {
+	from {
+		left: -70px;
+	}
+	to {
+		left: 100%;
+	}
+}
+
+@keyframes glow {
+	from {
+		left: -70px;
+	}
+	to {
+		left: 100%
+	}
+}
+
+#activity-indicator {
+	position: relative;
+	height: 0.4rem;
+	width: 100%;
+	background-color: $activity-indicator-background;
+	overflow: hidden;
+}
+
+#activity-indicator::after{
+	position: absolute;
+	display: block;
+	width: 15rem;
+	height: 250%;
+	top: -50%;
+	content: "";
+	animation: glow 2s linear infinite;
+	-webkit-animation: glow 2s linear infinite;
+	background: $activity-indicator-glow;
+	z-index: 2;
 }

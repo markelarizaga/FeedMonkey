@@ -6,14 +6,17 @@ controller('Categories',
 	'sectionNavigator',
 	'$routeParams',
 	'networkStatusService',
-function($scope, backendService, feedsCache, sectionNavigator, $routeParams, networkStatusService) {
+	'backgroundActivityService',
+function($scope, backendService, feedsCache, sectionNavigator, $routeParams, networkStatusService, backgroundActivityService) {
 
 	var categories = null;
 	var categoryId = $routeParams.categoryId;
 	if(!categoryId) {
 		if(networkStatusService.isOnline() && !sectionNavigator.isComingBack()) {
+			backgroundActivityService.notifyBackgroundActivity();
 			var categoriesRetrieved = backendService.downloadCategories();
 			categoriesRetrieved.then(function(categories){
+				backgroundActivityService.notifyBackgroundActivityStopped();
 				$scope.categories = categories;
 				feedsCache.addToCache(categories);
 			});
@@ -27,10 +30,12 @@ function($scope, backendService, feedsCache, sectionNavigator, $routeParams, net
 
 	} else {
 		if(networkStatusService.isOnline() && !sectionNavigator.isComingBack()) {
+			backgroundActivityService.notifyBackgroundActivity();
 			// Retrieve child elements from server
 			var feedsRetrieved = backendService.downloadFeeds(categoryId);
 			feedsRetrieved.then(function(feeds){
 				feedsCache.addToCache(feeds, categoryId);
+				backgroundActivityService.notifyBackgroundActivityStopped();
 				$scope.categories = feeds;
 			});
 		} else {
