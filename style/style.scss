@@ -198,7 +198,7 @@ input[type=text], input[type=password] {
 }
 
 ul.trss-list {
-	padding: 0px 1.5rem;
+	padding: 0;
 	overflow: auto;
 	list-style: outside none none;
 	margin: 0px;
@@ -208,8 +208,6 @@ ul.trss-list {
 }
 
 ul li {
-
-	border-bottom: 0.1rem solid $list-item-border;
 	color: $list-item-text;
 
     &.category, &.settings-item {
@@ -227,14 +225,16 @@ ul li {
         p.group-item {
             font-size: 1.8rem;
         	line-height: 4rem;
-        	padding: 1rem 0px 0px;
+        	padding: 1rem 0px 10px;
         	white-space: nowrap;
         	overflow: hidden;
         	text-overflow: ellipsis;
         	border: medium none;
         	display: block;
-        	margin: 0px 0px 10px 0px;
+        	margin: 0;
         	list-style: none outside none;
+			border-bottom: 1px solid #E7E7E7;
+			margin: 0px 1rem 0px 1rem;
 
             .unread-amount {
                 color: $list-item-unread-indicator;
@@ -249,6 +249,11 @@ ul li {
         white-space: normal;
         line-height: 2rem;
         min-height: 5rem;
+
+		p {
+			margin: 0px 1rem 0px 1rem;
+			border-bottom: 1px solid #E7E7E7;
+		}
 
         .unread {
             font-weight: 600;
