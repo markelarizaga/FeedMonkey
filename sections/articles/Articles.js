@@ -1,12 +1,20 @@
 angular.module('TinyRSS').
 controller('Articles',
-	['$scope', '$routeParams', 'backendService', 'feedsCache', 'networkStatusService',
-function($scope, $routeParams, backendService, feedsCache, networkStatusService) {
+	['$scope',
+	'$routeParams',
+	'backendService',
+	'feedsCache',
+	'networkStatusService',
+	'settingsService',
+	'$timeout',
+function($scope, $routeParams, backendService, feedsCache, networkStatusService, settingsService, $timeout) {
 
 	var articleCursor = 0;
 	var articleList;
 	var article = feedsCache.getElements($routeParams.articleId);
 	var readArticles = 0;
+	var helpMessageTimeout = 4000;
+	$scope.helpAlreadyShown = settingsService.isArticleHelpShown();
 
 	if(article && article.content) {
 		// If retrieved article has all the information, show it
@@ -30,6 +38,17 @@ function($scope, $routeParams, backendService, feedsCache, networkStatusService)
 				break;
 		}
 	};
+
+	$scope.hideHelp = function() {
+		$scope.helpAlreadyShown = true;
+		settingsService.markArticleHelpAsShown();
+		feedsCache.markLocalArticleAsRead($scope.article.feed_id, $scope.article.id);
+		backendService.markArticlesAsRead([$scope.article.id]);
+	};
+
+	$timeout(function() {
+		$scope.hideHelp();
+	}, helpMessageTimeout);
 
 	/**
 	 * This function transforms all the link elements found in the articles to
@@ -55,7 +74,7 @@ function($scope, $routeParams, backendService, feedsCache, networkStatusService)
 		if(articles && articles.length > 0) {
 			$scope.article = articles[0];
 			document.getElementById('full').scrollTop = 0;
-			if($scope.article.unread) {
+			if($scope.article.unread && $scope.helpAlreadyShown) {
 				feedsCache.markLocalArticleAsRead($scope.article.feed_id, $scope.article.id);
 				backendService.markArticlesAsRead([$scope.article.id]);
 			}
@@ -95,4 +114,5 @@ function($scope, $routeParams, backendService, feedsCache, networkStatusService)
 			}
 		}
 	}
+
 }]);

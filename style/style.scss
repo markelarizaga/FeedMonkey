@@ -319,6 +319,24 @@ ul li {
 		max-width: 100%;
 		height: auto;
 	}
+
+	article #article-swipe-help-background {
+		position: fixed;
+		top: 0px;
+		bottom: 0px;
+		left: 0px;
+		right: 0px;
+		background-color: black;
+		opacity: 0.8;
+	}
+
+	article #article-swipe-help {
+		position: fixed;
+		top: 43%;
+		color: white;
+		text-align: center;
+		font-size: 3rem;
+	}
 }
 
 .ng-hide {

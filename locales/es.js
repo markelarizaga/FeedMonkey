@@ -23,5 +23,8 @@ tinyRss.locales.es = {
 	es: 'Español',
 	logOut: 'Cerrar sesión',
 	runningVersion: 'Versión instalada',
-	developer: 'Desarrollador'
+	developer: 'Desarrollador',
+
+	/* ARTICLES */
+	articleSwipeHelp: 'Desliza a izquierda y derecha para navegar entre artículos'
 };

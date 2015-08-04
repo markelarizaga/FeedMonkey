@@ -7,4 +7,8 @@
     </div>
     <div class="article-content" ng-bind-html="article.content"></div>
   </article>
+  <article ng-hide="helpAlreadyShown">
+      <div id=article-swipe-help-background ng-click="hideHelp()"></div>
+      <div id="article-swipe-help" ng-click="hideHelp()" translate>articleSwipeHelp</div>
+  </article>
 </section>

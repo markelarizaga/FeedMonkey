@@ -38,12 +38,22 @@ factory("settingsService", ['$translate', 'localStorageService', function($trans
 		return localStorageService.get('language');
 	}
 
+	function markArticleHelpAsShown() {
+		return localStorageService.set('articleHelpShown', true);
+	}
+
+	function isArticleHelpShown() {
+		return localStorageService.get('articleHelpShown');
+	}
+
 	return {
 		getVersion: getVersion,
 		setCredentials: setCredentials,
 		getCredentials: getCredentials,
 		getCurrentLanguage: getCurrentLanguage,
 		setCurrentLanguage: setCurrentLanguage,
-		getLanguagePreference: getLanguagePreference
+		getLanguagePreference: getLanguagePreference,
+		markArticleHelpAsShown: markArticleHelpAsShown,
+		isArticleHelpShown: isArticleHelpShown
 	}
 }]);

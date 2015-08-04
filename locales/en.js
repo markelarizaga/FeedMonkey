@@ -23,5 +23,8 @@ tinyRss.locales.en = {
 	es: 'Español',
 	logOut: 'Log out',
 	runningVersion: 'Running version',
-	developer: 'Developer'
+	developer: 'Developer',
+
+	/* ARTICLES */
+	articleSwipeHelp: 'Swipe left and right to navigate the articles'
 };

@@ -23,5 +23,8 @@ tinyRss.locales.eu = {
 	es: 'Español',
 	logOut: 'Itxi saioa',
 	runningVersion: 'Instalatutako bertsioa',
-	developer: 'Garatzailea'
+	developer: 'Garatzailea',
+
+	/* ARTICLES */
+	articleSwipeHelp: 'Hatza ezker eta eskuinera mugitu artikuluz aldatzeko'
 };
