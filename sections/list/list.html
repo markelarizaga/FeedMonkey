@@ -1,7 +1,7 @@
 <section id="list">
     <article>
         <ul class="trss-list">
-            <li ng-repeat="headline in headlines" class="feed">
+            <li ng-repeat="headline in headlines" class="feed selectable">
                 <p ng-class="{headline: true, unread:headline.unread}" ng-click="openElement(headline)">
                     {{headline.title}}
                 </p>

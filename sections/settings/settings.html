@@ -1,7 +1,7 @@
 <section id="settings">
   	<article>
         <ul class="trss-list">
-            <li class="settings-item">
+            <li class="settings-item selectable">
                 <p ng-click="revealLanguageSwitcher()" class="group-item">
                     {{'language' | translate}}: {{currentLanguage | translate}}
                 </p>
@@ -17,7 +17,7 @@
                     <a href="https://github.com/markelarizaga/TinyRSS" target="_blank">Markel Arizaga</a>
                 </p>
             </li>
-            <li class="settings-item">
+            <li class="settings-item selectable">
                 <p ng-click="logout()" class="button group-item" translate>
                     logOut
                 </p>
