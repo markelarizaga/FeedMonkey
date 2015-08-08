@@ -2,6 +2,7 @@ angular.module('TinyRSS').
 controller('Settings', ['$scope', 'sectionNavigator', 'authenticationService', 'settingsService', '$translate',
 function($scope, sectionNavigator, authenticationService, settingsService, $translate) {
 
+	$scope.currentPage = "settings-view";
 	$scope.version = settingsService.getVersion();
 	$scope.currentLanguage = settingsService.getCurrentLanguage();
 	$scope.switchLanguage = false;

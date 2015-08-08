@@ -1,5 +1,6 @@
 angular.module('TinyRSS',
     ['ngRoute',
+    'ngAnimate',
     'LocalStorageModule',
     'ngSanitize',
     'hmTouchEvents',

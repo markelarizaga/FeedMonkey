@@ -9,6 +9,8 @@ controller('List',
 	'backgroundActivityService',
 function($scope, feedsCache, backendService, $routeParams, sectionNavigator, networkStatusService, backgroundActivityService) {
 
+	$scope.currentPage = !sectionNavigator.isComingBack() ? 'headlines-view' : 'headlines-view-back';
+
 	backgroundActivityService.notifyBackgroundActivity();
 	if(networkStatusService.isOnline() && !sectionNavigator.isComingBack()) {
 		var headlinesRetrieved = backendService.downloadHeadlines($routeParams.feedId, true);
@@ -31,4 +33,5 @@ function($scope, feedsCache, backendService, $routeParams, sectionNavigator, net
 	$scope.openElement = function(element) {
 		sectionNavigator.navigateTo(sectionNavigator.section.ARTICLES, element.id);
 	};
+
 }]);

@@ -14,6 +14,7 @@ function($scope, $routeParams, backendService, feedsCache, networkStatusService,
 	var article = feedsCache.getElements($routeParams.articleId);
 	var readArticles = 0;
 	var helpMessageTimeout = 4000;
+	$scope.currentPage = 'articles-view';
 	$scope.helpAlreadyShown = settingsService.isArticleHelpShown();
 
 	if(article && article.content) {

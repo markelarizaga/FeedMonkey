@@ -9,6 +9,7 @@ controller('Categories',
 	'backgroundActivityService',
 function($scope, backendService, feedsCache, sectionNavigator, $routeParams, networkStatusService, backgroundActivityService) {
 
+	$scope.currentPage = !sectionNavigator.isComingBack() ? 'categories-view' : 'categories-view-back';
 	var categories = null;
 	var categoryId = $routeParams.categoryId;
 	if(!categoryId) {

@@ -34,6 +34,9 @@ $input-text-color: #333;
 $activity-indicator-background: #FFA500;
 $activity-indicator-glow: #EF692B;
 
+/* ANIMATIONS */
+$fast: 0.25s;
+
 html, body {
 	padding: 0;
 	margin: 0;
@@ -195,6 +198,51 @@ input[type=text], input[type=password] {
 	position: relative;
 	height: calc(100% - 5rem);
 	top: 5rem;
+
+	@keyframes slideInRight {
+		from { transform: translateX(100%); }
+		to { transform: translateX(0); }
+	}
+
+	@keyframes slideInLeft {
+		from { transform: translateX(-100%); }
+		to { transform: translateX(0); }
+	}
+
+	@keyframes slideInTop {
+		from { transform: translateY(-100%); }
+		to { transform: translateY(0); }
+	}
+
+	@keyframes slideInBottom {
+		from { transform: translateY(100%); }
+		to { transform: translateY(0); }
+	}
+
+	@keyframes slideOutTop {
+		from { transform: translateY(0); }
+		to { transform: translateY(-100%); }
+	}
+
+	&.headlines-view.ng-enter {
+		animation: slideInRight $fast;
+	}
+
+	&.headlines-view-back.ng-enter, &.categories-view-back.ng-enter {
+		animation: slideInLeft $fast;
+	}
+
+	&.articles-view.ng-enter {
+		animation: slideInBottom $fast;
+	}
+
+	&.settings-view.ng-enter {
+		animation: slideInTop $fast;
+	}
+
+	&.settings-view.ng-leave {
+		animation: slideOutTop $fast;
+	}
 }
 
 ul.trss-list {
