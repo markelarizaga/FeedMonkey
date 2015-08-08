@@ -219,11 +219,6 @@ input[type=text], input[type=password] {
 		to { transform: translateY(0); }
 	}
 
-	@keyframes slideOutTop {
-		from { transform: translateY(0); }
-		to { transform: translateY(-100%); }
-	}
-
 	&.headlines-view.ng-enter {
 		animation: slideInRight $fast;
 	}
@@ -238,10 +233,6 @@ input[type=text], input[type=password] {
 
 	&.settings-view.ng-enter {
 		animation: slideInTop $fast;
-	}
-
-	&.settings-view.ng-leave {
-		animation: slideOutTop $fast;
 	}
 }
 
