@@ -22,8 +22,8 @@ function($scope, $routeParams, backendService, feedsCache, networkStatusService,
 		showArticle(addTargetToLinks([article]));
 	} else if(networkStatusService.isOnline()) {
 		// If the article has only the headline, request all the info
-		var articleRetrieved = backendService.downloadArticle(article.id);
-		articleRetrieved.then(function(article) {
+		backendService.downloadArticle(article.id)
+		.then(function(article) {
 			showArticle(addTargetToLinks(article));
 		});
 	}

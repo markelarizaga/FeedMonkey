@@ -1,5 +1,7 @@
 /**
  * Temporary service until Angular's default $http service can be used in FirefoxOS
+ * The problem is that a property called mozSystem set to true needs to be added to the
+ * XMLHttpRequest.
  **/
 angular.module('TinyRSS')
 .factory("http", function(){

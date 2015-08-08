@@ -13,8 +13,8 @@ function($scope, feedsCache, backendService, $routeParams, sectionNavigator, net
 
 	backgroundActivityService.notifyBackgroundActivity();
 	if(networkStatusService.isOnline() && !sectionNavigator.isComingBack()) {
-		var headlinesRetrieved = backendService.downloadHeadlines($routeParams.feedId, true);
-		headlinesRetrieved.then(function(headlines){
+		backendService.downloadHeadlines($routeParams.feedId, true)
+		.then(function(headlines){
 			$scope.headlines = headlines;
 			feedsCache.addToCache(headlines, $routeParams.feedId);
 			feedsCache.setHeadlinesList(headlines);
