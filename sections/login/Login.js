@@ -4,10 +4,10 @@ function ($scope, sectionNavigator, authenticationService, settingsService, $fil
 
 	$scope.attemptLogin = function() {
 		var login = null;
-		if ($scope.username && $scope.password && $scope.server_url) {
+		if ($scope.username && $scope.password && $scope.serverUrl) {
 			backgroundActivityService.notifyBackgroundActivity();
-			settingsService.setCredentials($scope.server_url, $scope.username, $scope.password);
-			login = authenticationService.login($scope.server_url, $scope.username, $scope.password);
+			settingsService.setCredentials($scope.serverUrl, $scope.username, $scope.password);
+			login = authenticationService.login($scope.serverUrl, $scope.username, $scope.password);
 			login.then(function(){
 				backgroundActivityService.notifyBackgroundActivityStopped();
 				sectionNavigator.navigateTo(sectionNavigator.section.CATEGORIES);
@@ -18,6 +18,7 @@ function ($scope, sectionNavigator, authenticationService, settingsService, $fil
 				alert(errorMessage);
 			});
 		}
+		updateInputErrorState($scope.serverUrl, $scope.username, $scope.password);
 	};
 
 	var loggedIn = authenticationService.isLoggedIn();
@@ -25,5 +26,11 @@ function ($scope, sectionNavigator, authenticationService, settingsService, $fil
 		loggedIn.then(function() {
 			sectionNavigator.navigateTo(sectionNavigator.section.CATEGORIES);
 		});
+	}
+
+	function updateInputErrorState(serverUrl, username, password) {
+		$scope.serverUrlError = !serverUrl;
+		$scope.usernameError = !username;
+		$scope.passwordError = !password;
 	}
 }]);

@@ -28,6 +28,7 @@ $modal-background: #2D2D2D;
 /* INPUT COLORS */
 $input-background: #ffffff;
 $input-border: #C7C7C7;
+$input-border-error: red;
 $input-text-color: #333;
 
 /* ACTIVITY INDICATOR COLORS */
@@ -166,6 +167,10 @@ input[type=text], input[type=password] {
 
 	&:focus {
 		border-bottom: 2px solid #00CAF2;
+	}
+
+	&.error {
+		border-color: $input-border-error;
 	}
 }
 

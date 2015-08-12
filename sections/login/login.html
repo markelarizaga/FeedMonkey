@@ -5,9 +5,33 @@
   <article>
     <img id="login-icon" src="img/logo/logo-hdpi.png" />
     <form>
-      <input class="button" type="text" name="url" id="url" placeholder="{{ 'serverPlaceholder' | translate }}" x-inputmode="verbatim" autocorrect="off" ng-model="server_url" />
-      <input class="button" type="text" name="user" id="un" placeholder="{{ 'usernamePlaceholder' | translate }}" x-inputmode="verbatim" autocorrect="off" ng-model="username" />          
-      <input class="button" type="password" name="pass" id="pw" placeholder="{{ 'passwordPlaceholder' | translate }}" x-inputmode="verbatim" autocorrect="off" ng-model="password" />      
+      <input class="button"
+                type="text"
+                name="url"
+                id="url"
+                placeholder="{{ 'serverPlaceholder' | translate }}"
+                x-inputmode="verbatim"
+                autocorrect="off"
+                ng-model="serverUrl"
+                ng-class="{error: serverUrlError}" />
+      <input class="button"
+                type="text"
+                name="user"
+                id="un"
+                placeholder="{{ 'usernamePlaceholder' | translate }}"
+                x-inputmode="verbatim"
+                autocorrect="off"
+                ng-model="username"
+                ng-class="{error: usernameError}" />
+      <input class="button"
+                type="password"
+                name="pass"
+                id="pw"
+                placeholder="{{ 'passwordPlaceholder' | translate }}"
+                x-inputmode="verbatim"
+                autocorrect="off"
+                ng-model="password"
+                ng-class="{error: passwordError}" />
       <button class="default" type="submit" ng-click="attemptLogin()" translate>logIn</button>
     </form>
   </article>
