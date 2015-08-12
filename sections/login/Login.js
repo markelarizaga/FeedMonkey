@@ -2,6 +2,7 @@ angular.module('TinyRSS').
 controller('Login', ['$scope', 'sectionNavigator', 'authenticationService', 'settingsService', '$filter', 'backgroundActivityService',
 function ($scope, sectionNavigator, authenticationService, settingsService, $filter, backgroundActivityService) {
 
+	fillCredentialsInputs();
 	$scope.attemptLogin = function() {
 		var login = null;
 		if ($scope.username && $scope.password && $scope.serverUrl) {
@@ -32,5 +33,14 @@ function ($scope, sectionNavigator, authenticationService, settingsService, $fil
 		$scope.serverUrlError = !serverUrl;
 		$scope.usernameError = !username;
 		$scope.passwordError = !password;
+	}
+
+	function fillCredentialsInputs() {
+		var credentials = settingsService.getCredentials();
+		if(credentials) {
+			$scope.username = credentials.userName || '';
+			$scope.password = credentials.password || '';
+			$scope.serverUrl = credentials.serverUrl || '';;
+		}
 	}
 }]);

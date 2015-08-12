@@ -14,15 +14,22 @@ factory("settingsService", ['$translate', 'localStorageService', function($trans
 		url = serverUrl;
 		user = username;
 		pass = password;
+		localStorageService.set('url', serverUrl);
+		localStorageService.set('user', username);
+		localStorageService.set('pass', password);
 	}
 
 	function getCredentials() {
-		return {
+		url = url || localStorageService.get('url');
+		user = user || localStorageService.get('user');
+		pass = pass || localStorageService.get('pass');
+
+		return (url && user && pass) ?  {
 			serverUrl: url,
 			serverApiUrl: url + '/api/',
 			userName: user,
 			password: pass
-		};
+		} : null;
 	}
 
 	function getCurrentLanguage() {
@@ -51,6 +58,10 @@ factory("settingsService", ['$translate', 'localStorageService', function($trans
 		$translate.use('en');
 		// Mark the articles help message as not shown
 		localStorageService.set('articleHelpShown', false);
+		// Remove the stored credentials
+		localStorageService.remove('url');
+		localStorageService.remove('user');
+		localStorageService.remove('pass');
 	}
 
 	return {
