@@ -24,6 +24,8 @@ tinyRss.locales.en = {
 	logOut: 'Log out',
 	runningVersion: 'Running version',
 	developer: 'Developer',
+	restoreDefaults: 'Reset to default settings',
+	confirmResetSettings: 'Are you sure you want to reset the configuration?',
 
 	/* ARTICLES */
 	articleSwipeHelp: 'Swipe left and right to navigate the articles'

@@ -43,7 +43,14 @@ factory("settingsService", ['$translate', 'localStorageService', function($trans
 	}
 
 	function isArticleHelpShown() {
-		return localStorageService.get('articleHelpShown');
+		return localStorageService.get('articleHelpShown') === 'true';
+	}
+
+	function restoreDefaults() {
+		// Set english as the current language
+		$translate.use('en');
+		// Mark the articles help message as not shown
+		localStorageService.set('articleHelpShown', false);
 	}
 
 	return {
@@ -54,6 +61,7 @@ factory("settingsService", ['$translate', 'localStorageService', function($trans
 		setCurrentLanguage: setCurrentLanguage,
 		getLanguagePreference: getLanguagePreference,
 		markArticleHelpAsShown: markArticleHelpAsShown,
-		isArticleHelpShown: isArticleHelpShown
+		isArticleHelpShown: isArticleHelpShown,
+		restoreDefaults: restoreDefaults
 	}
 }]);

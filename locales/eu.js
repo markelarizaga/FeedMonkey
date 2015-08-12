@@ -24,6 +24,8 @@ tinyRss.locales.eu = {
 	logOut: 'Itxi saioa',
 	runningVersion: 'Instalatutako bertsioa',
 	developer: 'Garatzailea',
+	restoreDefaults: 'Bueltatu hasierako konfiguraziora',
+	confirmResetSettings: 'Ziur zaude hasierako konfiguraziora bueltatu nahi duzula?',
 
 	/* ARTICLES */
 	articleSwipeHelp: 'Hatza ezker eta eskuinera mugitu artikuluz aldatzeko'

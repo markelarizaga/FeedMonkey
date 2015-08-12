@@ -24,6 +24,8 @@ tinyRss.locales.es = {
 	logOut: 'Cerrar sesión',
 	runningVersion: 'Versión instalada',
 	developer: 'Desarrollador',
+	restoreDefaults: 'Restaurar configuración inicial',
+	confirmResetSettings: '¿Estás seguro de que quieres volver a la configuración por defecto?',
 
 	/* ARTICLES */
 	articleSwipeHelp: 'Desliza a izquierda y derecha para navegar entre artículos'

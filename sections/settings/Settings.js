@@ -1,6 +1,6 @@
 angular.module('TinyRSS').
-controller('Settings', ['$scope', 'sectionNavigator', 'authenticationService', 'settingsService', '$translate',
-function($scope, sectionNavigator, authenticationService, settingsService, $translate) {
+controller('Settings', ['$scope', 'sectionNavigator', 'authenticationService', 'settingsService', '$translate', '$filter',
+function($scope, sectionNavigator, authenticationService, settingsService, $translate, $filter) {
 
 	$scope.currentPage = "settings-view";
 	$scope.version = settingsService.getVersion();
@@ -30,5 +30,12 @@ function($scope, sectionNavigator, authenticationService, settingsService, $tran
 		settingsService.setCurrentLanguage(languageCode);
 		$scope.currentLanguage = languageCode;
 		$scope.switchLanguage = false;
-	}
+	};
+
+	$scope.restoreDefaultSettings = function() {
+		if(confirm($filter('translate')('confirmResetSettings'))) {
+			settingsService.restoreDefaults();
+			$scope.currentLanguage = settingsService.getCurrentLanguage();
+		}
+	};
 }]);
