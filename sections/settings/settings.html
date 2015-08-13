@@ -1,11 +1,15 @@
 <section id="settings">
   	<article>
+        <div class="settings-subsection" translate>language</div>
         <ul class="trss-list">
             <li class="settings-item selectable">
                 <p ng-click="revealLanguageSwitcher()" class="group-item">
                     {{'language' | translate}}: {{currentLanguage | translate}}
                 </p>
             </li>
+        </ul>
+        <div class="settings-subsection" translate>information</div>
+        <ul class="trss-list">
             <li class="settings-item">
                 <p class="version group-item">
                     {{'runningVersion' | translate}}: {{version}}
@@ -17,6 +21,9 @@
                     <a href="https://github.com/markelarizaga/TinyRSS" target="_blank">Markel Arizaga</a>
                 </p>
             </li>
+        </ul>
+        <div class="settings-subsection" translate>actions</div>
+        <ul class="trss-list">
             <li class="settings-item selectable">
                 <p class="restore-settings group-item" ng-click="restoreDefaultSettings()">
                     {{'restoreDefaults' | translate}}

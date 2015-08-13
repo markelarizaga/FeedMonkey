@@ -7,6 +7,9 @@ tinyRss.locales.es = {
 	offlineModeReady: 'Modo offline listo',
 	cancel: 'Cancelar',
 
+	/* HEADER */
+	done: 'Hecho',
+
 	/* LOGIN SCREEN */
 	pleaseLogIn: 'Inicia sesión por favor',
 	serverPlaceholder: 'http://ejemplo.com/tt-rss/',
@@ -26,6 +29,8 @@ tinyRss.locales.es = {
 	developer: 'Desarrollador',
 	restoreDefaults: 'Restaurar configuración inicial',
 	confirmResetSettings: '¿Estás seguro de que quieres volver a la configuración por defecto?',
+	information: 'Información',
+	actions: 'Acciones',
 
 	/* ARTICLES */
 	articleSwipeHelp: 'Desliza a izquierda y derecha para navegar entre artículos'

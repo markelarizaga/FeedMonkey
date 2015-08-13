@@ -24,9 +24,14 @@ function($scope,
 	sectionNavigator.addEventListener("onSectionChanged", function(newSection){
 		var id = newSection.split("/");
 		id = id[id.length-1];
-		$scope.title = feedsCache.getElementTitle(id) || "Tiny RSS";
 
+		$scope.title = feedsCache.getElementTitle(id) || "Tiny RSS";
 		$scope.isRoot = sectionNavigator.isInRoot();
+		if(newSection.indexOf('settings') != -1) {
+			$scope.settingsStyle = true;
+		} else {
+			$scope.settingsStyle = false;
+		}
 	});
 
 	backgroundActivityService.addEventListener('onActivityPresent', function(){

@@ -7,6 +7,9 @@ tinyRss.locales.en = {
 	offlineModeReady: 'Offline mode ready',
 	cancel: 'Cancel',
 
+	/* HEADER */
+	done: 'Done',
+
 	/* LOGIN SCREEN */
 	pleaseLogIn: 'Please log in',
 	serverPlaceholder: 'http://example.com/tt-rss/',
@@ -26,6 +29,8 @@ tinyRss.locales.en = {
 	developer: 'Developer',
 	restoreDefaults: 'Reset to default settings',
 	confirmResetSettings: 'Are you sure you want to reset the configuration?',
+	information: 'Information',
+	actions: 'Actions',
 
 	/* ARTICLES */
 	articleSwipeHelp: 'Swipe left and right to navigate the articles'

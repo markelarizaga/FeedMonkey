@@ -1,5 +1,5 @@
-<header class="fixed" ng-controller="Header">
-	<a ng-show="!isRoot" ng-click="goBack()" id="btn-buttons-back">
+<header class="fixed" ng-class="{'settings-header': settingsStyle}" ng-controller="Header">
+	<a ng-show="!isRoot && !settingsStyle" ng-click="goBack()" id="btn-buttons-back">
 		<span class="icon icon-back">back</span>
 	</a>
 	<a ng-show="isRoot" ng-click="openSettings()" class="btn-buttons">
@@ -10,6 +10,9 @@
 	</a>
 	<a ng-show="isRoot && !offline" ng-click="reloadFeeds()" class="btn-buttons">
 		<span class="icon icon-reload">reload</span>
+	</a>
+	<a ng-show="settingsStyle" ng-click="goBack()" class="btn-buttons icon-done" translate>
+		done
 	</a>
 	<h1 translate>appTitle</h1>
 	<div id="activity-indicator" ng-show="backgroundWorkPresent"></div>

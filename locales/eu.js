@@ -7,6 +7,9 @@ tinyRss.locales.eu = {
 	offlineModeReady: 'Sarerik gabeko modua prest',
 	cancel: 'Ezeztatu',
 
+	/* HEADER */
+	done: 'Ados',
+
 	/* LOGIN SCREEN */
 	pleaseLogIn: 'Hasi saioa mesedez',
 	serverPlaceholder: 'http://adibidea.com/tt-rss/',
@@ -26,6 +29,8 @@ tinyRss.locales.eu = {
 	developer: 'Garatzailea',
 	restoreDefaults: 'Bueltatu hasierako konfiguraziora',
 	confirmResetSettings: 'Ziur zaude hasierako konfiguraziora bueltatu nahi duzula?',
+	information: 'Informazioa',
+	actions: 'Akzioak',
 
 	/* ARTICLES */
 	articleSwipeHelp: 'Hatza ezker eta eskuinera mugitu artikuluz aldatzeko'

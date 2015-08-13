@@ -1,7 +1,10 @@
 /* HEADER COLORS */
 $header-title: #ffffff;
 $header-background: #222B2D;
+$header-title-settings: #858585;
+$header-background-settings: #F4F4F4;
 $header-icon-active: #7E9DB9;
+$header-icon-done-text: #00CAF2;
 
 /* LIST COLORS */
 $active-item-background: #E6E9E9;
@@ -28,8 +31,13 @@ $modal-background: #2D2D2D;
 /* INPUT COLORS */
 $input-background: #ffffff;
 $input-border: #C7C7C7;
+$input-focused-bottom-border: #00CAF2;
 $input-border-error: red;
 $input-text-color: #333;
+
+/* SETTINGS SCREEN COLORS */
+$settings-subsection-background: #E7E7E7;
+$settings-subsection-text: #707070;
 
 /* ACTIVITY INDICATOR COLORS */
 $activity-indicator-background: #FFA500;
@@ -52,8 +60,20 @@ header {
 	width: 100%;
 	margin: 0;
 	padding: 0;
-	z-index: 10;
+	z-index: 2;
 	background-color: $header-background;
+
+	&.settings-header {
+		background-color: $header-background-settings;
+
+		h1 {
+			color: $header-title-settings;
+		}
+
+		.icon-back-settings {
+			background-image: url("../img/icons/back-settings.svg");
+		}
+	}
 
     a {
         box-sizing: border-box;
@@ -96,6 +116,10 @@ header {
 		.icon-reload {
         	background-image: url("../img/icons/sync.svg");
         }
+
+		&.icon-done {
+			color: $header-icon-done-text;
+		}
 
         &.btn-buttons {
         	float: right;
@@ -166,7 +190,7 @@ input[type=text], input[type=password] {
 	margin-top: 10px;
 
 	&:focus {
-		border-bottom: 2px solid #00CAF2;
+		border-bottom: 2px solid $input-focused-bottom-border;
 	}
 
 	&.error {
@@ -391,9 +415,19 @@ ul li {
 	display: none;
 }
 
+.settings-subsection {
+	height: 3rem;
+	background-color: $settings-subsection-background;
+	font-size: 1.5rem;
+	line-height: 3rem;
+	padding-left: 2rem;
+	color: $settings-subsection-text;
+}
+
 .modal {
 	position: absolute;
-	top: 0;
+	top: -5rem; // 0 starts just after the header, we want the modal to hie the header
+	z-index: 3;
 	width: 100%;
 	height: 100%;
 	background-color: $modal-background;
