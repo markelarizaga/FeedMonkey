@@ -8,7 +8,14 @@ controller('Header',
 		'syncService',
 		'$filter',
 		'backgroundActivityService',
-function($scope, sectionNavigator, feedsCache, backendService, networkStatusService, syncService, $filter, backgroundActivityService) {
+function($scope,
+		sectionNavigator,
+		feedsCache,
+		backendService,
+		networkStatusService,
+		syncService,
+		$filter,
+		backgroundActivityService) {
 
 	$scope.isRoot = true;
 	$scope.offline = false;
@@ -30,6 +37,7 @@ function($scope, sectionNavigator, feedsCache, backendService, networkStatusServ
 	});
 
 	$scope.goBack = function() {
+		backgroundActivityService.notifyBackgroundActivityStopped();
 		sectionNavigator.back();
 	};
 
@@ -55,6 +63,7 @@ function($scope, sectionNavigator, feedsCache, backendService, networkStatusServ
 	};
 
 	$scope.openSettings = function() {
+		backgroundActivityService.notifyBackgroundActivityStopped();
 		sectionNavigator.navigateTo(sectionNavigator.section.SETTINGS);
 	};
 
