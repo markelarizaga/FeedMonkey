@@ -24,7 +24,7 @@ function($scope, backendService, feedsCache, sectionNavigator, $routeParams, net
 			backendService.downloadCategories()
 			.then(function(categories) {
 					if(categories.error && categories.error === 'NOT_LOGGED_IN') {
-						sectionNavigator.navigateTo(sectionNavigator.section.LOGIN, true, true, true);
+						goToLoginPage();
 					} else {
 						showCategoriesOnScreen(categories);
 					}
@@ -43,7 +43,7 @@ function($scope, backendService, feedsCache, sectionNavigator, $routeParams, net
 			backendService.downloadFeeds(categoryId)
 			.then(function(feeds){
 					if(feeds.error && feeds.error === 'NOT_LOGGED_IN') {
-						sectionNavigator.navigateTo(sectionNavigator.section.LOGIN, true, true, true);
+						goToLoginPage();
 					} else {
 						showFeedsOnScreen(feeds);
 					}
@@ -88,6 +88,12 @@ function($scope, backendService, feedsCache, sectionNavigator, $routeParams, net
 		backgroundActivityService.notifyBackgroundActivityStopped();
 		$scope.noCategoriesAvailable = false;
 		$scope.categories = feeds;
+	}
+
+	function goToLoginPage() {
+		backgroundActivityService.notifyBackgroundActivityStopped();
+		sectionNavigator.clearHistory();
+		sectionNavigator.navigateTo(sectionNavigator.section.LOGIN, true, true, true);
 	}
 
 	$scope.openElement = function(element) {
