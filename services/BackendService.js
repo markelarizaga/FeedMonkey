@@ -251,7 +251,9 @@ function($q, http, authenticationService, settingsService){
             var articles = result[0];
             var feeds = result[1].categories.items;
             feeds = buildFeedTree(feeds, articles);
-            callback(feeds);
+            callback(null, feeds);
+        }, function() {
+            callback(true, null);
         });
     }
 

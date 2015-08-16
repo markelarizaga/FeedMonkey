@@ -5,6 +5,7 @@ tinyRss.locales.eu = {
 	/* GENERAL */
 	appTitle : 'Tiny RSS',
 	offlineModeReady: 'Sarerik gabeko modua prest',
+	offlineModeError: 'Ezin izan da sarerik gabeko modura pasatu',
 	cancel: 'Ezeztatu',
 
 	/* HEADER */

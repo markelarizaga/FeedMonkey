@@ -1,11 +1,24 @@
 angular.module('TinyRSS').
-controller('Login', ['$scope', 'sectionNavigator', 'authenticationService', 'settingsService', '$filter', 'backgroundActivityService',
-function ($scope, sectionNavigator, authenticationService, settingsService, $filter, backgroundActivityService) {
+controller('Login', ['$scope',
+	'sectionNavigator',
+	'authenticationService',
+	'settingsService',
+	'$filter',
+	'backgroundActivityService',
+	'feedsCache',
+	'$routeParams',
+function ($scope,
+		sectionNavigator,
+		authenticationService,
+		settingsService,
+		$filter,
+		backgroundActivityService,
+		feedsCache,
+		$routeParams) {
 
-	fillCredentialsInputs();
-	$scope.attemptLogin = function() {
+	$scope.attemptLogin = function(isAutoLogin) {
 		var login = null;
-		if ($scope.username && $scope.password && $scope.serverUrl) {
+		if (credentialsPresent()) {
 			backgroundActivityService.notifyBackgroundActivity();
 			settingsService.setCredentials($scope.serverUrl, $scope.username, $scope.password);
 			login = authenticationService.login($scope.serverUrl, $scope.username, $scope.password);
@@ -13,14 +26,26 @@ function ($scope, sectionNavigator, authenticationService, settingsService, $fil
 				backgroundActivityService.notifyBackgroundActivityStopped();
 				sectionNavigator.navigateTo(sectionNavigator.section.CATEGORIES);
 			}, function(error) {
-				backgroundActivityService.notifyBackgroundActivityStopped();
-				var errorMessage = $filter('translate')('loginError');
-				var errorMessage = error ? errorMessage + ': ' + $filter('translate')(error) : errorMessage;
-				alert(errorMessage);
+				if(!isAutoLogin) {
+					backgroundActivityService.notifyBackgroundActivityStopped();
+					var errorMessage = $filter('translate')('loginError');
+					var errorMessage = error ? errorMessage + ': ' + $filter('translate')(error) : errorMessage;
+					alert(errorMessage);
+				} else {
+					// Check if the cache contains elements
+					if(feedsCache.getElements()) {
+						sectionNavigator.navigateTo(sectionNavigator.section.CATEGORIES);
+					}
+				}
 			});
 		}
 		updateInputErrorState($scope.serverUrl, $scope.username, $scope.password);
 	};
+
+	fillCredentialsInputs();
+	if($routeParams.disableAutoLogin !== 'true' && credentialsPresent()) {
+		$scope.attemptLogin(true);
+	}
 
 	var loggedIn = authenticationService.isLoggedIn();
 	if (loggedIn) {
@@ -42,5 +67,9 @@ function ($scope, sectionNavigator, authenticationService, settingsService, $fil
 			$scope.password = credentials.password || '';
 			$scope.serverUrl = credentials.serverUrl || '';;
 		}
+	}
+
+	function credentialsPresent() {
+		return ($scope.username && $scope.password && $scope.serverUrl);
 	}
 }]);

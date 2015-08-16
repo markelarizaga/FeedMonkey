@@ -13,12 +13,12 @@ angular.module('TinyRSS',
 
 .config(['$routeProvider',function($routeProvider) {
 	$routeProvider.
-		when('/login', {controller: 'Login', templateUrl: 'sections/login/login.html'}).
+		when('/login/:disableAutoLogin?', {controller: 'Login', templateUrl: 'sections/login/login.html'}).
 		when('/categories/:categoryId?', {controller: 'Categories', templateUrl: 'sections/categories/categories.html'}).
 		when('/list/:feedId', {controller: 'List', templateUrl: 'sections/list/list.html'}).
 		when('/articles/:articleId', {controller: 'Articles', templateUrl: 'sections/articles/articles.html'}).
 		when('/settings', {controller: 'Settings', templateUrl: 'sections/settings/settings.html'}).
-		otherwise({redirectTo: '/login'});
+		otherwise({redirectTo: '/login/'});
 }])
 
 .config(['$translateProvider',function($translateProvider) {

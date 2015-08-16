@@ -1,6 +1,18 @@
 angular.module('TinyRSS').
-controller('Settings', ['$scope', 'sectionNavigator', 'authenticationService', 'settingsService', '$translate', '$filter',
-function($scope, sectionNavigator, authenticationService, settingsService, $translate, $filter) {
+controller('Settings', ['$scope',
+	'sectionNavigator',
+	'authenticationService',
+	'settingsService',
+	'$translate',
+	'$filter',
+	'feedsCache',
+function($scope,
+		sectionNavigator,
+		authenticationService,
+		settingsService,
+		$translate,
+		$filter,
+		feedsCache) {
 
 	$scope.currentPage = "settings-view";
 	$scope.version = settingsService.getVersion();
@@ -9,13 +21,16 @@ function($scope, sectionNavigator, authenticationService, settingsService, $tran
 
 	$scope.logout = function () {
 		var logout = authenticationService.logout();
-		logout.then(function(){
-				console.log("Sucessfully logged out");
-			}, function(error) {
-				console.log("Something went wrong when logging out: " + error);
-			});
+		if(logout) {
+			logout.then(function(){
+					console.log("Sucessfully logged out");
+				}, function(error) {
+					console.log("Something went wrong when logging out: " + error);
+				});
+		}
+		feedsCache.clear();
 		sectionNavigator.clearHistory();
-		sectionNavigator.navigateTo(sectionNavigator.section.LOGIN, null, true, true);
+		sectionNavigator.navigateTo(sectionNavigator.section.LOGIN, true, true, true);
 	};
 
 	$scope.revealLanguageSwitcher = function() {

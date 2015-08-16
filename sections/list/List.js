@@ -19,15 +19,21 @@ function($scope, feedsCache, backendService, $routeParams, sectionNavigator, net
 			feedsCache.addToCache(headlines, $routeParams.feedId);
 			feedsCache.setHeadlinesList(headlines);
 			backgroundActivityService.notifyBackgroundActivityStopped();
+		}, function() {
+			getHeadlinesFromCache($routeParams.feedId);
 		});
 
 	} else {
-		var headlines = feedsCache.getElements($routeParams.feedId);
-		if(headlines) {
+		getHeadlinesFromCache($routeParams.feedId);
+	}
+
+	function getHeadlinesFromCache(feedId) {
+		var headlines = feedsCache.getElements(feedId);
+		if(headlines && headlines.constructor === Array) {
 			$scope.headlines = headlines;
 			feedsCache.setHeadlinesList(headlines);
-			backgroundActivityService.notifyBackgroundActivityStopped();
 		}
+		backgroundActivityService.notifyBackgroundActivityStopped();
 	}
 
 	$scope.openElement = function(element) {

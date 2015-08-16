@@ -22,13 +22,17 @@ function($scope, backendService, feedsCache, sectionNavigator, $routeParams, net
 		if(networkStatusService.isOnline() && !sectionNavigator.isComingBack()) {
 			backgroundActivityService.notifyBackgroundActivity();
 			backendService.downloadCategories()
-			.then(showCategoriesOnScreen);
+			.then(function(categories) {
+					if(categories.error && categories.error === 'NOT_LOGGED_IN') {
+						sectionNavigator.navigateTo(sectionNavigator.section.LOGIN, true, true, true);
+					} else {
+						showCategoriesOnScreen(categories);
+					}
+				},
+				getCategoriesFromCache); // Called in case of error
 
 		} else {
-			categories = feedsCache.getElements();
-			if(categories) {
-				$scope.categories = categories;
-			}
+			getCategoriesFromCache();
 		}
 	}
 
@@ -37,13 +41,35 @@ function($scope, backendService, feedsCache, sectionNavigator, $routeParams, net
 			backgroundActivityService.notifyBackgroundActivity();
 			// Retrieve child elements from server
 			backendService.downloadFeeds(categoryId)
-			.then(showFeedsOnScreen);
+			.then(function(feeds){
+					if(feeds.error && feeds.error === 'NOT_LOGGED_IN') {
+						sectionNavigator.navigateTo(sectionNavigator.section.LOGIN, true, true, true);
+					} else {
+						showFeedsOnScreen(feeds);
+					}
+				},
+				function() {
+					getChildrenFromCache(categoryId);
+				});
 		} else {
-			var children = feedsCache.getElements(categoryId);
-			if(children) {
-				$scope.categories = children;
-			}
+			getChildrenFromCache(categoryId);
 		}
+	}
+
+	function getCategoriesFromCache() {
+		categories = feedsCache.getElements();
+		if(categories) {
+			$scope.categories = categories;
+		}
+		backgroundActivityService.notifyBackgroundActivityStopped();
+	}
+
+	function getChildrenFromCache(categoryId) {
+		var children = feedsCache.getElements(categoryId);
+		if(children && children.constructor === Array) {
+			$scope.categories = children;
+		}
+		backgroundActivityService.notifyBackgroundActivityStopped();
 	}
 
 	function showCategoriesOnScreen(categories) {

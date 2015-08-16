@@ -49,13 +49,17 @@ function($scope,
 	$scope.toggleOffline = function() {
 		$scope.backgroundWorkPresent = true;
 		if(!networkStatusService.isOfflineMode()) {
-			backendService.goOffline(function (feeds) {
+			backendService.goOffline(function (error, feeds) {
+				if(!error) {
+					alert($filter('translate')('offlineModeReady'));
+					$scope.offline = true;
+					feedsCache.setOfflineFeeds(feeds);
+					networkStatusService.setOfflineMode(true);
+					sectionNavigator.navigateTo(sectionNavigator.section.ROOT_SECTION);
+				} else {
+					alert($filter('translate')('offlineModeError'));
+				}
 				$scope.backgroundWorkPresent = false;
-				alert($filter('translate')('offlineModeReady'));
-				$scope.offline = true;
-				feedsCache.setOfflineFeeds(feeds);
-				networkStatusService.setOfflineMode(true);
-				sectionNavigator.navigateTo(sectionNavigator.section.ROOT_SECTION);
 			});
 		} else {
 			$scope.offline = false;
@@ -73,6 +77,6 @@ function($scope,
 	};
 
 	$scope.reloadFeeds = function() {
-		sectionNavigator.navigateTo(sectionNavigator.section.ROOT_SECTION);
+	sectionNavigator.navigateTo(sectionNavigator.section.ROOT_SECTION);
 	}
 }]);
