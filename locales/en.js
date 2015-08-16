@@ -33,6 +33,10 @@ tinyRss.locales.en = {
 	information: 'Information',
 	actions: 'Actions',
 
+	/* CATEGORIES */
+	noCategoriesToShow: 'No categories to show',
+
 	/* ARTICLES */
-	articleSwipeHelp: 'Swipe left and right to navigate the articles'
+	articleSwipeHelp: 'Swipe left and right to navigate the articles',
+	noArticlesToShow: 'No articles to show'
 };

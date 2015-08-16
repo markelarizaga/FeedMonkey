@@ -59,7 +59,9 @@ function($scope, backendService, feedsCache, sectionNavigator, $routeParams, net
 	function getCategoriesFromCache() {
 		categories = feedsCache.getElements();
 		if(categories) {
-			$scope.categories = categories;
+			showCategoriesOnScreen(categories);
+		} else {
+			$scope.noCategoriesAvailable = true;
 		}
 		backgroundActivityService.notifyBackgroundActivityStopped();
 	}
@@ -67,13 +69,16 @@ function($scope, backendService, feedsCache, sectionNavigator, $routeParams, net
 	function getChildrenFromCache(categoryId) {
 		var children = feedsCache.getElements(categoryId);
 		if(children && children.constructor === Array) {
-			$scope.categories = children;
+			showFeedsOnScreen(children);
+		} else {
+			$scope.noCategoriesAvailable = true;
 		}
 		backgroundActivityService.notifyBackgroundActivityStopped();
 	}
 
 	function showCategoriesOnScreen(categories) {
 		backgroundActivityService.notifyBackgroundActivityStopped();
+		$scope.noCategoriesAvailable = false;
 		$scope.categories = categories;
 		feedsCache.addToCache(categories);
 	}
@@ -81,6 +86,7 @@ function($scope, backendService, feedsCache, sectionNavigator, $routeParams, net
 	function showFeedsOnScreen(feeds) {
 		feedsCache.addToCache(feeds, categoryId);
 		backgroundActivityService.notifyBackgroundActivityStopped();
+		$scope.noCategoriesAvailable = false;
 		$scope.categories = feeds;
 	}
 

@@ -33,6 +33,10 @@ tinyRss.locales.es = {
 	information: 'Información',
 	actions: 'Acciones',
 
+	/* CATEGORIES */
+	noCategoriesToShow: 'No hay categorías para mostrar',
+
 	/* ARTICLES */
-	articleSwipeHelp: 'Desliza a izquierda y derecha para navegar entre artículos'
+	articleSwipeHelp: 'Desliza a izquierda y derecha para navegar entre artículos',
+	noArticlesToShow: 'No hay artículos para mostrar'
 };

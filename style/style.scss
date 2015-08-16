@@ -43,6 +43,9 @@ $settings-subsection-text: #707070;
 $activity-indicator-background: #FFA500;
 $activity-indicator-glow: #EF692B;
 
+/* OTHER */
+$empty-screen-error-text: #868686;
+
 /* ANIMATIONS */
 $fast: 0.25s;
 
@@ -225,6 +228,12 @@ input[type=text], input[type=password] {
 
 .default:active {
 	background-color: $active-button-background;
+}
+
+.empty-screen-error {
+	font-size: 1.8rem;
+	margin: 1rem 1rem 1rem 1rem;
+	color: $empty-screen-error-text;
 }
 
 #content {

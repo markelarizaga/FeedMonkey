@@ -15,9 +15,14 @@ function($scope, feedsCache, backendService, $routeParams, sectionNavigator, net
 	if(networkStatusService.isOnline() && !sectionNavigator.isComingBack()) {
 		backendService.downloadHeadlines($routeParams.feedId, true)
 		.then(function(headlines){
-			$scope.headlines = headlines;
-			feedsCache.addToCache(headlines, $routeParams.feedId);
-			feedsCache.setHeadlinesList(headlines);
+			if(headlines) {
+				$scope.noArticlesToShow = false;
+				$scope.headlines = headlines;
+				feedsCache.addToCache(headlines, $routeParams.feedId);
+				feedsCache.setHeadlinesList(headlines);
+			} else {
+				$scope.noArticlesToShow = true;
+			}
 			backgroundActivityService.notifyBackgroundActivityStopped();
 		}, function() {
 			getHeadlinesFromCache($routeParams.feedId);
@@ -30,8 +35,11 @@ function($scope, feedsCache, backendService, $routeParams, sectionNavigator, net
 	function getHeadlinesFromCache(feedId) {
 		var headlines = feedsCache.getElements(feedId);
 		if(headlines && headlines.constructor === Array) {
+			$scope.noArticlesToShow = false;
 			$scope.headlines = headlines;
 			feedsCache.setHeadlinesList(headlines);
+		} else {
+			$scope.noArticlesToShow = true;
 		}
 		backgroundActivityService.notifyBackgroundActivityStopped();
 	}

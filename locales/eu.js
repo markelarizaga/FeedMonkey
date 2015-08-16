@@ -33,6 +33,10 @@ tinyRss.locales.eu = {
 	information: 'Informazioa',
 	actions: 'Akzioak',
 
+	/* CATEGORIES */
+	noCategoriesToShow: 'Ez dago kategoriarik eskuragarri',
+
 	/* ARTICLES */
-	articleSwipeHelp: 'Hatza ezker eta eskuinera mugitu artikuluz aldatzeko'
+	articleSwipeHelp: 'Hatza ezker eta eskuinera mugitu artikuluz aldatzeko',
+	noArticlesToShow: 'Ez dago artikulurik eskuragarri'
 };
