@@ -1,0 +1,27 @@
+{
+  "name": "TinyRSS",
+  "main": "index.js",
+  "version": "0.3.4",
+  "homepage": "https://github.com/markelarizaga/TinyRSS",
+  "authors": [
+    "Markel Arizaga <markel.arizaga@gmail.com>"
+  ],
+  "license": "GPLv3",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-carousel": "~0.3.12",
+    "angular-cookies": ">=1.2.26 <=1.5",
+    "angular-local-storage": "~0.2.2",
+    "angular-route": "~1.4.3",
+    "angular-sanitize": "~1.4.3",
+    "angular-translate-storage-cookie": "~2.7.2",
+    "angular-translate-storage-local": "~2.7.2",
+    "ryanmullins-angular-hammer": "~2.1.10"
+  }
+}
