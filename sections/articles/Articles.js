@@ -32,10 +32,14 @@ function($scope, $routeParams, backendService, feedsCache, networkStatusService,
 
 		switch (swipe.direction) {
 			case 2:
-				moveToArticle('next');
+				if(articleCursor < articleList.length-1) {
+					moveToArticle('next');
+				}
 				break;
 			case 4:
-				moveToArticle('previous');
+				if(articleCursor > 0) {
+					moveToArticle('previous');
+				}
 				break;
 		}
 	};
