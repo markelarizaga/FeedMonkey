@@ -8,6 +8,7 @@ controller('Header',
 		'syncService',
 		'$filter',
 		'backgroundActivityService',
+		'$rootScope',
 function($scope,
 		sectionNavigator,
 		feedsCache,
@@ -15,11 +16,13 @@ function($scope,
 		networkStatusService,
 		syncService,
 		$filter,
-		backgroundActivityService) {
+		backgroundActivityService,
+		$rootScope) {
 
 	$scope.isRoot = true;
 	$scope.offline = false;
 	$scope.backgroundWorkPresent = false;
+	var previousHeaderStatus = null;
 
 	sectionNavigator.addEventListener("onSectionChanged", function(newSection){
 		var id = newSection.split("/");
@@ -28,9 +31,9 @@ function($scope,
 		$scope.title = feedsCache.getElementTitle(id) || "Tiny RSS";
 		$scope.isRoot = sectionNavigator.isInRoot();
 		if(newSection.indexOf('settings') != -1) {
-			$scope.settingsStyle = true;
+			$scope.status = 'settings';
 		} else {
-			$scope.settingsStyle = false;
+			$scope.status = 'default';
 		}
 	});
 
@@ -39,6 +42,19 @@ function($scope,
 	});
 	backgroundActivityService.addEventListener('onActivityStopped', function(){
 		$scope.backgroundWorkPresent = false;
+	});
+
+	$scope.$on('enterEditMode', function(){
+		previousHeaderStatus = $scope.status;
+		$scope.status = 'editMode';
+	});
+
+	$scope.$on('exitEditMode', function() {
+		$scope.status = 'default';
+	});
+
+	$scope.$on('cancelEditMode', function() {
+		$scope.status = 'default';
 	});
 
 	$scope.goBack = function() {
@@ -77,6 +93,16 @@ function($scope,
 	};
 
 	$scope.reloadFeeds = function() {
-	sectionNavigator.navigateTo(sectionNavigator.section.ROOT_SECTION);
+		sectionNavigator.navigateTo(sectionNavigator.section.ROOT_SECTION);
 	}
+
+	$scope.leaveEditMode = function() {
+		$scope.status = previousHeaderStatus;
+		$rootScope.$broadcast('exitEditMode');
+	};
+
+	$scope.sendMarkAsReadEvent = function() {
+		$scope.status = previousHeaderStatus;
+		$rootScope.$broadcast('markSelectedAsRead');
+	};
 }]);

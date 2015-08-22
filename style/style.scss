@@ -8,6 +8,7 @@ $header-icon-done-text: #00CAF2;
 
 /* LIST COLORS */
 $active-item-background: #E6E9E9;
+$selected-item-background: #999999;
 $list-item-text: #333;
 $list-item-border: #E7E7E7;
 $list-item-unread-indicator: #A09FA7;
@@ -78,6 +79,7 @@ header {
 		}
 	}
 
+
     a {
         box-sizing: border-box;
     	position: relative;
@@ -118,6 +120,14 @@ header {
 
 		.icon-reload {
         	background-image: url("../img/icons/sync.svg");
+        }
+
+		.icon-mark-as-read {
+        	background-image: url("../img/icons/tick.svg");
+        }
+
+		.icon-close {
+        	background-image: url("../img/icons/close.svg");
         }
 
 		&.icon-done {
@@ -291,6 +301,10 @@ ul.trss-list {
 ul li {
 	color: $list-item-text;
 
+	&.selected {
+		background-color: $selected-item-background;
+	}
+
     &.category, &.settings-item {
         min-width: 100%;
     	box-sizing: border-box;
@@ -342,6 +356,10 @@ ul li {
 
 	&.selectable:active {
 		background-color: $active-item-background;
+
+		&.selected {
+			background-color: $selected-item-background;
+		}
 	}
 
 	.headline {

@@ -47,7 +47,7 @@ function($scope, $routeParams, backendService, feedsCache, networkStatusService,
 	$scope.hideHelp = function() {
 		$scope.helpAlreadyShown = true;
 		settingsService.markArticleHelpAsShown();
-		feedsCache.markLocalArticleAsRead($scope.article.feed_id, $scope.article.id);
+		feedsCache.markLocalArticleAsRead($scope.article.feed_id, [$scope.article.id]);
 		backendService.markArticlesAsRead([$scope.article.id]);
 	};
 
@@ -80,7 +80,7 @@ function($scope, $routeParams, backendService, feedsCache, networkStatusService,
 			$scope.article = articles[0];
 			document.getElementById('full').scrollTop = 0;
 			if($scope.article.unread && $scope.helpAlreadyShown) {
-				feedsCache.markLocalArticleAsRead($scope.article.feed_id, $scope.article.id);
+				feedsCache.markLocalArticleAsRead($scope.article.feed_id, [$scope.article.id]);
 				backendService.markArticlesAsRead([$scope.article.id]);
 			}
 			if(!articleList || !articleCursor) {

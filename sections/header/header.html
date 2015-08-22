@@ -1,17 +1,25 @@
-<header class="fixed" ng-class="{'settings-header': settingsStyle}" ng-controller="Header">
-	<a ng-show="!isRoot && !settingsStyle" ng-click="goBack()" id="btn-buttons-back">
+<header class="fixed"
+		ng-class="{'settings-header': status === 'settings', 'edit-mode-header': status === 'editMode'}"
+		ng-controller="Header">
+	<a ng-show="!isRoot && status === 'default'" ng-click="goBack()" id="btn-buttons-back">
 		<span class="icon icon-back">back</span>
 	</a>
-	<a ng-show="isRoot" ng-click="openSettings()" class="btn-buttons">
+	<a ng-show="status === 'editMode'" ng-click="leaveEditMode()" id="btn-buttons-close">
+		<span class="icon icon-close">close</span>
+	</a>
+	<a ng-show="isRoot && status !== 'editMode'" ng-click="openSettings()" class="btn-buttons">
 		<span class="icon icon-settings">settings</span>
 	</a>
-	<a ng-show="isRoot" ng-click="toggleOffline()" class="btn-buttons">
+	<a ng-show="isRoot && status !== 'editMode'" ng-click="toggleOffline()" class="btn-buttons">
 		<span class="icon" ng-class="{'icon-offline': !offline, 'icon-online': offline}">toggle offline</span>
 	</a>
-	<a ng-show="isRoot && !offline" ng-click="reloadFeeds()" class="btn-buttons">
+	<a ng-show="isRoot && status !== 'editMode' && !offline" ng-click="reloadFeeds()" class="btn-buttons">
 		<span class="icon icon-reload">reload</span>
 	</a>
-	<a ng-show="settingsStyle" ng-click="goBack()" class="btn-buttons icon-done" translate>
+	<a ng-show="status === 'editMode'" ng-click="sendMarkAsReadEvent()" class="btn-buttons">
+		<span class="icon icon-mark-as-read">mark as read</span>
+	</a>
+	<a ng-show="status === 'settings'" ng-click="goBack()" class="btn-buttons icon-done" translate>
 		done
 	</a>
 	<h1 translate>appTitle</h1>

@@ -7,9 +7,32 @@ controller('List',
 	'sectionNavigator',
 	'networkStatusService',
 	'backgroundActivityService',
-function($scope, feedsCache, backendService, $routeParams, sectionNavigator, networkStatusService, backgroundActivityService) {
+	'$rootScope',
+function($scope,
+		feedsCache,
+		backendService,
+		$routeParams,
+		sectionNavigator,
+		networkStatusService,
+		backgroundActivityService,
+		$rootScope) {
 
 	$scope.currentPage = !sectionNavigator.isComingBack() ? 'headlines-view' : 'headlines-view-back';
+	var editMode = false;
+
+	$scope.$on('exitEditMode', function(){
+		leaveEditMode();
+	});
+
+	$scope.$on('markSelectedAsRead', function(){
+		var selectedArticlesIds = getSelectedAndUnreadHeadlines()
+				.map(function(headline){
+					return headline.id;
+				});
+		feedsCache.markLocalArticleAsRead($routeParams.feedId, selectedArticlesIds);
+		backendService.markArticlesAsRead(selectedArticlesIds);
+		leaveEditMode();
+	});
 
 	backgroundActivityService.notifyBackgroundActivity();
 	if(networkStatusService.isOnline() && !sectionNavigator.isComingBack()) {
@@ -45,7 +68,48 @@ function($scope, feedsCache, backendService, $routeParams, sectionNavigator, net
 	}
 
 	$scope.openElement = function(element) {
-		sectionNavigator.navigateTo(sectionNavigator.section.ARTICLES, element.id);
+		if(!editMode) {
+			sectionNavigator.navigateTo(sectionNavigator.section.ARTICLES, element.id);
+		} else {
+			if(element.ui && element.ui.selected === true) {
+				element.ui.selected = false;
+				if(getSelectedHeadlines().length === 0) {
+					leaveEditMode();
+					$rootScope.$broadcast('cancelEditMode');
+				}
+			} else {
+				element.ui = {
+					selected: true
+				};
+			}
+		}
 	};
+
+	$scope.onLongPress = function(headline){
+		headline.ui = {
+			selected: true
+		};
+		editMode = true;
+		$rootScope.$broadcast('enterEditMode');
+	};
+
+	function leaveEditMode() {
+		editMode = false;
+		$scope.headlines.forEach(function(headline){
+			headline.ui = null;
+		});
+	}
+
+	function getSelectedHeadlines() {
+		return $scope.headlines.filter(function(headline){
+				return (headline.ui && headline.ui.selected === true);
+			});
+	}
+
+	function getSelectedAndUnreadHeadlines() {
+		return $scope.headlines.filter(function(headline){
+				return (headline.unread && headline.ui && headline.ui.selected === true);
+			});
+	}
 
 }]);

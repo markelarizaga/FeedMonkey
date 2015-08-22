@@ -115,39 +115,41 @@ factory("feedsCache", ['localStorageService', function(localStorageService){
       }
   }
 
-  function markLocalArticleAsRead(feedId, articleId) {
-    var feedInfo = null;
-    var articleList = null;
-    var i = 0;
-    categories = categories || getPersistent();
+    function markLocalArticleAsRead(feedId, articleIds) {
+        var feedInfo = null;
+        var articleList = null;
+        var i = 0, j = 0;
+        categories = categories || getPersistent();
 
-    if(categories) {
-      feedInfo = inspectCachedTree(categories, feedId, true);
-      articleList = feedInfo.elements;
-      if(articleList) {
-        for(i; i < articleList.length; i++) {
-          if(articleList[i].id == articleId && articleList[i].unread) {
-            articleList[i].unread = false;
-            decreaseUnreadAmount(feedInfo);
-            return;
-          }
+        if(categories) {
+            feedInfo = inspectCachedTree(categories, feedId, true);
+            articleList = feedInfo.elements;
+            if(articleList) {
+                for(j; j < articleIds.length; j++) {
+                    for(i; i < articleList.length; i++) {
+                        if(articleList[i].id == articleIds[j] && articleList[i].unread) {
+                            articleList[i].unread = false;
+                            decreaseUnreadAmount(feedInfo);
+                            break;
+                        }
+                    }
+                }
+            }
         }
-      }
     }
-  }
 
-  function setOfflineFeeds(feeds) {
-    categories = feeds;
-  }
+    function setOfflineFeeds(feeds) {
+        categories = feeds;
+    }
 
-  return {
-    addToCache: addToCache,
-    clear: clear,
-    getElements: getElements,
-    getElementTitle: getElementTitle,
-    setHeadlinesList: setHeadlinesList,
-    getHeadlinesList: getHeadlinesList,
-    markLocalArticleAsRead: markLocalArticleAsRead,
-    setOfflineFeeds: setOfflineFeeds
+    return {
+        addToCache: addToCache,
+        clear: clear,
+        getElements: getElements,
+        getElementTitle: getElementTitle,
+        setHeadlinesList: setHeadlinesList,
+        getHeadlinesList: getHeadlinesList,
+        markLocalArticleAsRead: markLocalArticleAsRead,
+        setOfflineFeeds: setOfflineFeeds
   };
 }]);
