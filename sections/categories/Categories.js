@@ -7,10 +7,45 @@ controller('Categories',
 	'$routeParams',
 	'networkStatusService',
 	'backgroundActivityService',
-function($scope, backendService, feedsCache, sectionNavigator, $routeParams, networkStatusService, backgroundActivityService) {
+	'$rootScope',
+	'syncService',
+function($scope,
+		backendService,
+		feedsCache,
+		sectionNavigator,
+		$routeParams,
+		networkStatusService,
+		backgroundActivityService,
+		$rootScope,
+		syncService) {
+
+	$scope.$on('exitEditMode', function(){
+		leaveEditMode();
+	});
+
+	$scope.$on('markSelectedAsRead', function(){
+		backendService.markCategoriesAsRead(getSelectedCategories())
+		.then(
+			function() {
+				if(networkStatusService.isOfflineMode()) {
+					syncService.addCategoriesToSyncPending($scope.categories);
+				}
+				$scope.categories = $scope.categories.filter(function(category) {
+					// Remove from the categories list those selected to be marked
+					return !(category.ui && category.ui.selected);
+				});
+				leaveEditMode();
+			},
+			function() {
+				alert($filter('translate')('errorMarkingElementsAsRead'));
+				leaveEditMode();
+			}
+		);
+	});
 
 	$scope.currentPage = !sectionNavigator.isComingBack() ? 'categories-view' : 'categories-view-back';
 	var categories = null;
+	var editMode = false;
 	var categoryId = $routeParams.categoryId;
 	if(!categoryId) {
 		retrieveCategories();
@@ -97,10 +132,45 @@ function($scope, backendService, feedsCache, sectionNavigator, $routeParams, net
 	}
 
 	$scope.openElement = function(element) {
-		if(element.feed_url) {
-			sectionNavigator.navigateTo(sectionNavigator.section.LIST, element.id);
+		if(!editMode){
+			if(element.feed_url) {
+				sectionNavigator.navigateTo(sectionNavigator.section.LIST, element.id);
+			} else {
+				sectionNavigator.navigateTo(sectionNavigator.section.CATEGORIES, element.id);
+			}
 		} else {
-			sectionNavigator.navigateTo(sectionNavigator.section.CATEGORIES, element.id);
+			if(element.ui && element.ui.selected === true) {
+				element.ui.selected = false;
+				if(getSelectedCategories().length === 0) {
+					leaveEditMode();
+					$rootScope.$broadcast('cancelEditMode');
+				}
+			} else {
+				element.ui = {
+					selected: true
+				};
+			}
 		}
 	};
+
+	$scope.onLongPress = function(category){
+		category.ui = {
+			selected: true
+		};
+		editMode = true;
+		$rootScope.$broadcast('enterEditMode');
+	};
+
+	function leaveEditMode() {
+		editMode = false;
+		$scope.categories.forEach(function(headline){
+			headline.ui = null;
+		});
+	}
+
+	function getSelectedCategories() {
+		return $scope.categories.filter(function(category){
+				return (category.ui && category.ui.selected === true);
+			});
+	}
 }]);

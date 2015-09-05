@@ -81,7 +81,7 @@ function($scope,
 			$scope.offline = false;
 			networkStatusService.setOfflineMode(false);
 			feedsCache.clear();
-			syncService.syncArticlesInServer();
+			syncService.syncWithServer();
 			$scope.backgroundWorkPresent = false;
 			sectionNavigator.navigateTo(sectionNavigator.section.ROOT_SECTION);
 		}

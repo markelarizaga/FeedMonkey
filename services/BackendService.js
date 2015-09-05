@@ -152,6 +152,42 @@ function($q, http, authenticationService, settingsService){
         return deferred.promise;
     }
 
+    function markCategoryAsRead(categoryId, isCategory) {
+        var deferred = $q.defer();
+        var token = authenticationService.getToken();
+        isCategory = (isCategory === null || isCategory === undefined);
+        var options = {
+            "sid": token,
+            "op": "catchupFeed",
+            "feed_id": categoryId,
+            "is_cat": isCategory
+        };
+        http.post(settingsService.getCredentials().serverApiUrl, options,
+            function(xhr) {
+                if(JSON.parse(xhr.responseText).content) {
+                    deferred.resolve(JSON.parse(xhr.responseText).content);
+                } else {
+                    deferred.reject();
+                }
+            }, function(xhr) {
+                deferred.reject(xhr.statusText);
+            }
+        );
+
+        return deferred.promise;
+    }
+
+    function markCategoriesAsRead(categories) {
+        categories = categories.map(function(category){
+			return {id: category.id, isCategory: category.feed_url};
+		})
+        var deferred = $q;
+        var categoriesMarkedAsRead = categories.map(function(item){
+            return markCategoryAsRead(item.id, item.isCategory);
+        });
+        return deferred.all(categoriesMarkedAsRead);
+    }
+
     function removeEmptyFeeds(feeds) {
         var i = 0;
         for(i; i < feeds.length; i++) {
@@ -263,6 +299,7 @@ function($q, http, authenticationService, settingsService){
         downloadHeadlines: downloadHeadlines,
         downloadArticle: downloadArticle,
         markArticlesAsRead: markArticlesAsRead,
+        markCategoriesAsRead: markCategoriesAsRead,
         goOffline: goOffline,
     }
 }]);

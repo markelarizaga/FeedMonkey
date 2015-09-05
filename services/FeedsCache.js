@@ -71,6 +71,14 @@ factory("feedsCache", ['localStorageService', function(localStorageService){
     return null;
   }
 
+  function getArticleListByCategories(categoriesToInspect) {
+      var i = 0;
+      var articleList = [];
+      for(i; i < categories.length; i++) {
+
+      }
+  }
+
   function getElements(elementId) {
     var elementsToReturn = null;
     var i = 0;

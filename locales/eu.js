@@ -35,6 +35,7 @@ tinyRss.locales.eu = {
 
 	/* CATEGORIES */
 	noCategoriesToShow: 'Ez dago kategoriarik eskuragarri',
+	errorMarkingElementsAsRead: 'Errorea gertatu da elementuak irakurrita bezala markatzean',
 
 	/* ARTICLES */
 	articleSwipeHelp: 'Hatza ezker eta eskuinera mugitu artikuluz aldatzeko',

@@ -35,6 +35,7 @@ tinyRss.locales.en = {
 
 	/* CATEGORIES */
 	noCategoriesToShow: 'No categories to show',
+	errorMarkingElementsAsRead: 'There was an error when marking elements as read',
 
 	/* ARTICLES */
 	articleSwipeHelp: 'Swipe left and right to navigate the articles',

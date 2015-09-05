@@ -35,6 +35,7 @@ tinyRss.locales.es = {
 
 	/* CATEGORIES */
 	noCategoriesToShow: 'No hay categorías para mostrar',
+	errorMarkingElementsAsRead: 'Se produjo un error al marcar los elementos como leídos',
 
 	/* ARTICLES */
 	articleSwipeHelp: 'Desliza a izquierda y derecha para navegar entre artículos',
