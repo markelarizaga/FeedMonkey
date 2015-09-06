@@ -48,7 +48,7 @@ function($scope, $routeParams, backendService, feedsCache, networkStatusService,
 		$scope.helpAlreadyShown = true;
 		settingsService.markArticleHelpAsShown();
 		feedsCache.markLocalArticleAsRead($scope.article.feed_id, [$scope.article.id]);
-		backendService.markArticlesAsRead([$scope.article.id]);
+		backendService.markArticlesAsRead([$scope.article]);
 	};
 
 	$timeout(function() {
@@ -81,7 +81,7 @@ function($scope, $routeParams, backendService, feedsCache, networkStatusService,
 			document.getElementById('full').scrollTop = 0;
 			if($scope.article.unread && $scope.helpAlreadyShown) {
 				feedsCache.markLocalArticleAsRead($scope.article.feed_id, [$scope.article.id]);
-				backendService.markArticlesAsRead([$scope.article.id]);
+				backendService.markArticlesAsRead([$scope.article]);
 			}
 			if(!articleList || !articleCursor) {
 				articleList = feedsCache.getHeadlinesList();

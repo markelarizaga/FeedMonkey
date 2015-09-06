@@ -130,6 +130,9 @@ function($q, http, authenticationService, settingsService){
     function markArticlesAsRead(articles){
         var deferred = $q.defer();
         var token = authenticationService.getToken();
+        articles = articles.map(function(article) {
+            return article.id;
+        });
         var options = {
             "sid": token,
             "op": "updateArticle",
@@ -180,7 +183,7 @@ function($q, http, authenticationService, settingsService){
     function markCategoriesAsRead(categories) {
         categories = categories.map(function(category){
 			return {id: category.id, isCategory: category.feed_url};
-		})
+		});
         var deferred = $q;
         var categoriesMarkedAsRead = categories.map(function(item){
             return markCategoryAsRead(item.id, item.isCategory);

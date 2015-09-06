@@ -4,12 +4,12 @@ factory("syncService", ['backendService', function(backendService){
   var articlesToSync = null;
   var categoriesToSync = null;
 
-  function addToSyncPending(article) {
+  function addArticlesToSyncPending(article) {
     if(article) {
       if(!articlesToSync) {
         articlesToSync = [];
       }
-      articlesToSync.push(article);
+      articlesToSync = articlesToSync.concat(article);
     }
   }
 
@@ -18,7 +18,7 @@ factory("syncService", ['backendService', function(backendService){
         if(!categoriesToSync) {
           categoriesToSync = [];
         }
-        categoriesToSync.concat(categories);
+        categoriesToSync = categoriesToSync.concat(categories);
       }
   }
 
@@ -42,7 +42,7 @@ factory("syncService", ['backendService', function(backendService){
   }
 
   return {
-    addToSyncPending: addToSyncPending,
+    addArticlesToSyncPending: addArticlesToSyncPending,
     syncArticlesInServer: syncArticlesInServer,
     addCategoriesToSyncPending: addCategoriesToSyncPending,
     syncWithServer: syncWithServer

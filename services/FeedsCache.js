@@ -71,57 +71,102 @@ factory("feedsCache", ['localStorageService', function(localStorageService){
     return null;
   }
 
-  function getArticleListByCategories(categoriesToInspect) {
-      var i = 0;
+  function containsCategory(categoryList, category) {
+      return categoryList.some(function(item){
+          if(item.id === category.id) {
+              return true;
+          }
+      });
+  }
+
+  function isCategory(category) {
+      return (category.feed_url === null || category.feed_url === undefined);
+  }
+
+  function getAllArticlesUnderCategory(categoryTree) {
       var articleList = [];
-      for(i; i < categories.length; i++) {
-
-      }
-  }
-
-  function getElements(elementId) {
-    var elementsToReturn = null;
-    var i = 0;
-    categories = categories || getPersistent();
-
-    if(categories) {
-      if (elementId === null || elementId === undefined) {
-        elementsToReturn = categories;
-      } else {
-        elementsToReturn = inspectCachedTree(categories, elementId);
-      }
-    }
-    return elementsToReturn;
-  }
-
-  function getElementTitle(elementId) {
-    var returnTitle = "";
-    var i = 0;
-    if(categories && elementId !== null && elementId !== undefined) {
-      for(i; i < categories.length; i++) {
-        if(categories[i].id === elementId) {
-          returnTitle = categories[i].title;
-        }
-      }
-    }
-    return returnTitle;
-  }
-
-  function setHeadlinesList (headlines) {
-    currentHeadlines = headlines;
-  }
-
-  function getHeadlinesList () {
-    return currentHeadlines;
-  }
-
-  function decreaseUnreadAmount(feedInfo) {
       var i = 0;
-      feedInfo.parentFeed.unread--;
-      for(i; i < feedInfo.parentCategories.length; i++) {
-          feedInfo.parentCategories[i].unread--;
+      for(i; i < categoryTree.children.length; i++) {
+          if(categoryTree.children[i].feed_url) {
+              articleList = articleList.concat(categoryTree.children[i].children);
+          } else {
+              articleList = articleList.concat(getAllArticlesUnderCategory(categoryTree.children[i]));
+          }
       }
+      return articleList;
   }
+
+  function removeCategoryFromList(categoryList, category) {
+      return categoryList.filter(function(item){
+          if(item.id !== category.id) {
+              return true;
+          }
+      });
+  }
+
+    function getArticleListByCategories(categoriesToInspect, subtree) {
+        var i = 0;
+        var articleList = [];
+        var cachedCategories = subtree || categories;
+        for(i; i < cachedCategories.length; i++) {
+            if(isCategory(cachedCategories[i])){
+                if (containsCategory(categoriesToInspect, cachedCategories[i])){
+                    categoriesToInspect = removeCategoryFromList(categoriesToInspect, cachedCategories[i]);
+                    articleList = articleList.concat(getAllArticlesUnderCategory(cachedCategories[i]));
+                } else if(cachedCategories[i].children) {
+                    articleList = articleList.concat(getArticleListByCategories(categoriesToInspect, cachedCategories[i].children));
+                }
+            }
+            if(categoriesToInspect.length === 0){
+                return articleList;
+            }
+        }
+        return articleList;
+    }
+
+    function getElements(elementId) {
+        var elementsToReturn = null;
+        var i = 0;
+        categories = categories || getPersistent();
+
+        if(categories) {
+            if (elementId === null || elementId === undefined) {
+                elementsToReturn = categories;
+            } else {
+                elementsToReturn = inspectCachedTree(categories, elementId);
+            }
+        }
+        return elementsToReturn;
+    }
+
+    function getElementTitle(elementId) {
+        var returnTitle = "";
+        var i = 0;
+        if(categories && elementId !== null && elementId !== undefined) {
+            for(i; i < categories.length; i++) {
+                if(categories[i].id === elementId) {
+                    returnTitle = categories[i].title;
+                }
+            }
+        }
+        return returnTitle;
+    }
+
+    function setHeadlinesList (headlines) {
+        currentHeadlines = headlines;
+    }
+
+    function getHeadlinesList () {
+        return currentHeadlines;
+    }
+
+    function decreaseUnreadAmount(feedInfo) {
+        var i = 0;
+        feedInfo.parentFeed.unread--;
+        for(i; i < feedInfo.parentCategories.length; i++) {
+            feedInfo.parentCategories[i].unread--;
+        }
+    }
 
     function markLocalArticleAsRead(feedId, articleIds) {
         var feedInfo = null;
@@ -158,6 +203,7 @@ factory("feedsCache", ['localStorageService', function(localStorageService){
         setHeadlinesList: setHeadlinesList,
         getHeadlinesList: getHeadlinesList,
         markLocalArticleAsRead: markLocalArticleAsRead,
-        setOfflineFeeds: setOfflineFeeds
-  };
+        setOfflineFeeds: setOfflineFeeds,
+        getArticleListByCategories: getArticleListByCategories
+    };
 }]);

@@ -24,23 +24,25 @@ function($scope,
 	});
 
 	$scope.$on('markSelectedAsRead', function(){
-		backendService.markCategoriesAsRead(getSelectedCategories())
-		.then(
-			function() {
-				if(networkStatusService.isOfflineMode()) {
-					syncService.addCategoriesToSyncPending($scope.categories);
+		var articlesToMarkAsRead = null;
+		if(networkStatusService.isOfflineMode()) {
+			articlesToMarkAsRead = feedsCache.getArticleListByCategories(getSelectedCategories());
+			syncService.addArticlesToSyncPending(articlesToMarkAsRead);
+			hideMarkAsReadCategories();
+			leaveEditMode();
+		} else {
+			backendService.markCategoriesAsRead(getSelectedCategories())
+			.then(
+				function() {
+					hideMarkAsReadCategories();
+					leaveEditMode();
+				},
+				function() {
+					alert($filter('translate')('errorMarkingElementsAsRead'));
+					leaveEditMode();
 				}
-				$scope.categories = $scope.categories.filter(function(category) {
-					// Remove from the categories list those selected to be marked
-					return !(category.ui && category.ui.selected);
-				});
-				leaveEditMode();
-			},
-			function() {
-				alert($filter('translate')('errorMarkingElementsAsRead'));
-				leaveEditMode();
-			}
-		);
+			);
+		}
 	});
 
 	$scope.currentPage = !sectionNavigator.isComingBack() ? 'categories-view' : 'categories-view-back';
@@ -51,6 +53,13 @@ function($scope,
 		retrieveCategories();
 	} else {
 		retrieveFeedsByCategoryId(categoryId);
+	}
+
+	function hideMarkAsReadCategories() {
+		$scope.categories = $scope.categories.filter(function(category) {
+			// Remove from the categories list those selected to be marked
+			return !(category.ui && category.ui.selected);
+		});
 	}
 
 	function retrieveCategories() {
