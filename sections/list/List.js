@@ -25,10 +25,7 @@ function($scope,
 	});
 
 	$scope.$on('markSelectedAsRead', function(){
-		var selectedArticlesIds = getSelectedAndUnreadHeadlines()
-				.map(function(headline){
-					return headline.id;
-				});
+		var selectedArticlesIds = getSelectedAndUnreadHeadlines();
 		feedsCache.markLocalArticleAsRead($routeParams.feedId, selectedArticlesIds);
 		backendService.markArticlesAsRead(selectedArticlesIds);
 		leaveEditMode();

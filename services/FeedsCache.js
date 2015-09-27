@@ -83,18 +83,32 @@ factory("feedsCache", ['localStorageService', function(localStorageService){
       return (category.feed_url === null || category.feed_url === undefined);
   }
 
-  function getAllArticlesUnderCategory(categoryTree) {
-      var articleList = [];
-      var i = 0;
-      for(i; i < categoryTree.children.length; i++) {
-          if(categoryTree.children[i].feed_url) {
-              articleList = articleList.concat(categoryTree.children[i].children);
-          } else {
-              articleList = articleList.concat(getAllArticlesUnderCategory(categoryTree.children[i]));
-          }
-      }
-      return articleList;
-  }
+    function isFeed(feed) {
+        return (feed.feed_url !== null && feed.feed_url !== undefined);
+    }
+
+    function isArticle(article) {
+        return (article.author !== null && article.author !== undefined);
+    }
+
+    function getAllArticlesUnderCategory(categoryTree) {
+        var articleList = [];
+        var i = 0;
+        if(categoryTree.children) {
+            for(i; i < categoryTree.children.length; i++) {
+                if(isArticle(categoryTree.children[i])){
+                    articleList.push(categoryTree.children[i]);
+                } else if(categoryTree.children[i].feed_url) {
+                    articleList = articleList.concat(categoryTree.children[i].children);
+                } else {
+                    articleList = articleList.concat(getAllArticlesUnderCategory(categoryTree.children[i]));
+                }
+            }
+        } else if(categoryTree[i] && isArticle(categoryTree[i])) {
+            articleList = categoryTree;
+        }
+        return articleList;
+    }
 
   function removeCategoryFromList(categoryList, category) {
       return categoryList.filter(function(item){
@@ -109,7 +123,7 @@ factory("feedsCache", ['localStorageService', function(localStorageService){
         var articleList = [];
         var cachedCategories = subtree || categories;
         for(i; i < cachedCategories.length; i++) {
-            if(isCategory(cachedCategories[i])){
+            if(isCategory(cachedCategories[i]) || isFeed(cachedCategories[i])){
                 if (containsCategory(categoriesToInspect, cachedCategories[i])){
                     categoriesToInspect = removeCategoryFromList(categoriesToInspect, cachedCategories[i]);
                     articleList = articleList.concat(getAllArticlesUnderCategory(cachedCategories[i]));
