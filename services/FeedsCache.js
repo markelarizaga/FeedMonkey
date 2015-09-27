@@ -110,20 +110,20 @@ factory("feedsCache", ['localStorageService', function(localStorageService){
         return articleList;
     }
 
-  function removeCategoryFromList(categoryList, category) {
-      return categoryList.filter(function(item){
-          if(item.id !== category.id) {
-              return true;
-          }
-      });
-  }
+    function removeCategoryFromList(categoryList, category) {
+        return categoryList.filter(function(item){
+            if(item.id !== category.id) {
+                return true;
+            }
+        });
+    }
 
     function getArticleListByCategories(categoriesToInspect, subtree) {
         var i = 0;
         var articleList = [];
         var cachedCategories = subtree || categories;
         for(i; i < cachedCategories.length; i++) {
-            if(isCategory(cachedCategories[i]) || isFeed(cachedCategories[i])){
+            if(!isArticle(cachedCategories[i]) && (isCategory(cachedCategories[i]) || isFeed(cachedCategories[i]))){
                 if (containsCategory(categoriesToInspect, cachedCategories[i])){
                     categoriesToInspect = removeCategoryFromList(categoriesToInspect, cachedCategories[i]);
                     articleList = articleList.concat(getAllArticlesUnderCategory(cachedCategories[i]));
