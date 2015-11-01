@@ -22,6 +22,7 @@ function($scope,
 	$scope.isRoot = true;
 	$scope.offline = false;
 	$scope.backgroundWorkPresent = false;
+	$scope.allItemsSelected = false;
 	var previousHeaderStatus = null;
 
 	sectionNavigator.addEventListener("onSectionChanged", function(newSection){
@@ -55,6 +56,10 @@ function($scope,
 
 	$scope.$on('cancelEditMode', function() {
 		$scope.status = 'default';
+	});
+
+	$scope.$on('allItemsSelected', function() {
+		$scope.allItemsSelected = !$scope.allItemsSelected;
 	});
 
 	$scope.goBack = function() {
@@ -100,10 +105,16 @@ function($scope,
 	$scope.leaveEditMode = function() {
 		$scope.status = previousHeaderStatus;
 		$rootScope.$broadcast('exitEditMode');
+		$scope.allItemsSelected = false;
 	};
 
 	$scope.sendMarkAsReadEvent = function() {
 		$scope.status = previousHeaderStatus;
 		$rootScope.$broadcast('markSelectedAsRead');
 	};
+
+	$scope.sendSelectAllEvent = function() {
+		$rootScope.$broadcast('selectAll');
+		$scope.allItemsSelected = true;
+	}
 }]);

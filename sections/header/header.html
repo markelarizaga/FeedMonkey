@@ -19,6 +19,9 @@
 	<a ng-show="status === 'editMode'" ng-click="sendMarkAsReadEvent()" class="btn-buttons">
 		<span class="icon icon-mark-as-read">mark as read</span>
 	</a>
+	<a ng-show="status === 'editMode' && !allItemsSelected" ng-click="sendSelectAllEvent()" class="btn-buttons">
+		<span class="icon icon-select-all">select all</span>
+	</a>
 	<a ng-show="status === 'settings'" ng-click="goBack()" class="btn-buttons icon-done" translate>
 		done
 	</a>

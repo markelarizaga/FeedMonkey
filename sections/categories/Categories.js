@@ -52,6 +52,10 @@ function($scope,
 		feedsCache.popTreeLevel();
 	});
 
+	$scope.$on('selectAll', function(){
+		selectAll();
+	});
+
 	$scope.currentPage = !sectionNavigator.isComingBack() ? 'categories-view' : 'categories-view-back';
 	var categories = null;
 	var editMode = false;
@@ -157,6 +161,9 @@ function($scope,
 			}
 		} else {
 			if(element.ui && element.ui.selected === true) {
+				if(areAllCategoriesSelected()){
+					$rootScope.$broadcast('allItemsSelected');
+				}
 				element.ui.selected = false;
 				if(getSelectedCategories().length === 0) {
 					leaveEditMode();
@@ -166,6 +173,9 @@ function($scope,
 				element.ui = {
 					selected: true
 				};
+				if(areAllCategoriesSelected()){
+					$rootScope.$broadcast('allItemsSelected');
+				}
 			}
 		}
 	};
@@ -176,6 +186,9 @@ function($scope,
 		};
 		editMode = true;
 		$rootScope.$broadcast('enterEditMode');
+		if(areAllCategoriesSelected()){
+			$rootScope.$broadcast('allItemsSelected');
+		}
 	};
 
 	function leaveEditMode() {
@@ -189,5 +202,24 @@ function($scope,
 		return $scope.categories.filter(function(category){
 				return (category.ui && category.ui.selected === true);
 			});
+	}
+
+	function isAnyCategorySelected () {
+	  return $scope.categories.some(function(category) {
+	    return category.ui && category.ui.selected;
+	  });
+	}
+
+	function areAllCategoriesSelected() {
+		return $scope.categories.every(function(category) {
+	    return category.ui && category.ui.selected;
+	  });
+	}
+
+	function selectAll () {
+		$scope.categories.forEach(function(category){
+			category.ui = category.ui || {};
+			category.ui.selected = true;
+		});
 	}
 }]);

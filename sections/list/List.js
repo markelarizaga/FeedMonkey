@@ -24,6 +24,10 @@ function($scope,
 		leaveEditMode();
 	});
 
+	$scope.$on('selectAll', function(){
+			selectAll();
+	});
+
 	$scope.$on('markSelectedAsRead', function(){
 		var selectedArticlesIds = getSelectedAndUnreadHeadlines()
 				.map(function(headline){
@@ -73,10 +77,12 @@ function($scope,
 
 	$scope.openElement = function(element) {
 		if(!editMode) {
-
 			sectionNavigator.navigateTo(sectionNavigator.section.ARTICLES, element.id);
 		} else {
 			if(element.ui && element.ui.selected === true) {
+				if(areAllHeadlinesSelected()){
+					$rootScope.$broadcast('allItemsSelected');
+				}
 				element.ui.selected = false;
 				if(getSelectedHeadlines().length === 0) {
 					leaveEditMode();
@@ -86,6 +92,9 @@ function($scope,
 				element.ui = {
 					selected: true
 				};
+				if(areAllHeadlinesSelected()){
+					$rootScope.$broadcast('allItemsSelected');
+				}
 			}
 		}
 	};
@@ -96,6 +105,9 @@ function($scope,
 		};
 		editMode = true;
 		$rootScope.$broadcast('enterEditMode');
+		if(areAllHeadlinesSelected()){
+			$rootScope.$broadcast('allItemsSelected');
+		}
 	};
 
 	function leaveEditMode() {
@@ -115,6 +127,25 @@ function($scope,
 		return $scope.headlines.filter(function(headline){
 				return (headline.unread && headline.ui && headline.ui.selected === true);
 			});
+	}
+
+	function isAnyHeadlineSelected () {
+	  return $scope.headlines.some(function(headline) {
+	    return headline.ui && headline.ui.selected;
+	  });
+	}
+
+	function areAllHeadlinesSelected() {
+		return $scope.headlines.every(function(headline) {
+	    return headline.ui && headline.ui.selected;
+	  });
+	}
+
+	function selectAll () {
+		$scope.headlines.forEach(function(headline){
+			headline.ui = headline.ui || {};
+			headline.ui.selected = true;
+		});
 	}
 
 }]);
