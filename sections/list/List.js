@@ -8,6 +8,7 @@ controller('List',
 	'networkStatusService',
 	'backgroundActivityService',
 	'$rootScope',
+	'ListService',
 function($scope,
 		feedsCache,
 		backendService,
@@ -15,7 +16,8 @@ function($scope,
 		sectionNavigator,
 		networkStatusService,
 		backgroundActivityService,
-		$rootScope) {
+		$rootScope,
+		listService) {
 
 	$scope.currentPage = !sectionNavigator.isComingBack() ? 'headlines-view' : 'headlines-view-back';
 	var editMode = false;
@@ -25,7 +27,7 @@ function($scope,
 	});
 
 	$scope.$on('selectAll', function(){
-			selectAll();
+			listService.selectAll($scope.headlines);
 	});
 
 	$scope.$on('markSelectedAsRead', function(){
@@ -80,11 +82,11 @@ function($scope,
 			sectionNavigator.navigateTo(sectionNavigator.section.ARTICLES, element.id);
 		} else {
 			if(element.ui && element.ui.selected === true) {
-				if(areAllHeadlinesSelected()){
+				if(listService.areAllSelected($scope.headlines)){
 					$rootScope.$broadcast('allItemsSelected');
 				}
 				element.ui.selected = false;
-				if(getSelectedHeadlines().length === 0) {
+				if(listService.getSelected($scope.headlines).length === 0) {
 					leaveEditMode();
 					$rootScope.$broadcast('cancelEditMode');
 				}
@@ -92,7 +94,7 @@ function($scope,
 				element.ui = {
 					selected: true
 				};
-				if(areAllHeadlinesSelected()){
+				if(listService.areAllSelected($scope.headlines)){
 					$rootScope.$broadcast('allItemsSelected');
 				}
 			}
@@ -105,7 +107,7 @@ function($scope,
 		};
 		editMode = true;
 		$rootScope.$broadcast('enterEditMode');
-		if(areAllHeadlinesSelected()){
+		if(listService.areAllSelected($scope.headlines)){
 			$rootScope.$broadcast('allItemsSelected');
 		}
 	};
@@ -117,35 +119,9 @@ function($scope,
 		});
 	}
 
-	function getSelectedHeadlines() {
-		return $scope.headlines.filter(function(headline){
-				return (headline.ui && headline.ui.selected === true);
-			});
-	}
-
 	function getSelectedAndUnreadHeadlines() {
 		return $scope.headlines.filter(function(headline){
 				return (headline.unread && headline.ui && headline.ui.selected === true);
 			});
 	}
-
-	function isAnyHeadlineSelected () {
-	  return $scope.headlines.some(function(headline) {
-	    return headline.ui && headline.ui.selected;
-	  });
-	}
-
-	function areAllHeadlinesSelected() {
-		return $scope.headlines.every(function(headline) {
-	    return headline.ui && headline.ui.selected;
-	  });
-	}
-
-	function selectAll () {
-		$scope.headlines.forEach(function(headline){
-			headline.ui = headline.ui || {};
-			headline.ui.selected = true;
-		});
-	}
-
 }]);

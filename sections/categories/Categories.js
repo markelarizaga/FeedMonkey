@@ -9,6 +9,7 @@ controller('Categories',
 	'backgroundActivityService',
 	'$rootScope',
 	'syncService',
+	'ListService',
 function($scope,
 		backendService,
 		feedsCache,
@@ -17,7 +18,8 @@ function($scope,
 		networkStatusService,
 		backgroundActivityService,
 		$rootScope,
-		syncService) {
+		syncService,
+		listService) {
 
 	$scope.$on('exitEditMode', function(){
 		leaveEditMode();
@@ -25,7 +27,7 @@ function($scope,
 
 	$scope.$on('markSelectedAsRead', function(){
 		var articlesToMarkAsRead = null;
-		var selectedCategories = getSelectedCategories();
+		var selectedCategories = listService.getSelected($scope.categories);
 		if(networkStatusService.isOfflineMode()) {
 			articlesToMarkAsRead = feedsCache.getArticleListByCategories(selectedCategories);
 			syncService.addArticlesToSyncPending(articlesToMarkAsRead);
@@ -53,7 +55,7 @@ function($scope,
 	});
 
 	$scope.$on('selectAll', function(){
-		selectAll();
+		listService.selectAll($scope.categories);
 	});
 
 	$scope.currentPage = !sectionNavigator.isComingBack() ? 'categories-view' : 'categories-view-back';
@@ -161,11 +163,11 @@ function($scope,
 			}
 		} else {
 			if(element.ui && element.ui.selected === true) {
-				if(areAllCategoriesSelected()){
+				if(listService.areAllSelected($scope.categories)){
 					$rootScope.$broadcast('allItemsSelected');
 				}
 				element.ui.selected = false;
-				if(getSelectedCategories().length === 0) {
+				if(listService.getSelected($scope.categories).length === 0) {
 					leaveEditMode();
 					$rootScope.$broadcast('cancelEditMode');
 				}
@@ -173,7 +175,7 @@ function($scope,
 				element.ui = {
 					selected: true
 				};
-				if(areAllCategoriesSelected()){
+				if(listService.areAllSelected($scope.categories)){
 					$rootScope.$broadcast('allItemsSelected');
 				}
 			}
@@ -186,7 +188,7 @@ function($scope,
 		};
 		editMode = true;
 		$rootScope.$broadcast('enterEditMode');
-		if(areAllCategoriesSelected()){
+		if(listService.areAllSelected($scope.categories)){
 			$rootScope.$broadcast('allItemsSelected');
 		}
 	};
@@ -195,31 +197,6 @@ function($scope,
 		editMode = false;
 		$scope.categories.forEach(function(headline){
 			headline.ui = null;
-		});
-	}
-
-	function getSelectedCategories() {
-		return $scope.categories.filter(function(category){
-				return (category.ui && category.ui.selected === true);
-			});
-	}
-
-	function isAnyCategorySelected () {
-	  return $scope.categories.some(function(category) {
-	    return category.ui && category.ui.selected;
-	  });
-	}
-
-	function areAllCategoriesSelected() {
-		return $scope.categories.every(function(category) {
-	    return category.ui && category.ui.selected;
-	  });
-	}
-
-	function selectAll () {
-		$scope.categories.forEach(function(category){
-			category.ui = category.ui || {};
-			category.ui.selected = true;
 		});
 	}
 }]);
