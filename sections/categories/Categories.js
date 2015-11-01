@@ -25,16 +25,19 @@ function($scope,
 
 	$scope.$on('markSelectedAsRead', function(){
 		var articlesToMarkAsRead = null;
+		var selectedCategories = getSelectedCategories();
 		if(networkStatusService.isOfflineMode()) {
-			articlesToMarkAsRead = feedsCache.getArticleListByCategories(getSelectedCategories());
+			articlesToMarkAsRead = feedsCache.getArticleListByCategories(selectedCategories);
 			syncService.addArticlesToSyncPending(articlesToMarkAsRead);
 			hideMarkAsReadCategories();
+			feedsCache.decreaseUnreadAmountInPath(selectedCategories);
 			leaveEditMode();
 		} else {
-			backendService.markCategoriesAsRead(getSelectedCategories())
+			backendService.markCategoriesAsRead(selectedCategories)
 			.then(
 				function() {
 					hideMarkAsReadCategories();
+					feedsCache.decreaseUnreadAmountInPath(selectedCategories);
 					leaveEditMode();
 				},
 				function() {
@@ -43,6 +46,10 @@ function($scope,
 				}
 			);
 		}
+	});
+
+	$scope.$on('backPressed', function(){
+		feedsCache.popTreeLevel();
 	});
 
 	$scope.currentPage = !sectionNavigator.isComingBack() ? 'categories-view' : 'categories-view-back';
@@ -142,6 +149,7 @@ function($scope,
 
 	$scope.openElement = function(element) {
 		if(!editMode){
+			feedsCache.pushTreeLevel(element);
 			if(element.feed_url) {
 				sectionNavigator.navigateTo(sectionNavigator.section.LIST, element.id);
 			} else {

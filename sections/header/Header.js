@@ -60,6 +60,7 @@ function($scope,
 	$scope.goBack = function() {
 		backgroundActivityService.notifyBackgroundActivityStopped();
 		sectionNavigator.back();
+		$rootScope.$broadcast('backPressed');
 	};
 
 	$scope.toggleOffline = function() {

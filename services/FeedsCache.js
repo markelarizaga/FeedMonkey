@@ -3,6 +3,41 @@ factory("feedsCache", ['localStorageService', function(localStorageService){
 
   var categories = null;
   var currentHeadlines = null;
+  var currentPath = [];
+
+  return {
+      addToCache: addToCache,
+      clear: clear,
+      getElements: getElements,
+      getElementTitle: getElementTitle,
+      setHeadlinesList: setHeadlinesList,
+      getHeadlinesList: getHeadlinesList,
+      markLocalArticleAsRead: markLocalArticleAsRead,
+      setOfflineFeeds: setOfflineFeeds,
+      getArticleListByCategories: getArticleListByCategories,
+      pushTreeLevel: pushTreeLevel,
+      popTreeLevel: popTreeLevel,
+      decreaseUnreadAmountInPath: decreaseUnreadAmountInPath
+  };
+
+  function decreaseUnreadAmountInPath(categoriesMarkedAsRead) {
+    var unreadElements = categoriesMarkedAsRead.reduce(function(unreadElements, category){
+      return unreadElements + category.unread;
+    }, 0);
+    currentPath = currentPath.forEach(function(pathLevel){
+      pathLevel.unread -= unreadElements;
+    });
+  }
+
+  function pushTreeLevel(level){
+    currentPath = currentPath || [];
+    currentPath.push(level);
+  }
+
+  function popTreeLevel(){
+    currentPath = currentPath || [];
+    currentPath.pop();
+  }
 
   function makePersistent(obj) {
     localStorageService.set('feeds',JSON.stringify(obj));
@@ -194,16 +229,4 @@ factory("feedsCache", ['localStorageService', function(localStorageService){
     function setOfflineFeeds(feeds) {
         categories = feeds;
     }
-
-    return {
-        addToCache: addToCache,
-        clear: clear,
-        getElements: getElements,
-        getElementTitle: getElementTitle,
-        setHeadlinesList: setHeadlinesList,
-        getHeadlinesList: getHeadlinesList,
-        markLocalArticleAsRead: markLocalArticleAsRead,
-        setOfflineFeeds: setOfflineFeeds,
-        getArticleListByCategories: getArticleListByCategories
-    };
 }]);

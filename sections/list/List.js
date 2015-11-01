@@ -34,6 +34,10 @@ function($scope,
 		leaveEditMode();
 	});
 
+	$scope.$on('backPressed', function(){
+		feedsCache.popTreeLevel();
+	});
+
 	backgroundActivityService.notifyBackgroundActivity();
 	if(networkStatusService.isOnline() && !sectionNavigator.isComingBack()) {
 		backendService.downloadHeadlines($routeParams.feedId, true)
@@ -69,6 +73,7 @@ function($scope,
 
 	$scope.openElement = function(element) {
 		if(!editMode) {
+
 			sectionNavigator.navigateTo(sectionNavigator.section.ARTICLES, element.id);
 		} else {
 			if(element.ui && element.ui.selected === true) {

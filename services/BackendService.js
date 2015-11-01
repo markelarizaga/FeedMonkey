@@ -182,8 +182,8 @@ function($q, http, authenticationService, settingsService){
 
     function markCategoriesAsRead(categories) {
         categories = categories.map(function(category){
-			return {id: category.id, isCategory: category.feed_url};
-		});
+    			return {id: category.id, isCategory: category.feed_url};
+    		});
         var deferred = $q;
         var categoriesMarkedAsRead = categories.map(function(item){
             return markCategoryAsRead(item.id, item.isCategory);
