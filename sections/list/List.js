@@ -31,12 +31,9 @@ function($scope,
 	});
 
 	$scope.$on('markSelectedAsRead', function(){
-		var selectedArticlesIds = getSelectedAndUnreadHeadlines()
-				.map(function(headline){
-					return headline.id;
-				});
-		feedsCache.markLocalArticleAsRead($routeParams.feedId, selectedArticlesIds);
-		backendService.markArticlesAsRead(selectedArticlesIds);
+		var selectedArticles = getSelectedAndUnreadHeadlines();
+		feedsCache.markLocalArticleAsRead($routeParams.feedId, selectedArticles);
+		backendService.markArticlesAsRead(selectedArticles);
 		leaveEditMode();
 	});
 

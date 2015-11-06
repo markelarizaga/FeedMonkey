@@ -29,20 +29,22 @@ function($scope,
 		var articlesToMarkAsRead = null;
 		var selectedCategories = listService.getSelected($scope.categories);
 		if(networkStatusService.isOfflineMode()) {
-			articlesToMarkAsRead = feedsCache.getArticleListByCategories(selectedCategories);
+			articlesToMarkAsRead = feedsCache.getAllArticlesUnderCategories(selectedCategories);
 			syncService.addArticlesToSyncPending(articlesToMarkAsRead);
 			hideMarkAsReadCategories();
 			feedsCache.decreaseUnreadAmountInPath(selectedCategories);
 			leaveEditMode();
 		} else {
+			hideMarkAsReadCategories();
+			feedsCache.decreaseUnreadAmountInPath(selectedCategories);
+			leaveEditMode();
 			backendService.markCategoriesAsRead(selectedCategories)
 			.then(
 				function() {
-					hideMarkAsReadCategories();
-					feedsCache.decreaseUnreadAmountInPath(selectedCategories);
-					leaveEditMode();
+					backgroundActivityService.notifyBackgroundActivityStopped();
 				},
 				function() {
+					backgroundActivityService.notifyBackgroundActivityStopped();
 					alert($filter('translate')('errorMarkingElementsAsRead'));
 					leaveEditMode();
 				}

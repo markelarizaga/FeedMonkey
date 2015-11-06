@@ -23,14 +23,14 @@ factory("syncService", ['backendService', function(backendService){
   }
 
   function syncArticlesInServer() {
-    if(articlesToSync) {
+    if(articlesToSync && articlesToSync.length > 0) {
       backendService.markArticlesAsRead(articlesToSync);
       articlesToSync = null;
     }
   }
 
   function syncCategoriesInServer() {
-    if(categoriesToSync) {
+    if(categoriesToSync && categoriesToSync.length > 0) {
       backendService.markCategoriesAsRead(categoriesToSync);
       categoriesToSync = null;
     }

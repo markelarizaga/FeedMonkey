@@ -110,6 +110,7 @@ function($scope,
 
 	$scope.sendMarkAsReadEvent = function() {
 		$scope.status = previousHeaderStatus;
+		$scope.backgroundWorkPresent = true;
 		$rootScope.$broadcast('markSelectedAsRead');
 	};
 

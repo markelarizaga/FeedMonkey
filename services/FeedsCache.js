@@ -14,7 +14,7 @@ factory("feedsCache", ['localStorageService', function(localStorageService){
       getHeadlinesList: getHeadlinesList,
       markLocalArticleAsRead: markLocalArticleAsRead,
       setOfflineFeeds: setOfflineFeeds,
-      getArticleListByCategories: getArticleListByCategories,
+      getAllArticlesUnderCategories: getAllArticlesUnderCategories,
       pushTreeLevel: pushTreeLevel,
       popTreeLevel: popTreeLevel,
       decreaseUnreadAmountInPath: decreaseUnreadAmountInPath
@@ -24,9 +24,11 @@ factory("feedsCache", ['localStorageService', function(localStorageService){
     var unreadElements = categoriesMarkedAsRead.reduce(function(unreadElements, category){
       return unreadElements + category.unread;
     }, 0);
-    currentPath = currentPath.forEach(function(pathLevel){
-      pathLevel.unread -= unreadElements;
-    });
+    if(currentPath) {
+      currentPath = currentPath.forEach(function(pathLevel){
+        pathLevel.unread -= unreadElements;
+      });
+    }
   }
 
   function pushTreeLevel(level){
@@ -118,15 +120,27 @@ factory("feedsCache", ['localStorageService', function(localStorageService){
       return (category.feed_url === null || category.feed_url === undefined);
   }
 
+  function getAllArticlesUnderCategories(categories) {
+    var articles = [];
+    for(var i = 0; i < categories.length; i++){
+      articles = articles.concat(getAllArticlesUnderCategory(categories[i]));
+    }
+    return articles;
+  }
+
   function getAllArticlesUnderCategory(categoryTree) {
       var articleList = [];
       var i = 0;
-      for(i; i < categoryTree.children.length; i++) {
-          if(categoryTree.children[i].feed_url) {
-              articleList = articleList.concat(categoryTree.children[i].children);
-          } else {
-              articleList = articleList.concat(getAllArticlesUnderCategory(categoryTree.children[i]));
-          }
+      if(categoryTree.children) {
+        for(i; i < categoryTree.children.length; i++) {
+            if(categoryTree.children[i].feed_url) {
+                articleList = articleList.concat(categoryTree.children[i].children);
+            } else if(categoryTree.children[i].content){
+                articleList.push(categoryTree.children[i]);
+            } else {
+                articleList = articleList.concat(getAllArticlesUnderCategory(categoryTree.children[i]));
+            }
+        }
       }
       return articleList;
   }
@@ -138,26 +152,6 @@ factory("feedsCache", ['localStorageService', function(localStorageService){
           }
       });
   }
-
-    function getArticleListByCategories(categoriesToInspect, subtree) {
-        var i = 0;
-        var articleList = [];
-        var cachedCategories = subtree || categories;
-        for(i; i < cachedCategories.length; i++) {
-            if(isCategory(cachedCategories[i])){
-                if (containsCategory(categoriesToInspect, cachedCategories[i])){
-                    categoriesToInspect = removeCategoryFromList(categoriesToInspect, cachedCategories[i]);
-                    articleList = articleList.concat(getAllArticlesUnderCategory(cachedCategories[i]));
-                } else if(cachedCategories[i].children) {
-                    articleList = articleList.concat(getArticleListByCategories(categoriesToInspect, cachedCategories[i].children));
-                }
-            }
-            if(categoriesToInspect.length === 0){
-                return articleList;
-            }
-        }
-        return articleList;
-    }
 
     function getElements(elementId) {
         var elementsToReturn = null;
@@ -203,10 +197,13 @@ factory("feedsCache", ['localStorageService', function(localStorageService){
         }
     }
 
-    function markLocalArticleAsRead(feedId, articleIds) {
+    function markLocalArticleAsRead(feedId, articles) {
         var feedInfo = null;
         var articleList = null;
         var i = 0, j = 0;
+        var articleIds = articles.map(function(article){
+					return article.id;
+				});
         categories = categories || getPersistent();
 
         if(categories) {
