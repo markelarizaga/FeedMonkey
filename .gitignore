@@ -1,6 +1,7 @@
 .DS_Store
+.sass-cache
 style/style.css
 style/style.css.map
 bower_components/
 node_modules/
-.sass-cache
+dist
