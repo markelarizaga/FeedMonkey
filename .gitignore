@@ -2,4 +2,5 @@
 style/style.css
 style/style.css.map
 bower_components/
+node_modules/
 .sass-cache
