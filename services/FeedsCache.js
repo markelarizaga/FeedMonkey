@@ -25,8 +25,18 @@ factory("feedsCache", ['localStorageService', function(localStorageService){
       return unreadElements + category.unread;
     }, 0);
     if(currentPath) {
-      currentPath = currentPath.forEach(function(pathLevel){
+      currentPath.forEach(function(pathLevel){
         pathLevel.unread -= unreadElements;
+      });
+    }
+  if(currentPath){
+      var visibleCategories = currentPath[currentPath.length-1].children;
+      categoriesMarkedAsRead.forEach(function(readCategory, index){
+        for(var i = 0; i < visibleCategories.length; i++){
+          if(readCategory.id === visibleCategories[i].id){
+            visibleCategories.splice(i,1);
+          }
+        }
       });
     }
   }

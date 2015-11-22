@@ -288,7 +288,7 @@ input[type=text], input[type=password] {
 		animation: slideInRight $fast;
 	}
 
-	&.headlines-view-back.ng-enter, &.categories-view-back.ng-enter {
+	&.headlines-view-back.ng-enter {
 		animation: slideInLeft $fast;
 	}
 

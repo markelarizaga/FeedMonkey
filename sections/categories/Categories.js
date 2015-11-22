@@ -34,6 +34,7 @@ function($scope,
 			hideMarkAsReadCategories();
 			feedsCache.decreaseUnreadAmountInPath(selectedCategories);
 			leaveEditMode();
+			backgroundActivityService.notifyBackgroundActivityStopped();
 		} else {
 			hideMarkAsReadCategories();
 			feedsCache.decreaseUnreadAmountInPath(selectedCategories);
@@ -60,7 +61,7 @@ function($scope,
 		listService.selectAll($scope.categories);
 	});
 
-	$scope.currentPage = !sectionNavigator.isComingBack() ? 'categories-view' : 'categories-view-back';
+	$scope.currentPage = 'categories-view';
 	var categories = null;
 	var editMode = false;
 	var categoryId = $routeParams.categoryId;
