@@ -35,6 +35,7 @@ function($scope,
 		feedsCache.markLocalArticleAsRead($routeParams.feedId, selectedArticles);
 		backendService.markArticlesAsRead(selectedArticles);
 		leaveEditMode();
+		backgroundActivityService.notifyBackgroundActivityStopped();
 	});
 
 	$scope.$on('backPressed', function(){
