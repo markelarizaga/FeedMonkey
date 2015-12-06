@@ -7,7 +7,6 @@ controller('Header',
 		'networkStatusService',
 		'syncService',
 		'$filter',
-		'backgroundActivityService',
 		'$rootScope',
 function($scope,
 		sectionNavigator,
@@ -16,7 +15,6 @@ function($scope,
 		networkStatusService,
 		syncService,
 		$filter,
-		backgroundActivityService,
 		$rootScope) {
 
 	$scope.isRoot = true;
@@ -38,10 +36,10 @@ function($scope,
 		}
 	});
 
-	backgroundActivityService.addEventListener('onActivityPresent', function(){
+	$scope.$on('backgroundActivityStarted', function(){
 		$scope.backgroundWorkPresent = true;
 	});
-	backgroundActivityService.addEventListener('onActivityStopped', function(){
+	$scope.$on('backgroundActivityStoped', function(){
 		$scope.backgroundWorkPresent = false;
 	});
 
@@ -63,7 +61,7 @@ function($scope,
 	});
 
 	$scope.goBack = function() {
-		backgroundActivityService.notifyBackgroundActivityStopped();
+		$rootScope.$broadcast('backgroundActivityStoped');
 		sectionNavigator.back();
 		$rootScope.$broadcast('backPressed');
 	};
@@ -94,7 +92,7 @@ function($scope,
 	};
 
 	$scope.openSettings = function() {
-		backgroundActivityService.notifyBackgroundActivityStopped();
+		$rootScope.$broadcast('backgroundActivityStoped');
 		sectionNavigator.navigateTo(sectionNavigator.section.SETTINGS);
 	};
 

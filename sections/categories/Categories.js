@@ -6,7 +6,6 @@ controller('Categories',
 	'sectionNavigator',
 	'$routeParams',
 	'networkStatusService',
-	'backgroundActivityService',
 	'$rootScope',
 	'syncService',
 	'ListService',
@@ -16,7 +15,6 @@ function($scope,
 		sectionNavigator,
 		$routeParams,
 		networkStatusService,
-		backgroundActivityService,
 		$rootScope,
 		syncService,
 		listService) {
@@ -34,7 +32,7 @@ function($scope,
 			hideMarkAsReadCategories();
 			feedsCache.decreaseUnreadAmountInPath(selectedCategories);
 			leaveEditMode();
-			backgroundActivityService.notifyBackgroundActivityStopped();
+			$rootScope.$broadcast('backgroundActivityStoped');
 		} else {
 			hideMarkAsReadCategories();
 			feedsCache.decreaseUnreadAmountInPath(selectedCategories);
@@ -42,10 +40,10 @@ function($scope,
 			backendService.markCategoriesAsRead(selectedCategories)
 			.then(
 				function() {
-					backgroundActivityService.notifyBackgroundActivityStopped();
+					$rootScope.$broadcast('backgroundActivityStoped');
 				},
 				function() {
-					backgroundActivityService.notifyBackgroundActivityStopped();
+					$rootScope.$broadcast('backgroundActivityStoped');
 					alert($filter('translate')('errorMarkingElementsAsRead'));
 					leaveEditMode();
 				}
@@ -80,7 +78,7 @@ function($scope,
 
 	function retrieveCategories() {
 		if(networkStatusService.isOnline() && !sectionNavigator.isComingBack()) {
-			backgroundActivityService.notifyBackgroundActivity();
+			$rootScope.$broadcast('backgroundActivityStarted');
 			backendService.downloadCategories()
 			.then(function(categories) {
 					if(categories.error && categories.error === 'NOT_LOGGED_IN') {
@@ -98,7 +96,7 @@ function($scope,
 
 	function retrieveFeedsByCategoryId(categoryId) {
 		if(networkStatusService.isOnline() && !sectionNavigator.isComingBack()) {
-			backgroundActivityService.notifyBackgroundActivity();
+			$rootScope.$broadcast('backgroundActivityStarted');
 			// Retrieve child elements from server
 			backendService.downloadFeeds(categoryId)
 			.then(function(feeds){
@@ -123,7 +121,7 @@ function($scope,
 		} else {
 			$scope.noCategoriesAvailable = true;
 		}
-		backgroundActivityService.notifyBackgroundActivityStopped();
+		$rootScope.$broadcast('backgroundActivityStoped');
 	}
 
 	function getChildrenFromCache(categoryId) {
@@ -133,11 +131,11 @@ function($scope,
 		} else {
 			$scope.noCategoriesAvailable = true;
 		}
-		backgroundActivityService.notifyBackgroundActivityStopped();
+		$rootScope.$broadcast('backgroundActivityStoped');
 	}
 
 	function showCategoriesOnScreen(categories) {
-		backgroundActivityService.notifyBackgroundActivityStopped();
+		$rootScope.$broadcast('backgroundActivityStoped');
 		$scope.noCategoriesAvailable = false;
 		$scope.categories = categories;
 		feedsCache.addToCache(categories);
@@ -145,13 +143,13 @@ function($scope,
 
 	function showFeedsOnScreen(feeds) {
 		feedsCache.addToCache(feeds, categoryId);
-		backgroundActivityService.notifyBackgroundActivityStopped();
+		$rootScope.$broadcast('backgroundActivityStoped');
 		$scope.noCategoriesAvailable = false;
 		$scope.categories = feeds;
 	}
 
 	function goToLoginPage() {
-		backgroundActivityService.notifyBackgroundActivityStopped();
+		$rootScope.$broadcast('backgroundActivityStoped');
 		sectionNavigator.clearHistory();
 		sectionNavigator.navigateTo(sectionNavigator.section.LOGIN, true, true, true);
 	}

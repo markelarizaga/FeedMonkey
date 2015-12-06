@@ -1,33 +1,33 @@
 angular.module('TinyRSS').
 controller('Login', ['$scope',
+	'$rootScope',
 	'sectionNavigator',
 	'authenticationService',
 	'settingsService',
 	'$filter',
-	'backgroundActivityService',
 	'feedsCache',
 	'$routeParams',
 function ($scope,
+		$rootScope,
 		sectionNavigator,
 		authenticationService,
 		settingsService,
 		$filter,
-		backgroundActivityService,
 		feedsCache,
 		$routeParams) {
 
 	$scope.attemptLogin = function(isAutoLogin) {
 		var login = null;
 		if (credentialsPresent()) {
-			backgroundActivityService.notifyBackgroundActivity();
+			$rootScope.$broadcast('backgroundActivityStarted');
 			settingsService.setCredentials($scope.serverUrl, $scope.username, $scope.password);
 			login = authenticationService.login($scope.serverUrl, $scope.username, $scope.password);
 			login.then(function(){
-				backgroundActivityService.notifyBackgroundActivityStopped();
+				$rootScope.$broadcast('backgroundActivityStoped');
 				sectionNavigator.navigateTo(sectionNavigator.section.CATEGORIES);
 			}, function(error) {
 				if(!isAutoLogin) {
-					backgroundActivityService.notifyBackgroundActivityStopped();
+					$rootScope.$broadcast('backgroundActivityStoped');
 					var errorMessage = $filter('translate')('loginError');
 					var errorMessage = error ? errorMessage + ': ' + $filter('translate')(error) : errorMessage;
 					alert(errorMessage);

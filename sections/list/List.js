@@ -6,7 +6,6 @@ controller('List',
 	'$routeParams',
 	'sectionNavigator',
 	'networkStatusService',
-	'backgroundActivityService',
 	'$rootScope',
 	'ListService',
 function($scope,
@@ -15,7 +14,6 @@ function($scope,
 		$routeParams,
 		sectionNavigator,
 		networkStatusService,
-		backgroundActivityService,
 		$rootScope,
 		listService) {
 
@@ -35,14 +33,14 @@ function($scope,
 		feedsCache.markLocalArticleAsRead($routeParams.feedId, selectedArticles);
 		backendService.markArticlesAsRead(selectedArticles);
 		leaveEditMode();
-		backgroundActivityService.notifyBackgroundActivityStopped();
+		$rootScope.$broadcast('backgroundActivityStoped');
 	});
 
 	$scope.$on('backPressed', function(){
 		feedsCache.popTreeLevel();
 	});
 
-	backgroundActivityService.notifyBackgroundActivity();
+	$rootScope.$broadcast('backgroundActivityStarted');
 	if(networkStatusService.isOnline() && !sectionNavigator.isComingBack()) {
 		backendService.downloadHeadlines($routeParams.feedId, true)
 		.then(function(headlines){
@@ -54,7 +52,7 @@ function($scope,
 			} else {
 				$scope.noArticlesToShow = true;
 			}
-			backgroundActivityService.notifyBackgroundActivityStopped();
+			$rootScope.$broadcast('backgroundActivityStoped');
 		}, function() {
 			getHeadlinesFromCache($routeParams.feedId);
 		});
@@ -72,7 +70,7 @@ function($scope,
 		} else {
 			$scope.noArticlesToShow = true;
 		}
-		backgroundActivityService.notifyBackgroundActivityStopped();
+		$rootScope.$broadcast('backgroundActivityStoped');
 	}
 
 	$scope.openElement = function(element) {
