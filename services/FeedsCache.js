@@ -24,12 +24,10 @@ factory("feedsCache", ['localStorageService', function(localStorageService){
     var unreadElements = categoriesMarkedAsRead.reduce(function(unreadElements, category){
       return unreadElements + category.unread;
     }, 0);
-    if(currentPath) {
+    if(currentPath && currentPath.length > 0) {
       currentPath.forEach(function(pathLevel){
         pathLevel.unread -= unreadElements;
       });
-    }
-  if(currentPath){
       var visibleCategories = currentPath[currentPath.length-1].children;
       categoriesMarkedAsRead.forEach(function(readCategory, index){
         for(var i = 0; i < visibleCategories.length; i++){
