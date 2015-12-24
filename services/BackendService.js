@@ -2,9 +2,24 @@ angular.module('TinyRSS').
 factory("backendService", ['$q', 'http', 'authenticationService', 'settingsService',
 function($q, http, authenticationService, settingsService){
 
+    var specialFeedIds = {
+      ALL_ARTICLES: -4
+    };
+
+    return {
+        downloadCategories: downloadCategories,
+        downloadFeeds: downloadFeeds,
+        downloadHeadlines: downloadHeadlines,
+        downloadArticle: downloadArticle,
+        markArticlesAsRead: markArticlesAsRead,
+        markCategoriesAsRead: markCategoriesAsRead,
+        goOffline: goOffline
+    };
+
     function downloadCategories() {
         var deferred = $q.defer();
         var token = authenticationService.getToken();
+        var apiUrl = settingsService.getCredentials().serverApiUrl;
         var options = {
             "sid": token,
             "op": "getCategories",
@@ -12,18 +27,8 @@ function($q, http, authenticationService, settingsService){
             "enable_nested": false,
             "include_empty": false
         };
-        http.post(settingsService.getCredentials().serverApiUrl, options,
-            function(xhr) {
-                if(JSON.parse(xhr.responseText).content) {
-                    deferred.resolve(JSON.parse(xhr.responseText).content);
-                } else {
-                    deferred.reject();
-                }
-            }, function(xhr) {
-                deferred.reject(xhr.statusText);
-            }
-        );
 
+        sendPostRequestWithPromise(apiUrl, options, deferred);
         return deferred.promise;
     }
 
@@ -31,6 +36,7 @@ function($q, http, authenticationService, settingsService){
 
         var deferred = $q.defer();
         var token = authenticationService.getToken();
+        var apiUrl = settingsService.getCredentials().serverApiUrl;
         var options = null;
         if(categoryId !== null && categoryId !== undefined) {
             options = {
@@ -48,18 +54,7 @@ function($q, http, authenticationService, settingsService){
             };
         }
 
-        http.post(settingsService.getCredentials().serverApiUrl, options,
-            function(xhr) {
-                if(JSON.parse(xhr.responseText).content) {
-                    deferred.resolve(JSON.parse(xhr.responseText).content);
-                } else {
-                    deferred.reject();
-                }
-            }, function(xhr) {
-                deferred.reject(xhr.statusText);
-            }
-        );
-
+        sendPostRequestWithPromise(apiUrl, options, deferred);
         return deferred.promise;
     }
 
@@ -67,69 +62,44 @@ function($q, http, authenticationService, settingsService){
 
         var deferred = $q.defer();
         var token = authenticationService.getToken();
-        var options = null;
-
+        var apiUrl = settingsService.getCredentials().serverApiUrl;
+        var options = {
+            "sid": token,
+            "op": "getHeadlines",
+            "view_mode": "unread"
+        };
         if(categoryId !== null && categoryId !== undefined) {
-            options = {
-                "sid": token,
-                "op": "getHeadlines",
-                "view_mode": "unread",
-                "feed_id": categoryId
-            };
-
+            options.feed_id = categoryId;
         } else {
-            options = {
-                "sid": token,
-                "op": "getHeadlines",
-                "view_mode": "unread",
-                "show_content": true,
-                "feed_id": -4 // All articles
-            };
+            options.show_content = true;
+            options.feed_id = specialFeedIds.ALL_ARTICLES;
         }
         if(fullArticles) {
-            options["show_content"] = fullArticles;
+            options.show_content = fullArticles;
         }
-        http.post(settingsService.getCredentials().serverApiUrl, options,
-            function(xhr) {
-                if(JSON.parse(xhr.responseText).content) {
-                    deferred.resolve(JSON.parse(xhr.responseText).content);
-                } else {
-                    deferred.reject();
-                }
-            }, function(xhr) {
-                deferred.reject(xhr.statusText);
-            }
-        );
 
+        sendPostRequestWithPromise(apiUrl, options, deferred);
         return deferred.promise;
     }
 
     function downloadArticle(articleId) {
         var deferred = $q.defer();
         var token = authenticationService.getToken();
+        var apiUrl = settingsService.getCredentials().serverApiUrl;
         var options = {
             "sid": token,
             "op": "getArticle",
-            "article_id": articleId,
+            "article_id": articleId
         };
-        http.post(settingsService.getCredentials().serverApiUrl, options,
-            function(xhr) {
-                if(JSON.parse(xhr.responseText).content) {
-                    deferred.resolve(JSON.parse(xhr.responseText).content);
-                } else {
-                    deferred.reject();
-                }
-            }, function(xhr) {
-                deferred.reject(xhr.statusText);
-            }
-        );
 
+        sendPostRequestWithPromise(apiUrl, options, deferred);
         return deferred.promise;
     }
 
     function markArticlesAsRead(articles){
         var deferred = $q.defer();
         var token = authenticationService.getToken();
+        var apiUrl = settingsService.getCredentials().serverApiUrl;
         articles = articles.map(function(article) {
             return article.id;
         });
@@ -140,24 +110,15 @@ function($q, http, authenticationService, settingsService){
             "mode": 0,
             "field": 2
         };
-        http.post(settingsService.getCredentials().serverApiUrl, options,
-            function(xhr) {
-                if(JSON.parse(xhr.responseText).content) {
-                    deferred.resolve(JSON.parse(xhr.responseText).content);
-                } else {
-                    deferred.reject();
-                }
-            }, function(xhr) {
-                deferred.reject(xhr.statusText);
-            }
-        );
 
+        sendPostRequestWithPromise(apiUrl, options, deferred);
         return deferred.promise;
     }
 
     function markCategoryAsRead(categoryId, isCategory) {
         var deferred = $q.defer();
         var token = authenticationService.getToken();
+        var apiUrl = settingsService.getCredentials().serverApiUrl;
         isCategory = (isCategory === null || isCategory === undefined);
         var options = {
             "sid": token,
@@ -165,30 +126,32 @@ function($q, http, authenticationService, settingsService){
             "feed_id": categoryId,
             "is_cat": isCategory
         };
-        http.post(settingsService.getCredentials().serverApiUrl, options,
-            function(xhr) {
-                if(JSON.parse(xhr.responseText).content) {
-                    deferred.resolve(JSON.parse(xhr.responseText).content);
-                } else {
-                    deferred.reject();
-                }
-            }, function(xhr) {
-                deferred.reject(xhr.statusText);
-            }
-        );
 
+        sendPostRequestWithPromise(apiUrl, options, deferred);
         return deferred.promise;
     }
 
     function markCategoriesAsRead(categories) {
-        categories = categories.map(function(category){
-    			return {id: category.id, isCategory: category.feed_url};
-    		});
         var deferred = $q;
-        var categoriesMarkedAsRead = categories.map(function(item){
-            return markCategoryAsRead(item.id, item.isCategory);
+        var categoriesMarkedAsRead = categories.map(function(category){
+            var isCategory = category.feed_url;
+            return markCategoryAsRead(category.id, isCategory);
         });
         return deferred.all(categoriesMarkedAsRead);
+    }
+
+    function goOffline (callback) {
+        var deferred = $q;
+        var retrieveOfflineInfo = deferred.all([downloadHeadlines(), downloadFeeds()]);
+
+        retrieveOfflineInfo.then(function(result) {
+            var articles = result[0];
+            var feeds = result[1].categories.items;
+            feeds = buildFeedTree(feeds, articles);
+            callback(null, feeds);
+        }, function() {
+            callback(true, null);
+        });
     }
 
     function removeEmptyFeeds(feeds) {
@@ -196,7 +159,7 @@ function($q, http, authenticationService, settingsService){
         for(i; i < feeds.length; i++) {
             if(feeds[i].children && feeds[i].children.length > 0) {
                 removeEmptyFeeds(feeds[i].children);
-                // Look again to the same node to check if it it empty now
+                // Look again to the same node to check if it is empty now
                 if(!feeds[i].children || feeds[i].children.length === 0) {
                     delete feeds[i];
                 }
@@ -205,13 +168,12 @@ function($q, http, authenticationService, settingsService){
                     delete feeds[i];
                 }
             }
-        }
-        for(i = 0; i < feeds.length; i++) {
             if(feeds[i] === undefined || feeds[i] === null) {
                 feeds.splice(i, 1);
                 i -= 1;
             }
         }
+
         return feeds;
     }
 
@@ -242,6 +204,9 @@ function($q, http, authenticationService, settingsService){
         return feeds;
     }
 
+    // FIXME This function breaks the single responsibility principle of this
+    // service, consider sending it to a different service. In addition, it
+    // contains duplaicated code, maybe it can be improved
     function transformFeeds(feeds) {
         var i = 0;
         var j = 0;
@@ -282,27 +247,25 @@ function($q, http, authenticationService, settingsService){
         return feeds;
     }
 
-    function goOffline (callback) {
-        var deferred = $q;
-        var offlineInfoRetrieved = deferred.all([downloadHeadlines(), downloadFeeds()]);
-
-        offlineInfoRetrieved.then(function(result) {
-            var articles = result[0];
-            var feeds = result[1].categories.items;
-            feeds = buildFeedTree(feeds, articles);
-            callback(null, feeds);
-        }, function() {
-            callback(true, null);
-        });
-    }
-
-    return {
-        downloadCategories: downloadCategories,
-        downloadFeeds: downloadFeeds,
-        downloadHeadlines: downloadHeadlines,
-        downloadArticle: downloadArticle,
-        markArticlesAsRead: markArticlesAsRead,
-        markCategoriesAsRead: markCategoriesAsRead,
-        goOffline: goOffline,
+    /**
+     * Performs a POST request and attaches the resolvers to a promise object
+     * @param  {String} url     URL of the resource to POST to
+     * @param  {object} options Configuration object needed by the backend API
+     * @param  {object} promise Promise object that will get resolved of rejected
+     * once the response from the backend arrives
+     */
+    function sendPostRequestWithPromise(url, options, promise){
+        http.post(url, options,
+            function(res) {
+                var response = JSON.parse(res.responseText);
+                if(response.content) {
+                    promise.resolve(response.content);
+                } else {
+                    promise.reject();
+                }
+            }, function(res) {
+                promise.reject(res.statusText);
+            }
+        );
     }
 }]);
