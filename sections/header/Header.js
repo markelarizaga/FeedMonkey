@@ -18,7 +18,7 @@ function($scope,
 		$rootScope) {
 
 	$scope.isRoot = true;
-	$scope.offline = false;
+	$scope.offline = networkStatusService.isOfflineMode();
 	$scope.backgroundWorkPresent = false;
 	$scope.allItemsSelected = false;
 	var previousHeaderStatus = null;
