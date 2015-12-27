@@ -1,7 +1,7 @@
 angular.module('TinyRSS')
 .factory("authenticationService", ['$q', 'http', function($q, http){
 
-  var token = null;
+    var token = null;
 	var serverUrl = null;
 
 	/**
@@ -24,11 +24,11 @@ angular.module('TinyRSS')
 		http.post(serverUrl, options,
 			function(xhr) {
 				if(JSON.parse(xhr.responseText).content.error) {
-							deferred.reject(JSON.parse(xhr.responseText).content.error);
-						} else if (JSON.parse(xhr.responseText).content.session_id) {
-							token = JSON.parse(xhr.responseText).content.session_id;
-							deferred.resolve();
-						}
+					deferred.reject(JSON.parse(xhr.responseText).content.error);
+				} else if (JSON.parse(xhr.responseText).content.session_id) {
+					token = JSON.parse(xhr.responseText).content.session_id;
+					deferred.resolve();
+				}
 			}, function(xhr) {
 				deferred.reject(xhr.statusText);
 			}
@@ -38,15 +38,18 @@ angular.module('TinyRSS')
 	}
 
 	/**
-	 * Asynchronously checks for authentication status. This function will check for a token and a serverUrl stored in memory and if
-	 * both elements are present will return a promise that will call resolve callback if user is logged in and reject in other case.
-	 * If no token and server url are present, this function will return null.
+	 * Asynchronously checks for authentication status. This function will check
+	 * for a token and a serverUrl stored in memory and if both elements are present
+	 * will return a promise that will call resolve callback if user is logged
+	 * in and reject in other case. If no token and server url are present, this
+	 * function will return null.
 	 * @method isLoggedIn
 	 * @example
 	 * var promise = authenticationService.isLoggedIn();
 	 * if (promise) {promise.then(isLoggedCallback, failureCallback);}
-	 * @return {Object} A promise that will call resolve callback if user is logged in and reject in other case or null if no token
-	 * and server url exist in memory
+	 * @return {Object} A promise that will call resolve callback if user is
+	 * logged in and reject in other case or null if no token and server url
+	 * exist in memory
 	 **/
 	function isLoggedIn() {
 
@@ -58,11 +61,11 @@ angular.module('TinyRSS')
 			http.post(serverUrl, options,
 				function(xhr) {
 					if(JSON.parse(xhr.responseText).content.status) {
-								deferred.resolve();
-							} else {
-								token = null;
-								deferred.reject();
-							}
+						deferred.resolve();
+					} else {
+						token = null;
+						deferred.reject();
+					}
 				}, function(xhr) {
 					deferred.reject(xhr.statusText);
 				}
@@ -102,8 +105,8 @@ angular.module('TinyRSS')
 	}
 
 	function getToken() {
-			return token;
-		}
+		return token;
+	}
 
 
 	return{

@@ -16,7 +16,39 @@ function ($scope,
 		feedsCache,
 		$routeParams) {
 
-	$scope.attemptLogin = function(isAutoLogin) {
+	$scope.attemptLogin = attemptLogin;
+	fillCredentialsInputs();
+	if($routeParams.disableAutoLogin !== 'true' && credentialsPresent()) {
+		attemptLogin(true);
+	}
+
+	var loggedIn = authenticationService.isLoggedIn();
+	if (loggedIn) {
+		loggedIn.then(function() {
+			sectionNavigator.navigateTo(sectionNavigator.section.CATEGORIES);
+		});
+	}
+
+	function updateInputErrorState(serverUrl, username, password) {
+		$scope.serverUrlError = !serverUrl;
+		$scope.usernameError = !username;
+		$scope.passwordError = !password;
+	}
+
+	function fillCredentialsInputs() {
+		var credentials = settingsService.getCredentials();
+		if(credentials) {
+			$scope.username = credentials.userName || '';
+			$scope.password = credentials.password || '';
+			$scope.serverUrl = credentials.serverUrl || '';
+		}
+	}
+
+	function credentialsPresent() {
+		return ($scope.username && $scope.password && $scope.serverUrl);
+	}
+
+	function attemptLogin(isAutoLogin) {
 		var login = null;
 		if (credentialsPresent()) {
 			$rootScope.$broadcast('backgroundActivityStarted');
@@ -41,35 +73,4 @@ function ($scope,
 		}
 		updateInputErrorState($scope.serverUrl, $scope.username, $scope.password);
 	};
-
-	fillCredentialsInputs();
-	if($routeParams.disableAutoLogin !== 'true' && credentialsPresent()) {
-		$scope.attemptLogin(true);
-	}
-
-	var loggedIn = authenticationService.isLoggedIn();
-	if (loggedIn) {
-		loggedIn.then(function() {
-			sectionNavigator.navigateTo(sectionNavigator.section.CATEGORIES);
-		});
-	}
-
-	function updateInputErrorState(serverUrl, username, password) {
-		$scope.serverUrlError = !serverUrl;
-		$scope.usernameError = !username;
-		$scope.passwordError = !password;
-	}
-
-	function fillCredentialsInputs() {
-		var credentials = settingsService.getCredentials();
-		if(credentials) {
-			$scope.username = credentials.userName || '';
-			$scope.password = credentials.password || '';
-			$scope.serverUrl = credentials.serverUrl || '';;
-		}
-	}
-
-	function credentialsPresent() {
-		return ($scope.username && $scope.password && $scope.serverUrl);
-	}
 }]);

@@ -19,9 +19,7 @@ function($scope,
 		syncService,
 		listService) {
 
-	$scope.$on('exitEditMode', function(){
-		leaveEditMode();
-	});
+	$scope.$on('exitEditMode', leaveEditMode);
 
 	$scope.$on('markSelectedAsRead', function(){
 		var articlesToMarkAsRead = null;
@@ -51,9 +49,7 @@ function($scope,
 		}
 	});
 
-	$scope.$on('backPressed', function(){
-		feedsCache.popTreeLevel();
-	});
+	$scope.$on('backPressed', feedsCache.popTreeLevel);
 
 	$scope.$on('selectAll', function(){
 		listService.selectAll($scope.categories);

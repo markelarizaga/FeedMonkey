@@ -50,7 +50,7 @@ factory("feedsCache", ['localStorageService', function(localStorageService){
   }
 
   function makePersistent(obj) {
-    localStorageService.set('feeds',JSON.stringify(obj));
+    localStorageService.set('feeds', JSON.stringify(obj));
   }
 
   function getPersistent() {
