@@ -7,6 +7,7 @@ tinyRss.locales.es = {
 	offlineModeReady: 'Modo offline listo',
 	offlineModeError: 'Error al entrar en modo offline',
 	cancel: 'Cancelar',
+	noNetworkConnectionError: 'No hay conexión a la red. No se puede acceder a los datos',
 
 	/* HEADER */
 	done: 'Hecho',

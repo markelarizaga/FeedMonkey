@@ -2,12 +2,13 @@ angular.module('TinyRSS')
 .factory('networkStatusService',
 ['localStorageService', function(localStorageService){
 
-	var offlineMode = localStorageService.get('offlineMode') || false;
+	var offlineMode = JSON.parse(localStorageService.get('offlineMode')) || false;
 
 	return {
 		isOnline: isOnline,
 		setOfflineMode: setOfflineMode,
-		isOfflineMode: isOfflineMode
+		isOfflineMode: isOfflineMode,
+		networkConnectionExists: networkConnectionExists
 	};
 
 	/**
@@ -19,6 +20,10 @@ angular.module('TinyRSS')
 	 */
 	function isOnline() {
 		return (!offlineMode && navigator.onLine);
+	}
+
+	function networkConnectionExists(){
+		return navigator.onLine;
 	}
 
 	/**

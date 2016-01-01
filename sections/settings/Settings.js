@@ -1,15 +1,20 @@
 angular.module('TinyRSS').
-controller('Settings', ['$scope',
+controller('Settings', [
+	'$scope',
+	'$rootScope',
 	'sectionNavigator',
 	'authenticationService',
 	'settingsService',
+	'networkStatusService',
 	'$translate',
 	'$filter',
 	'feedsCache',
 function($scope,
+		$rootScope,
 		sectionNavigator,
 		authenticationService,
 		settingsService,
+		networkStatusService,
 		$translate,
 		$filter,
 		feedsCache) {
@@ -30,6 +35,8 @@ function($scope,
 		}
 		feedsCache.clear();
 		sectionNavigator.clearHistory();
+		networkStatusService.setOfflineMode(false);
+		$rootScope.$broadcast('offlineModeChanged');
 		sectionNavigator.navigateTo(sectionNavigator.section.LOGIN, true, true, true);
 	};
 

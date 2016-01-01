@@ -7,6 +7,7 @@ tinyRss.locales.en = {
 	offlineModeReady: 'Offline mode ready',
 	offlineModeError: 'Could not go offline',
 	cancel: 'Cancel',
+	noNetworkConnectionError: 'There is no network connection. Impossible to retrieve information',
 
 	/* HEADER */
 	done: 'Done',

@@ -60,6 +60,10 @@ function($scope,
 		$scope.allItemsSelected = !$scope.allItemsSelected;
 	});
 
+	$scope.$on('offlineModeChanged', function(){
+		$scope.offline = !$scope.offline;
+	})
+
 	$scope.goBack = function() {
 		$rootScope.$broadcast('backgroundActivityStoped');
 		sectionNavigator.back();
@@ -67,8 +71,8 @@ function($scope,
 	};
 
 	$scope.toggleOffline = function() {
-		$scope.backgroundWorkPresent = true;
 		if(!networkStatusService.isOfflineMode()) {
+			$scope.backgroundWorkPresent = true;
 			backendService.goOffline(function (error, feeds) {
 				if(!error) {
 					alert($filter('translate')('offlineModeReady'));
@@ -82,12 +86,17 @@ function($scope,
 				$scope.backgroundWorkPresent = false;
 			});
 		} else {
-			$scope.offline = false;
-			networkStatusService.setOfflineMode(false);
-			feedsCache.clear();
-			syncService.syncWithServer();
-			$scope.backgroundWorkPresent = false;
-			sectionNavigator.navigateTo(sectionNavigator.section.ROOT_SECTION);
+			if(networkStatusService.networkConnectionExists()){
+				$scope.backgroundWorkPresent = true;
+				$scope.offline = false;
+				networkStatusService.setOfflineMode(false);
+				feedsCache.clear();
+				syncService.syncWithServer();
+				$scope.backgroundWorkPresent = false;
+				sectionNavigator.navigateTo(sectionNavigator.section.ROOT_SECTION);
+			} else {
+				alert($filter('translate')('noNetworkConnectionError'));
+			}
 		}
 	};
 
@@ -97,7 +106,11 @@ function($scope,
 	};
 
 	$scope.reloadFeeds = function() {
-		sectionNavigator.navigateTo(sectionNavigator.section.ROOT_SECTION);
+		if(networkStatusService.networkConnectionExists()){
+			sectionNavigator.navigateTo(sectionNavigator.section.ROOT_SECTION);
+		} else {
+			alert($filter('translate')('noNetworkConnectionError'));
+		}
 	}
 
 	$scope.leaveEditMode = function() {

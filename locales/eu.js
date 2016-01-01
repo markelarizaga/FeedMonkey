@@ -7,6 +7,7 @@ tinyRss.locales.eu = {
 	offlineModeReady: 'Sarerik gabeko modua prest',
 	offlineModeError: 'Ezin izan da sarerik gabeko modura pasatu',
 	cancel: 'Ezeztatu',
+	noNetworkConnectionError: 'Ez dago sareko konexiorik. Ezin da datuetara iritsi',
 
 	/* HEADER */
 	done: 'Ados',
