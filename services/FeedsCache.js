@@ -29,10 +29,18 @@ factory("feedsCache", ['localStorageService', function(localStorageService){
         pathLevel.unread -= unreadElements;
       });
       var visibleCategories = currentPath[currentPath.length-1].children;
-      categoriesMarkedAsRead.forEach(function(readCategory, index){
+      categoriesMarkedAsRead.forEach(function(readCategory){
         for(var i = 0; i < visibleCategories.length; i++){
           if(readCategory.id === visibleCategories[i].id){
             visibleCategories.splice(i,1);
+          }
+        }
+      });
+    } else {
+      categoriesMarkedAsRead.forEach(function(readCategory){
+        for(var i = 0; i < categories.length; i++){
+          if(categories[i].id === readCategory.id){
+            categories.splice(i, 1)
           }
         }
       });
