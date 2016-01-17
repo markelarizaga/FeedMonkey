@@ -292,10 +292,6 @@ input[type=text], input[type=password] {
 		animation: slideInLeft $fast;
 	}
 
-	&.articles-view.ng-enter {
-		animation: slideInBottom $fast;
-	}
-
 	&.settings-view.ng-enter {
 		animation: slideInTop $fast;
 	}
