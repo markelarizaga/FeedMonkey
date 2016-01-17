@@ -196,4 +196,9 @@ function($scope,
 			headline.ui = null;
 		});
 	}
+
+	$scope.goBack = function(){
+		feedsCache.popTreeLevel();
+		sectionNavigator.back();
+	};
 }]);

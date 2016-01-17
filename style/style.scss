@@ -284,14 +284,6 @@ input[type=text], input[type=password] {
 		to { transform: translateY(0); }
 	}
 
-	&.headlines-view.ng-enter {
-		animation: slideInRight $fast;
-	}
-
-	&.headlines-view-back.ng-enter {
-		animation: slideInLeft $fast;
-	}
-
 	&.settings-view.ng-enter {
 		animation: slideInTop $fast;
 	}
@@ -379,10 +371,10 @@ ul li {
 	}
 }
 
-#full {
+.full {
 	position: fixed;
 	top: 5rem;
-	bottom: 0px;
+	bottom: 0;
 	right: 0;
 	left: 0;
 	overflow-y: scroll;

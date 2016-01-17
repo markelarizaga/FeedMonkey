@@ -120,4 +120,9 @@ function($scope,
 				return (headline.unread && headline.ui && headline.ui.selected === true);
 			});
 	}
+
+	$scope.goBack = function(){
+		feedsCache.popTreeLevel();
+		sectionNavigator.back();
+	};
 }]);

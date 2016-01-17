@@ -78,7 +78,7 @@ function($scope, $routeParams, backendService, feedsCache, networkStatusService,
 	function showArticle(articles){
 		if(articles && articles.length > 0) {
 			$scope.article = articles[0];
-			document.getElementById('full').scrollTop = 0;
+			document.getElementById('article-layout').scrollTop = 0;
 			if($scope.article.unread && $scope.helpAlreadyShown) {
 				feedsCache.markLocalArticleAsRead($scope.article.feed_id, [$scope.article]);
 				backendService.markArticlesAsRead([$scope.article]);
