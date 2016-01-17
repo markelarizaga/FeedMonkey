@@ -35,8 +35,10 @@ function($scope,
 		}
 		feedsCache.clear();
 		sectionNavigator.clearHistory();
-		networkStatusService.setOfflineMode(false);
-		$rootScope.$broadcast('offlineModeChanged');
+		if(networkStatusService.isOfflineMode()){
+			networkStatusService.setOfflineMode(false);
+			$rootScope.$broadcast('offlineModeChanged');
+		}
 		sectionNavigator.navigateTo(sectionNavigator.section.LOGIN, true, true, true);
 	};
 
