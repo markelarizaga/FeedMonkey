@@ -1,0 +1,32 @@
+{
+  "name": "tinyrss",
+  "version": "1.0.0",
+  "description": "TinyRSS ==========",
+  "main": "index.html",
+  "dependencies": {
+    "ansi-regex": "^2.0.0",
+    "bower": "^1.7.1",
+    "del": "^2.2.0",
+    "gulp": "^3.9.0",
+    "gulp-clean": "^0.3.1",
+    "gulp-util": "^3.0.7",
+    "gulp-zip": "^3.0.2",
+    "replace-ext": "0.0.1",
+    "vinyl": "^1.1.0",
+    "vinyl-paths": "^2.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/markelarizaga/TinyRSS.git"
+  },
+  "author": "Markel Arizaga",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/markelarizaga/TinyRSS/issues"
+  },
+  "homepage": "https://github.com/markelarizaga/TinyRSS#readme"
+}
